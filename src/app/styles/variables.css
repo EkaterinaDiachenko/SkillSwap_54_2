@@ -1,0 +1,59 @@
+/* ─── CSS Custom Properties (UI_kit Colors + starter tokens) ─── */
+:root {
+  /* Colors — значения из макета UI_kit; имена starter сохранены где были */
+  --color-primary: #abd27a; /* Accent */
+  --color-primary-hover: #deebc5; /* Button hover */
+  --color-bg: #f9faf7; /* Background */
+  --color-bg-secondary: #f9fafb; /* нет в макете — как в стартере */
+  --color-text: #253017; /* Text */
+  --color-text-secondary: #69735d; /* Caption */
+  --color-border: #e5e7eb; /* нет в макете — как в стартере */
+  --color-error: #bf3920; /* Error */
+  --color-success: #22c55e; /* нет в макете — как в стартере */
+
+  /* Доп. цвета из макета (для кнопок, тегов, состояний) */
+  --color-caption: #69735d;
+  --color-disabled-text: #9ca197;
+  --color-toggle: #b2b9a9;
+  --color-disabled: #e4e8df;
+  --color-card: #ffffff; /* Card, input */
+  --color-link: #508826; /* Text link, Button pressed */
+  --color-accent: #abd27a;
+  --color-button-hover: #deebc5;
+  --color-button-pressed: #508826;
+  --color-alarm: #e0796e;
+
+  /* Tag — категории */
+  --tag-business: #eee7f7; /* Бизнес и карьера */
+  --tag-art: #f7e7f2; /* Творчество и искусство */
+  --tag-languages: #ebe5c5; /* Иностранные языки */
+  --tag-education: #e7f2f6; /* Образование и развитие */
+  --tag-home: #f7ebe5; /* Дом и уют */
+  --tag-health: #e9f7e7; /* Здоровье и лайфстайл */
+  --tag-more: #e8ecf7; /* Tag_+ */
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+
+  /* Typography — как в global.css стартера (шрифты задаёт другая задача) */
+  --font-sans: system-ui, -apple-system, sans-serif;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+
+  /* Borders */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 5%);
+  --shadow-md: 0 4px 6px rgb(0 0 0 / 7%);
+}
