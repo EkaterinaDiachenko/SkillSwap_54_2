@@ -43,10 +43,28 @@
   --space-60: 60px;
   --space-72: 72px;
 
-  /* Typography — как в стартере (шрифты — отдельная задача) */
-  --font-sans: system-ui, -apple-system, sans-serif;
+  /* Typography — UI_kit (Jost / Roboto), локальные файлы */
+  --font-display: 'Jost', sans-serif;
+  --font-body: 'Roboto', sans-serif;
+  --font-sans: var(--font-body);
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-size-h1: 32px;
+  --line-height-h1: 40px;
+  --font-size-h2: 24px;
+  --line-height-h2: 32px;
+  --font-size-h3: 20px;
+  --line-height-h3: 24px;
+  --font-size-h4: 16px;
+  --line-height-h4: 24px;
+  --font-size-body: 16px;
+  --line-height-body: 24px;
+  --font-size-caption: 12px;
+  --line-height-caption: 16px;
+
+  /* старые size-токены стартера */
   --font-size-sm: 0.875rem;
-  --font-size-base: 1rem;
+  --font-size-base: var(--font-size-body);
   --font-size-lg: 1.125rem;
   --font-size-xl: 1.25rem;
   --font-size-2xl: 1.5rem;
