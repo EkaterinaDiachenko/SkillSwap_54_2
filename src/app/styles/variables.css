@@ -1,0 +1,62 @@
+/* ─── CSS Custom Properties (UI_kit Colors + starter tokens) ─── */
+:root {
+  /* Colors — из макета UI_kit */
+  --color-primary: #abd27a; /* в макете: Accent */
+  --color-bg: #f9faf7; /* Background */
+  --color-bg-secondary: #f9fafb; /* нет в макете — как в стартере */
+  --color-text: #253017; /* Text */
+  --color-text-secondary: #69735d; /* в макете: Caption */
+  --color-border: #e5e7eb; /* нет в макете — как в стартере */
+  --color-error: #bf3920; /* Error */
+  --color-success: #22c55e; /* нет в макете — как в стартере */
+
+  /* Доп. цвета из макета (кнопки, теги, состояния) */
+  --color-disabled-text: #9ca197;
+  --color-toggle: #b2b9a9;
+  --color-disabled: #e4e8df;
+  --color-card: #fff; /* Card, input */
+  --color-link: #508826; /* Text link, Button pressed */
+  --color-button-hover: #deebc5; /* Button hover */
+  --color-button-pressed: #508826;
+  --color-alarm: #e0796e;
+
+  /* Tag — категории */
+  --tag-business: #eee7f7; /* Бизнес и карьера */
+  --tag-art: #f7e7f2; /* Творчество и искусство */
+  --tag-languages: #ebe5c5; /* Иностранные языки */
+  --tag-education: #e7f2f6; /* Образование и развитие */
+  --tag-home: #f7ebe5; /* Дом и уют */
+  --tag-health: #e9f7e7; /* Здоровье и лайфстайл */
+  --tag-more: #e8ecf7; /* Tag_+ */
+
+  /* Spacing — шкала из макета */
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-36: 36px;
+  --space-40: 40px;
+  --space-44: 44px;
+  --space-60: 60px;
+  --space-72: 72px;
+
+  /* Typography — как в стартере (шрифты — отдельная задача) */
+  --font-sans: system-ui, -apple-system, sans-serif;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+
+  /* Radii — из макета */
+  --radius-12: 12px;
+  --radius-20: 20px;
+  --radius-100: 100px; /* pill / круг */
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 5%);
+  --shadow-md: 0 4px 6px rgb(0 0 0 / 7%);
+}
