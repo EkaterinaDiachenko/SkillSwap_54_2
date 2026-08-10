@@ -1,4 +1,5 @@
 @import url('./variables.css');
+@import url('./typography.css');
 
 /* ─── Reset ──────────────────────────────────────────────── */
 *,
@@ -11,17 +12,10 @@
 
 /* Базовые стили страницы — оставляем в global вместе со сбросом (решение команды) */
 body {
-  font-family: var(--font-sans);
-  font-size: var(--font-size-base);
   color: var(--color-text);
   background-color: var(--color-bg);
-  line-height: 1.5;
 }
 
-h1,
-h2,
-h3,
-h4,
 h5,
 h6 {
   font-size: inherit;
