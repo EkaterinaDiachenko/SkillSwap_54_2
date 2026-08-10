@@ -62,13 +62,6 @@
   --font-size-caption: 12px;
   --line-height-caption: 16px;
 
-  /* старые size-токены стартера */
-  --font-size-sm: 0.875rem;
-  --font-size-base: var(--font-size-body);
-  --font-size-lg: 1.125rem;
-  --font-size-xl: 1.25rem;
-  --font-size-2xl: 1.5rem;
-
   /* Radii — из макета */
   --radius-12: 12px;
   --radius-20: 20px;
