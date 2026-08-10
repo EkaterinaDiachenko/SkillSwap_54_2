@@ -34,7 +34,6 @@ export type IconName =
   | 'message-text'
   | 'moon'
   | 'more-square'
-  | 'navigation-circle-chevron-right'
   | 'notification'
   | 'palette'
   | 'plus-circle'
