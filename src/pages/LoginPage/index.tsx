@@ -1,18 +1,10 @@
-import { useState } from 'react'
-import { SearchInput } from '../../shared/ui/search-input/search-input'
+// TODO: реализовать страницу LoginPage
 
-export default function App() {
-  const [value, setValue] = useState('')
-
+export default function LoginPage() {
   return (
-    <div style={{ padding: 20 }}>
-      <SearchInput
-        value={value}
-        onChange={setValue}
-        placeholder="Искать навык"
-        error={value === 'error' ? 'Ошибка ввода' : undefined}
-      />
-      <p>Текущее значение: {value}</p>
-    </div>
+    <main>
+      <h1>LoginPage</h1>
+      <p>Страница в разработке</p>
+    </main>
   )
 }

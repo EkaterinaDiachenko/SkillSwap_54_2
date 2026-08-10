@@ -1,6 +1,5 @@
+import { Icon } from '@/shared/ui/icon'
 import styles from './search-input.module.css'
-import SearchIcon from '@/images/icons/search.svg?react'
-import CrossIcon from '@/images/icons/cross.svg?react'
 
 interface SearchInputProps {
   value: string
@@ -22,7 +21,7 @@ export function SearchInput({
   return (
     <div className={`${styles.wrapper} ${className ?? ''}`}>
       <div className={styles.container}>
-        <SearchIcon className={styles.searchIcon} aria-hidden="true" />
+        <Icon name="search" className={styles.searchIcon} />
         <input
           className={styles.input}
           type="text"
@@ -39,7 +38,7 @@ export function SearchInput({
             onClick={() => onChange('')}
             aria-label="Очистить"
           >
-            <CrossIcon className={styles.clearIcon} aria-hidden="true" />
+            <Icon name="cross" className={styles.clearIcon} />
           </button>
         )}
       </div>

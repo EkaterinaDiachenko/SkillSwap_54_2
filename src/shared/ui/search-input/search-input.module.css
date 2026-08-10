@@ -26,7 +26,6 @@
   font-size: var(--font-size-base);
   color: var(--color-text);
   caret-color: var(--color-link);
-  caret-shape: 20px;
 }
 
 .input:focus {
