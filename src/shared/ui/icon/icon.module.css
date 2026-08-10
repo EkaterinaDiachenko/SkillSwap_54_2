@@ -1,0 +1,13 @@
+.icon {
+  display: block;
+  flex-shrink: 0;
+  color: inherit;
+}
+
+.icon [fill]:not([fill='none']) {
+  fill: currentcolor;
+}
+
+.icon [stroke]:not([stroke='none']) {
+  stroke: currentcolor;
+}
