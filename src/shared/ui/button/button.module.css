@@ -1,0 +1,102 @@
+/* ─── Базовые стили для всех кнопок ─── */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  line-height: 1.5;
+  border-radius: var(--radius-100);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  min-width: 120px;
+  min-height: 48px;
+  text-align: center;
+  user-select: none;
+  background: none;
+  border: none;
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ─── Primary — заливка ─── */
+.primary {
+  background-color: var(--color-primary);
+  color: var(--color-text);
+  border: 2px solid transparent;
+}
+
+.primary:hover:not(:disabled) {
+  background-color: var(--color-button-hover);
+  border-color: var(--color-primary);
+}
+
+.primary:active:not(:disabled) {
+  background-color: var(--color-link);
+  color: #ffffff;
+  border-color: var(--color-link);
+}
+
+.primary:disabled {
+  background-color: var(--color-disabled);
+  color: var(--color-disabled-text);
+  cursor: not-allowed;
+}
+
+/* ─── Secondary — обводка ─── */
+.secondary {
+  background-color: transparent;
+  color: var(--color-text);
+  border: 2px solid var(--color-border);
+}
+
+.secondary:hover:not(:disabled) {
+  background-color: var(--color-button-hover);
+  border-color: var(--color-primary);
+}
+
+.secondary:active:not(:disabled) {
+  background-color: var(--color-link);
+  color: #ffffff;
+  border-color: var(--color-link);
+}
+
+.secondary:disabled {
+  border-color: var(--color-disabled);
+  color: var(--color-disabled-text);
+  cursor: not-allowed;
+}
+
+/* ─── Tertiary — текстовая, без рамки ─── */
+.tertiary {
+  background-color: transparent;
+  color: var(--color-text-secondary);
+  border: none;
+  padding: 12px 16px;
+  min-width: auto;
+}
+
+.tertiary:hover:not(:disabled) {
+  color: var(--color-primary);
+  background-color: transparent;
+}
+
+.tertiary:active:not(:disabled) {
+  color: var(--color-link);
+  background-color: transparent;
+}
+
+.tertiary:disabled {
+  color: var(--color-disabled-text);
+  cursor: not-allowed;
+}
+
+/* ─── Дополнительные состояния ─── */
+.button:disabled {
+  pointer-events: none;
+}
