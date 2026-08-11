@@ -4,8 +4,14 @@
   color: inherit;
 }
 
-.icon [fill]:not([fill='none']) {
+/* Не перекрашивать точку Notification New (#E0796E / alarm) */
+.icon [fill]:not([fill='none'], [fill='#E0796E'], [fill='#e0796e']) {
   fill: currentcolor;
+}
+
+.icon [fill='#E0796E'],
+.icon [fill='#e0796e'] {
+  fill: var(--color-alarm);
 }
 
 .icon [stroke]:not([stroke='none']) {
