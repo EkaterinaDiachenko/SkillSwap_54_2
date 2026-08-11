@@ -26,12 +26,6 @@
   text-decoration: none;
 }
 
-/* Состояние наведения/фокуса */
-/* .link:hover,
-.link:focus-visible {
-  color: var(--color-link);
-} */
-
 /* Фокус для доступности */
 .link:focus-visible {
   outline: 2px solid var(--color-primary);
