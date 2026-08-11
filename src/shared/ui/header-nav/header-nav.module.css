@@ -14,7 +14,7 @@
   align-items: center;
   gap: var(--space-4);
   font-family: var(--font-body);
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-regular);
   font-size: var(--font-size-body);
   line-height: var(--line-height-body);
   color: var(--color-text);
@@ -27,10 +27,10 @@
 }
 
 /* Состояние наведения/фокуса */
-.link:hover,
+/* .link:hover,
 .link:focus-visible {
   color: var(--color-link);
-}
+} */
 
 /* Фокус для доступности */
 .link:focus-visible {
