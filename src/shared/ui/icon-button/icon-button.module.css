@@ -1,0 +1,30 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8);
+  border: none;
+  border-radius: var(--radius-12);
+  background: transparent;
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.button:hover:not(:disabled),
+.button:active:not(:disabled) {
+  background: transparent;
+  color: var(--color-text);
+}
+
+/* Лайк выбран — зелёный по макету; глаз/колокольчик остаются тёмными */
+.button.liked,
+.button.liked:hover:not(:disabled),
+.button.liked:active:not(:disabled) {
+  background: transparent;
+  color: var(--color-primary);
+}
+
+.button:disabled {
+  color: var(--color-disabled-text);
+  cursor: not-allowed;
+}

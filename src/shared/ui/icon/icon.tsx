@@ -35,6 +35,7 @@ export type IconName =
   | 'moon'
   | 'more-square'
   | 'notification'
+  | 'notification-new'
   | 'palette'
   | 'plus-circle'
   | 'radiobutton-active'
