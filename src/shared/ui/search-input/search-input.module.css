@@ -36,6 +36,10 @@
   color: var(--color-text-secondary);
 }
 
+.input:focus::placeholder { 
+  color: transparent; 
+}
+
 .clearButton {
   display: flex;
   flex-shrink: 0;
