@@ -1,0 +1,39 @@
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: var(--radius-100);
+  background-color: var(--color-disabled);
+  color: var(--color-text);
+  object-fit: cover;
+  vertical-align: middle;
+}
+
+/* 48px — карточка / хедер (по макету) */
+.sm {
+  width: 48px;
+  height: 48px;
+}
+
+/* 100px — крупный (по макету) */
+.lg {
+  width: 100px;
+  height: 100px;
+}
+
+.initials {
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-medium);
+  line-height: 1;
+  user-select: none;
+}
+
+.sm .initials {
+  font-size: var(--font-size-h4);
+}
+
+.lg .initials {
+  font-size: var(--font-size-h2);
+}

@@ -1,0 +1,57 @@
+.nav {
+  display: flex;
+  align-items: center;
+}
+
+.list {
+  display: flex;
+  align-items: center;
+  gap: var(--space-24);
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  color: var(--color-text);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--space-4) 0;
+  transition: color 0.2s ease;
+  text-decoration: none;
+}
+
+/* Фокус для доступности */
+.link:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-4, 4px);
+}
+
+/* Кнопка "Все навыки" */
+.link[role='button'] {
+  background: none;
+  border: none;
+  padding: var(--space-4) 0;
+}
+
+/* Анимация поворота иконки */
+.chevron {
+  flex-shrink: 0;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Поворот иконки при открытом меню */
+.link[data-open='true'] .chevron {
+  transform: rotate(180deg);
+}
+
+/* Альтернативный вариант через класс (если управление через className) */
+.link.is-open .chevron {
+  transform: rotate(180deg);
+}

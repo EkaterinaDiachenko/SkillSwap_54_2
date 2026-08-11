@@ -1,0 +1,65 @@
+/* Контейнер группы — Checkbox_Category из макета: padding и gap 20px */
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-20);
+  padding: var(--space-20);
+}
+
+/* Заголовок группы — стиль h3 из UI_kit */
+.groupTitle {
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-h3);
+  line-height: var(--line-height-h3);
+  color: var(--color-text);
+}
+
+.groupList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+}
+
+/* Строка чекбокса: высота 24px, отступ между иконкой и текстом 8px */
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  min-height: 24px;
+  cursor: pointer;
+}
+
+/* Визуально скрытый input — остаётся доступным для скринридеров и Tab */
+.input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Иконка 24×24 — состояния empty / checked / indeterminate */
+.icon {
+  flex-shrink: 0;
+}
+
+/* Двухцветные SVG: зелёный фон + светлая галочка/минус (перебивает currentColor из Icon) */
+.checkbox .iconActive path:first-of-type {
+  fill: var(--color-primary);
+}
+
+.checkbox .iconActive path:last-of-type {
+  fill: var(--color-card);
+}
+
+/* Текст label — Ag Body 16/24 из макета */
+.label {
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  color: var(--color-text);
+}
