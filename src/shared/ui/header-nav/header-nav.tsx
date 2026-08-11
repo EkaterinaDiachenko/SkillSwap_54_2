@@ -4,8 +4,11 @@ import styles from './header-nav.module.css'
 export type HeaderNavVariant = 'header' | 'footer'
 
 export type HeaderNavProps = {
+  /** Раскладка: header — шапка с шевроном; footer — колонка без шеврона (FooterMenu) */
   variant?: HeaderNavVariant
+  /** Колбэк при клике на кнопку "Все навыки" (открытие меню) */
   onOpenSkills?: () => void
+  /** Состояние открытости меню для анимации иконки */
   isSkillsOpen?: boolean
   className?: string
 }
