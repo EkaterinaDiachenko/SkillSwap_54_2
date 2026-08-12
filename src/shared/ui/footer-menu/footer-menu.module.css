@@ -35,3 +35,9 @@
   outline-offset: 2px;
   border-radius: 4px;
 }
+
+.menu button {
+  padding: var(--space-4) 0;
+  min-width: auto;
+  min-height: auto;
+}
