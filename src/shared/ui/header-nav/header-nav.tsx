@@ -1,18 +1,26 @@
 import { Icon } from '../icon'
+import { Button } from '../button'
 import styles from './header-nav.module.css'
 
 export type HeaderNavVariant = 'header' | 'footer'
 
 export type HeaderNavProps = {
-  /** Раскладка: header — шапка с шевроном; footer — колонка без шеврона (FooterMenu) */
+  /** Раскладка: header — горизонтально; footer — колонка (FooterMenu) */
   variant?: HeaderNavVariant
-  /** Колбэк при клике на кнопку "Все навыки" (открытие меню) */
+  /**
+   * Колбэк при клике на «Все навыки».
+   * Мега-меню подключат позже (в футере панель сверху, в шапке — снизу).
+   */
   onOpenSkills?: () => void
-  /** Состояние открытости меню для анимации иконки */
+  /** Состояние открытости меню для анимации шеврона */
   isSkillsOpen?: boolean
   className?: string
 }
 
+/**
+ * Навигация «О проекте» + «Все навыки» (стрелка).
+ * В develop кнопка навыков — Button quaternary; variant footer — только раскладка.
+ */
 export function HeaderNav({
   variant = 'header',
   onOpenSkills,
@@ -48,28 +56,24 @@ export function HeaderNav({
           </a>
         </li>
         <li>
-          {isFooter ? (
-            <a href="#" className={styles.link}>
-              Все навыки
-            </a>
-          ) : (
-            <button
-              type="button"
-              className={styles.link}
-              onClick={handleSkillsClick}
-              aria-expanded={isSkillsOpen}
-              aria-haspopup="true"
-              data-open={isSkillsOpen}
-            >
-              <span>Все навыки</span>
-              <Icon
-                name="chevron-down"
-                size={16}
-                className={styles.chevron}
-                aria-hidden="true"
-              />
-            </button>
-          )}
+          {/* И в header, и в footer — quaternary + шеврон (ревью FooterMenu) */}
+          <Button
+            type="button"
+            variant="quaternary"
+            className={styles.link}
+            onClick={handleSkillsClick}
+            aria-expanded={isSkillsOpen}
+            aria-haspopup="true"
+            data-open={isSkillsOpen}
+          >
+            <span>Все навыки</span>
+            <Icon
+              name="chevron-down"
+              size={16}
+              className={styles.chevron}
+              aria-hidden="true"
+            />
+          </Button>
         </li>
       </ul>
     </nav>

@@ -5,6 +5,11 @@ export type FooterMenuProps = {
   className?: string
 }
 
+/**
+ * Меню футера: HeaderNav (О проекте + Все навыки со стрелкой) и две колонки-заглушки.
+ * Мега-меню по клику на «Все навыки» пока не подключаем (отдельная задача;
+ * панель будет открываться сверху).
+ */
 export function FooterMenu({ className }: FooterMenuProps) {
   return (
     <nav

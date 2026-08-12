@@ -1,0 +1,85 @@
+/* Обёртка: relative для позиционирования выпадающего меню */
+.root {
+  position: relative;
+  display: inline-flex;
+}
+
+/* Триггер: имя слева, аватар справа */
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--color-text);
+}
+
+/* Фокус для доступности */
+.trigger:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-12);
+}
+
+.name {
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  color: var(--color-text);
+}
+
+/* Выпадающее меню — размеры из макета: 260×152, padding 40, gap 24, radius 12 */
+.menu {
+  position: absolute;
+  top: calc(100% + var(--space-20));
+  right: 0;
+  z-index: 10;
+  box-sizing: border-box;
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-24);
+  padding: var(--space-40);
+  background-color: var(--color-card);
+  border: 1px solid var(--color-toggle);
+  border-radius: var(--radius-12);
+}
+
+/* Пункты меню — типографика Ag H4 (16/24) */
+.menuItem,
+.menuItemLogout {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  border: none;
+  background: none;
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-h4);
+  line-height: var(--line-height-h4);
+  color: var(--color-text);
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.menuItem:hover,
+.menuItemLogout:hover {
+  color: var(--color-link);
+}
+
+.menuItem:focus-visible,
+.menuItemLogout:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-4, 4px);
+}
+
+/* Текст и иконка выхода в одной строке, gap 8px по макету */
+.menuItemLogout {
+  gap: var(--space-8);
+}
