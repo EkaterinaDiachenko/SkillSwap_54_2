@@ -1,5 +1,6 @@
 import { Icon } from '../icon'
 import styles from './header-nav.module.css'
+import { Button } from '../button'
 
 export type HeaderNavProps = {
   /** Колбэк при клике на кнопку "Все навыки" (открытие меню) */
@@ -8,9 +9,9 @@ export type HeaderNavProps = {
   isSkillsOpen?: boolean
 }
 
-export function HeaderNav({ 
-  onOpenSkills, 
-  isSkillsOpen = false 
+export function HeaderNav({
+  onOpenSkills,
+  isSkillsOpen = false
 }: HeaderNavProps) {
   const handleSkillsClick = () => {
     onOpenSkills?.()
@@ -25,8 +26,9 @@ export function HeaderNav({
           </a>
         </li>
         <li>
-          <button
+          <Button
             type="button"
+            variant="quaternary"
             className={styles.link}
             onClick={handleSkillsClick}
             aria-expanded={isSkillsOpen}
@@ -40,7 +42,7 @@ export function HeaderNav({
               className={styles.chevron}
               aria-hidden="true"
             />
-          </button>
+          </Button>
         </li>
       </ul>
     </nav>

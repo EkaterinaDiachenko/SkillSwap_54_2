@@ -98,3 +98,14 @@
 .button:disabled {
   pointer-events: none;
 }
+
+.quaternary {
+  color: var(--color-text);
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+.quaternaryWhite {
+  background-color: var(--color-card);
+}
