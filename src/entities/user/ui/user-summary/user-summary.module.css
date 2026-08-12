@@ -1,0 +1,33 @@
+.userSummary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 284px;
+  max-width: 100%;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 172px;
+  height: 44px;
+}
+
+.name {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.011em;
+  color: var(--color-text);
+}
+
+.details {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  letter-spacing: 0.02em;
+  color: var(--color-text);
+}

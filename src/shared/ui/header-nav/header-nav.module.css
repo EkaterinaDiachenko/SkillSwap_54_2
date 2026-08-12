@@ -50,8 +50,6 @@
 
 /* Кнопка "Все навыки" */
 .link[role='button'] {
-  background: none;
-  border: none;
   padding: var(--space-4) 0;
 }
 
