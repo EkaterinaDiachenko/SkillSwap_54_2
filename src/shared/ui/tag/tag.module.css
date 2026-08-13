@@ -1,0 +1,41 @@
+.tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 32px;
+  width: fit-content;
+  gap: var(--space-4);
+  border-radius: var(--radius-100);
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
+.small {
+  padding: var(--space-8) var(--space-16);
+}
+
+.large {
+  padding: var(--space-8) var(--space-12);
+}
+
+.business {
+  background-color: var(--tag-business);
+}
+.art {
+  background-color: var(--tag-art);
+}
+.languages {
+  background-color: var(--tag-languages);
+}
+.education {
+  background-color: var(--tag-education);
+}
+.home {
+  background-color: var(--tag-home);
+}
+.health {
+  background-color: var(--tag-health);
+}
+.more {
+  background-color: var(--tag-more);
+}
