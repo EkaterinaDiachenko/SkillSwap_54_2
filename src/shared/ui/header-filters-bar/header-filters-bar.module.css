@@ -1,0 +1,53 @@
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 284px;
+  max-width: 100%;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-h2);
+  line-height: var(--line-height-h2);
+  color: var(--color-text);
+}
+
+.counter {
+  font-family: inherit;
+  font-weight: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
+.resetButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  min-width: auto;
+  min-height: auto;
+  padding: 0;
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  color: var(--color-link);
+}
+
+.resetButton:hover:not(:disabled) {
+  color: var(--color-button-pressed);
+}
+
+.resetButton:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-4, 4px);
+}
+
+.resetIcon {
+  flex-shrink: 0;
+  color: inherit;
+}
