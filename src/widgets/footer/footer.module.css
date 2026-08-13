@@ -4,6 +4,7 @@
   Линии сверху (border-top) нет.
 */
 .footer {
+  position: relative;
   display: flex;
   align-items: stretch;
   box-sizing: border-box;
@@ -46,4 +47,10 @@
   flex: 1;
   min-width: 0;
   padding-top: calc(var(--space-80) - var(--space-32));
+}
+
+.skillsMegaMenu {
+  right: var(--space-60);
+  bottom: calc(100% - var(--space-80));
+  left: auto;
 }

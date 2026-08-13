@@ -5,6 +5,7 @@ import { SearchInput } from '@/shared/ui/search-input'
 import { IconButton } from '@/shared/ui/icon-button'
 import { UserMenu } from '@/shared/ui/user-menu'
 import styles from './header.module.css'
+import { SkillsMegaMenu, type SkillCategory } from '@/widgets/skills-mega-menu'
 
 export type AuthHeaderProps = {
   /** Имя пользователя в UserMenu */
@@ -20,6 +21,7 @@ export type AuthHeaderProps = {
   /** Клик по иконке колокольчика (уведомления) */
   onNotificationsClick?: () => void
   className?: string
+  categories: SkillCategory[]
 }
 
 /**
@@ -34,8 +36,10 @@ export function AuthHeader({
   onFavoritesClick,
   onNotificationsClick,
   className,
+  categories
 }: AuthHeaderProps) {
   const [search, setSearch] = useState('')
+  const [isSkillsOpen, setIsSkillsOpen] = useState(false)
 
   return (
     <header
@@ -43,7 +47,10 @@ export function AuthHeader({
     >
       <div className={styles.left}>
         <Logo />
-        <HeaderNav />
+        <HeaderNav isSkillsOpen={isSkillsOpen}
+          onOpenSkills={() => {
+            setIsSkillsOpen((previousValue) => !previousValue)
+          }} />
       </div>
 
       <SearchInput
@@ -77,6 +84,11 @@ export function AuthHeader({
           onLogout={onLogout}
         />
       </div>
+      <SkillsMegaMenu
+        categories={categories}
+        isOpen={isSkillsOpen}
+        className={styles.skillsMegaMenu}
+      />
     </header>
   )
 }
