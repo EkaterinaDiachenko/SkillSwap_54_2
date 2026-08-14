@@ -1,0 +1,150 @@
+/* Панель фильтров: 324 снаружи, контент 284 после отступов 20 */
+.bar {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-40);
+  width: 324px;
+  max-width: 100%;
+  min-width: 0;
+  height: 100%;
+  min-height: 100%;
+  align-self: stretch;
+  background-color: var(--color-card);
+}
+
+/* «Фильтры (N) / Сбросить»: верх-лево-право 20, до «Всё» — gap 40 у .bar */
+.header {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  padding: var(--space-20) var(--space-20) 0;
+  gap: var(--space-40);
+}
+
+.header h2 {
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-h2);
+  line-height: 28px;
+  letter-spacing: -0.011em;
+}
+
+/* Список от «Всё»: лево-право-низ 20, между крупными блоками 32 */
+.body {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+  gap: var(--space-32);
+  padding: 0 var(--space-20) var(--space-20);
+}
+
+/* CheckboxGroup из shared даёт свой padding — внутри панели он не нужен */
+.bar section {
+  padding: 0;
+}
+
+/* RadioButtons по умолчанию 284px — сжимаем под внутреннюю ширину */
+.bar fieldset {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* У первой radio-группы без видимого заголовка — legend только для a11y */
+.modeFilter legend {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Строка пункта: 4-12-4, зазор кружок/квадрат → текст 8 */
+.bar label {
+  padding: var(--space-4) 0 var(--space-4) var(--space-12);
+  gap: var(--space-8);
+}
+
+.skillBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+}
+
+/* Строка: чекбокс категории + уголок раскрытия */
+.categoryRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-8);
+  width: 100%;
+  padding: var(--space-4) 0 var(--space-4) var(--space-12);
+}
+
+.categoryCheckbox {
+  flex: 1;
+  min-width: 0;
+}
+
+/* У label внутри строки категории padding уже на .categoryRow */
+.categoryRow label {
+  padding: 0;
+}
+
+/* Вложенные подкатегории: +20 к началу категории = 40 от края карточки */
+.subList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  padding-left: var(--space-20);
+}
+
+/* Слот под будущие чекбоксы из данных */
+.extraSlot {
+  display: contents;
+}
+
+.moreRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.moreButton {
+  min-width: auto;
+  min-height: auto;
+  padding: 0;
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  color: var(--color-link);
+}
+
+.moreButton:hover:not(:disabled) {
+  color: var(--color-button-pressed);
+}
+
+/* IconButton-уголок: без лишних отступов кнопки */
+.chevronButton {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  color: var(--color-link);
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Поворот уголка при раскрытой секции (chevron-down → вверх) */
+.chevronOpen {
+  transform: rotate(180deg);
+}
