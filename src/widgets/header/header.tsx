@@ -5,6 +5,7 @@ import { SearchInput } from '@/shared/ui/search-input'
 import { IconButton } from '@/shared/ui/icon-button'
 import { Button } from '@/shared/ui/button'
 import styles from './header.module.css'
+import { SkillsMegaMenu, type SkillCategory } from '@/widgets/skills-mega-menu'
 
 export type HeaderProps = {
   /** Колбэк при клике на «Войти» */
@@ -14,6 +15,7 @@ export type HeaderProps = {
   /** Колбэк при изменении текста в поле поиска */
   onChange?: (value: string) => void
   className?: string
+  categories: SkillCategory[]
 }
 
 /**
@@ -25,9 +27,11 @@ export function Header({
   onRegister,
   onChange,
   className,
+  categories
 }: HeaderProps) {
   // SearchInput — контролируемый компонент, локальное состояние храним здесь
   const [search, setSearch] = useState('')
+  const [isSkillsOpen, setIsSkillsOpen] = useState(false)
 
   const handleSearchChange = (value: string) => {
     setSearch(value)
@@ -41,7 +45,10 @@ export function Header({
       {/* Левая группа: бренд и основная навигация */}
       <div className={styles.left}>
         <Logo />
-        <HeaderNav />
+        <HeaderNav isSkillsOpen={isSkillsOpen}
+          onOpenSkills={() => {
+            setIsSkillsOpen((previousValue) => !previousValue)
+          }} />
       </div>
 
       {/* Центральная зона: поиск растягивается на доступную ширину */}
@@ -67,6 +74,11 @@ export function Header({
           </Button>
         </div>
       </div>
+      <SkillsMegaMenu
+        categories={categories}
+        isOpen={isSkillsOpen}
+        className={styles.skillsMegaMenu}
+      />
     </header>
   )
 }

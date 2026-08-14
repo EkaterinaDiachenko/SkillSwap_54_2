@@ -2,21 +2,22 @@ import { HeaderNav } from '@/shared/ui/header-nav'
 import styles from './footer-menu.module.css'
 
 export type FooterMenuProps = {
+  onOpenSkills?: () => void
+  isSkillsOpen?: boolean
   className?: string
 }
 
-/**
- * Меню футера: HeaderNav (О проекте + Все навыки со стрелкой) и две колонки-заглушки.
- * Мега-меню по клику на «Все навыки» пока не подключаем (отдельная задача;
- * панель будет открываться сверху).
- */
-export function FooterMenu({ className }: FooterMenuProps) {
+export function FooterMenu({ onOpenSkills, isSkillsOpen, className }: FooterMenuProps) {
   return (
     <nav
       className={[styles.menu, className].filter(Boolean).join(' ')}
       aria-label="Меню футера"
     >
-      <HeaderNav variant="footer" />
+      <HeaderNav
+        variant="footer"
+        onOpenSkills={onOpenSkills}
+        isSkillsOpen={isSkillsOpen}
+      />
 
       <ul className={styles.column}>
         <li>
@@ -43,6 +44,7 @@ export function FooterMenu({ className }: FooterMenuProps) {
           </a>
         </li>
       </ul>
+
     </nav>
   )
 }

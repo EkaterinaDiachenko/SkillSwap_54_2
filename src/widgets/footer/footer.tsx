@@ -1,8 +1,11 @@
 import { Logo } from '@/shared/ui/logo'
 import { FooterMenu } from '@/shared/ui/footer-menu'
 import styles from './footer.module.css'
+import { useState } from 'react'
+import { SkillsMegaMenu, type SkillCategory } from '@/widgets/skills-mega-menu'
 
 export type FooterProps = {
+  categories: SkillCategory[]
   className?: string
 }
 
@@ -12,7 +15,8 @@ export type FooterProps = {
  * Копирайт: «SkillSwap — 2026» (в задаче 2026; на части кадров макета — 2025).
  * Ссылки меню — заглушки `#` (страницы Контакты/Блог/политика пока не делаем).
  */
-export function Footer({ className }: FooterProps) {
+export function Footer({ categories, className }: FooterProps) {
+  const [isSkillsOpen, setIsSkillsOpen] = useState(false)
   return (
     <footer
       className={[styles.footer, className].filter(Boolean).join(' ')}
@@ -23,7 +27,18 @@ export function Footer({ className }: FooterProps) {
         <p className={styles.copyright}>SkillSwap — 2026</p>
       </div>
       {/* На одной вертикали с колонкой карточек каталога (gap 60 от brand) */}
-      <FooterMenu className={styles.menu} />
+      <FooterMenu
+        className={styles.menu}
+        isSkillsOpen={isSkillsOpen}
+        onOpenSkills={() => {
+          setIsSkillsOpen((previousValue) => !previousValue)
+        }}
+      />
+      <SkillsMegaMenu
+        categories={categories}
+        isOpen={isSkillsOpen}
+        className={styles.skillsMegaMenu}
+      />
     </footer>
   )
 }
