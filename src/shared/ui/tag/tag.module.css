@@ -8,6 +8,7 @@
   border-radius: var(--radius-100);
   color: var(--color-text);
   white-space: nowrap;
+  font-size: var(--font-size-caption);
 }
 
 .small {
@@ -45,3 +46,4 @@
 .more {
   background-color: var(--tag-more);
 }
+
