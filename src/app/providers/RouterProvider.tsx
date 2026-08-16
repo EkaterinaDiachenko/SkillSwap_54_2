@@ -9,7 +9,12 @@ const ProfilePage = lazy(() => import('@/pages/ProfilePage'))
 const FavoritesPage = lazy(() => import('@/pages/FavoritesPage'))
 const CreateSkillPage = lazy(() => import('@/pages/CreateSkillPage'))
 const LoginPage = lazy(() => import('@/pages/LoginPage'))
-const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'))
+const Error404Page = lazy(() =>
+  import('@/pages/error-404').then(({ Error404 }) => ({ default: Error404 })),
+)
+const Error500Page = lazy(() =>
+  import('@/pages/error-500').then(({ Error500 }) => ({ default: Error500 })),
+)
 
 export function AppRouter() {
   return (
@@ -26,7 +31,9 @@ export function AppRouter() {
           <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
           <Route path={ROUTES.CREATE} element={<CreateSkillPage />} />
 
-          <Route path="*" element={<NotFoundPage />} />
+          <Route path={ROUTES.ERROR_404} element={<Error404Page isAuth={false} />} />
+          <Route path={ROUTES.ERROR_500} element={<Error500Page isAuth={false} />} />
+          <Route path="*" element={<Error404Page isAuth={false} />} />
         </Routes>
       </Suspense>
     </BrowserRouter>
