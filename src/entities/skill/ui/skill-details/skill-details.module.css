@@ -1,0 +1,67 @@
+/* Контейнер: вертикальный стек, ширина по макету (399px) */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 399px;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* Ag H1 — Jost 32/40 */
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-h1);
+  line-height: var(--line-height-h1);
+  color: var(--color-text);
+}
+
+/* Ag Caption 12/16 */
+.category {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  letter-spacing: 0.02em;
+  color: var(--color-text-secondary);
+}
+
+/* Roboto 16/24; при переполнении — многоточие после 7-й строки */
+.description {
+  margin: var(--space-24) 0 var(--space-20);
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  letter-spacing: 0.02em;
+  color: var(--color-text);
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 7;
+}
+
+/* Одна кнопка — на всю ширину; в паре — делят строку поровну */
+.actions {
+  display: flex;
+  gap: var(--space-12);
+  width: 100%;
+}
+
+.button {
+  width: 100%;
+  gap: var(--space-8);
+}
+
+.actions .button {
+  flex: 1;
+  min-width: 0;
+}
