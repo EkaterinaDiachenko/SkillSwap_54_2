@@ -69,7 +69,7 @@ export function SkillDetails({
       {showDualButtons ? (
         /* Модалка превью: белая «Редактировать» + зелёная «Готово» */
         <div className={styles.actions}>
-          <Button type="button" variant="tertiary" className={styles.button}>
+          <Button type="button" variant="secondary" className={styles.button}>
             <span>Редактировать</span>
             <Icon name="edit" size={24} aria-hidden="true" />
           </Button>
