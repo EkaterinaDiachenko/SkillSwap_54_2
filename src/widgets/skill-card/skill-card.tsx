@@ -46,7 +46,7 @@ export function SkillCard({
 
       <SkillExchangeInfo canTeach={canTeach} wantsToLearn={wantsToLearn} />
 
-      <Button variant="primary" className={styles.detailsButton} onClick={onDetailsClick}>
+      <Button variant="primary" onClick={onDetailsClick}>
         Подробнее
       </Button>
     </article>

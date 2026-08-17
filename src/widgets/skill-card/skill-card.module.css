@@ -1,10 +1,10 @@
 .card {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  width: 332px;
+  gap: 20px;
+  width: 324px;
   padding: 20px;
-  border-radius: 24px;
+  border-radius: var(--radius-12);
   background: var(--color-card);
 }
 
@@ -34,30 +34,4 @@
 .likeButton {
   padding: 0;
   border-radius: 0;
-}
-
-.detailsButton {
-  width: 100%;
-  min-height: 64px;
-  border-radius: 20px;
-  font-family: var(--font-display);
-  font-weight: var(--font-weight-medium);
-  font-size: var(--font-size-h2);
-  line-height: var(--line-height-h2);
-}
-
-@media (width <= 767px) {
-  .card {
-    width: 100%;
-    max-width: 332px;
-    padding: 20px;
-    border-radius: 24px;
-    gap: 24px;
-  }
-
-  .detailsButton {
-    min-height: 64px;
-    font-size: var(--font-size-h3);
-    line-height: var(--line-height-h3);
-  }
 }
