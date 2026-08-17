@@ -1,0 +1,37 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 324px;
+  padding: 20px;
+  border-radius: var(--radius-12);
+  background: var(--color-card);
+}
+
+.summaryWrap {
+  position: relative;
+  min-height: 100px;
+}
+
+.likeControl {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.likesCount {
+  min-width: 20px;
+  font-family: var(--font-body);
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  color: var(--color-text);
+  text-align: right;
+}
+
+.likeButton {
+  padding: 0;
+  border-radius: 0;
+}
