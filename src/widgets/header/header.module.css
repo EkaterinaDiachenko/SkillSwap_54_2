@@ -1,0 +1,69 @@
+/* ─── Header и AuthHeader: общая горизонтальная раскладка ─── */
+.header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-32);
+  box-sizing: border-box;
+  width: 100%;
+  padding: var(--space-36);
+}
+
+/* Логотип + навигация — фиксированная ширина, не сжимается */
+.left {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--space-24);
+}
+
+/* Поиск занимает центральную часть шапки */
+.search {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Иконки, кнопки и UserMenu — правая зона */
+.right {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--space-20);
+}
+
+/* Кнопки «Войти» и «Зарегистрироваться» */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+/* Три иконки в AuthHeader: луна, колокольчик, сердце */
+.iconGroup {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+/* ─── RegisterHeader: светлая шапка регистрации ─── */
+.registerHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  width: 100%;
+  padding: var(--space-36);
+}
+
+/* Текст и крестик в одной строке */
+.closeButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+  min-width: auto;
+}
+
+.skillsMegaMenu {
+  top: 100%;
+  left: var(--space-36);
+}

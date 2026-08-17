@@ -3,10 +3,25 @@
   align-items: center;
 }
 
+.navFooter {
+  width: 100%;
+  align-items: flex-start;
+}
+
 .list {
   display: flex;
   align-items: center;
   gap: var(--space-24);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.listFooter {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-12);
+  width: 100%;
 }
 
 .link {

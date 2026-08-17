@@ -1,0 +1,56 @@
+/*
+  Footer — по макету каталога (Figma).
+  Фон белый (--color-card) на фоне страницы --color-bg (#F9FAF7).
+  Линии сверху (border-top) нет.
+*/
+.footer {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  box-sizing: border-box;
+  width: 100%; /* на всю ширину родителя, без max-width */
+  height: 232px; /* фиксированная высота из макета */
+
+  /* сверху/снизу 32, слева/справа 36 (до лого, копирайта и до края после меню) */
+  padding: var(--space-32) var(--space-36);
+
+  /* между колонкой бренда (как фильтры 284) и меню — как gutter фильтры↔карточки */
+  gap: var(--space-60);
+  background-color: var(--color-card);
+}
+
+/* Левая колонка: Logo сверху, копирайт снизу (как панель фильтров max 284) */
+.brand {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 284px;
+}
+
+.copyright {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  color: var(--color-text-secondary);
+}
+
+/*
+  Меню справа, тянется на оставшуюся ширину.
+  От верха футера до меню — 80px (Figma).
+  У .footer уже padding-top 32 → доп. сдвиг меню = 80 − 32.
+*/
+.menu {
+  flex: 1;
+  min-width: 0;
+  padding-top: calc(var(--space-80) - var(--space-32));
+}
+
+.skillsMegaMenu {
+  right: var(--space-60);
+  bottom: calc(100% - var(--space-80));
+  left: auto;
+}
