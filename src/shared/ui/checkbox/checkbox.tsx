@@ -15,6 +15,7 @@ export type CheckboxProps = {
   indeterminate?: boolean
   onChange: ChangeEventHandler<HTMLInputElement>
   label: string
+  className?: string
 }
 
 /** Сопоставление состояния чекбокса с иконкой из UI_kit */
@@ -35,6 +36,7 @@ export function Checkbox({
   indeterminate = false,
   onChange,
   label,
+  className,
 }: CheckboxProps) {
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -50,7 +52,7 @@ export function Checkbox({
 
   // <label> делает кликабельными и иконку, и текст
   return (
-    <label className={styles.checkbox}>
+    <label className={[styles.checkbox, className].filter(Boolean).join(' ')}>
       {/* Нативный input скрыт визуально, но нужен для a11y и клавиатуры */}
       <input
         ref={inputRef}
