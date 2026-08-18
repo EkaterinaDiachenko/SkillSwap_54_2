@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useRef } from 'react'
-import { Splide, SplideSlide } from '@splidejs/react-splide'
+import { Splide, SplideSlide, SplideTrack } from '@splidejs/react-splide'
 import '@splidejs/react-splide/css'
 import styles from './skill-gallery.module.css'
+import { Icon } from '@/shared/ui/icon'
 
 export type SkillGalleryProps = {
   images: string[]
@@ -10,6 +11,7 @@ export type SkillGalleryProps = {
 }
 
 const MAX_THUMBS = 3
+const MAX_VISIBLE_IMAGES = 4
 
 export function SkillGallery({ images, activeImage, className }: SkillGalleryProps) {
   const mainRef = useRef<Splide>(null)
@@ -22,8 +24,8 @@ export function SkillGallery({ images, activeImage, className }: SkillGalleryPro
   }, [activeImage, images])
 
   const thumbImages = images.slice(0, MAX_THUMBS)
-  const hiddenCount = Math.max(images.length - MAX_THUMBS, 0)
-  const showOverlay = images.length > MAX_THUMBS
+  const hiddenCount = Math.max(images.length - MAX_VISIBLE_IMAGES, 0)
+  const showOverlay = images.length > MAX_VISIBLE_IMAGES
 
   useEffect(() => {
     if (mainRef.current && thumbRef.current?.splide) {
@@ -40,6 +42,7 @@ export function SkillGallery({ images, activeImage, className }: SkillGalleryPro
       <Splide
         className={styles.main}
         ref={mainRef}
+        hasTrack={false}
         options={{
           type: 'fade',
           rewind: true,
@@ -55,11 +58,30 @@ export function SkillGallery({ images, activeImage, className }: SkillGalleryPro
         }}
         aria-label="Галерея изображений навыка"
       >
-        {images.map((src, index) => (
-          <SplideSlide key={`${src}-${index}`}>
-            <img className={styles.mainImage} src={src} alt={`Изображение ${index + 1}`} />
-          </SplideSlide>
-        ))}
+        <SplideTrack>
+          {images.map((src, index) => (
+            <SplideSlide key={`${src}-${index}`}>
+              <img className={styles.mainImage} src={src} alt={`Изображение ${index + 1}`} />
+            </SplideSlide>
+          ))}
+        </SplideTrack>
+        <div className="splide__arrows">
+          <button
+            type="button"
+            className="splide__arrow splide__arrow--prev"
+            aria-label="Предыдущее изображение"
+          >
+            <Icon name="chevron-right" size={16} />
+          </button>
+
+          <button
+            type="button"
+            className="splide__arrow splide__arrow--next"
+            aria-label="Следующее изображение"
+          >
+            <Icon name="chevron-right" size={16} />
+          </button>
+        </div>
       </Splide>
 
       <div className={styles.thumbs}>
@@ -91,7 +113,7 @@ export function SkillGallery({ images, activeImage, className }: SkillGalleryPro
 
         {showOverlay && (
           <div className={styles.overlay} aria-hidden="true">
-            <span className={styles.overlayCount}>+{hiddenCount}</span>
+            <span>+{hiddenCount}</span>
           </div>
         )}
       </div>

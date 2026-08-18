@@ -32,12 +32,12 @@
 .main :global(.splide__arrow) {
   position: absolute;
   top: 50%;
-  width: 40px;
-  height: 40px;
-  padding: 0;
+  width: 32px;
+  height: 32px;
+  padding: 8px;
   border: none;
-  border-radius: 50%;
-  background-color: rgb(255 255 255 / 80%);
+  border-radius: var(--radius-100);
+  background-color: var(--color-disabled);
   opacity: 1;
   transform: translateY(-50%);
 }
@@ -52,6 +52,8 @@
 
 .main :global(.splide__arrow svg) {
   fill: var(--color-text);
+  width: 16px;
+  height: 16px;
 }
 
 .main :global(.splide__arrow:disabled) {
@@ -116,14 +118,6 @@
   height: 92px;
   background-color: color-mix(in srgb, var(--color-card) 50%, transparent);
   border-radius: var(--radius-12);
-}
-
-.overlayCount {
-  font-family: var(--font-display);
-  font-weight: var(--font-weight-regular);
-  font-size: var(--font-size-h4);
-  line-height: var(--line-height-h4);
-  color: var(--color-text);
 }
 
 /* Текст только для скринридера */
