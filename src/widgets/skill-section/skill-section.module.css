@@ -42,8 +42,8 @@
   font-size: var(--font-size-body, 16px) !important;
   font-weight: var(--font-weight-regular, 400) !important;
   line-height: var(--line-height-body, 24px) !important;
-  color: var(--color-text-secondary, #666) !important;
-  background: var(--color-card, #fff) !important;
+  color: var(--color-text-secondary, #666666) !important;
+  background: var(--color-card, #ffffff) !important;
   border: none !important;
   border-radius: var(--radius-12, 12px) !important;
   cursor: pointer;
@@ -58,12 +58,12 @@
 }
 
 .showAllButton:hover:not(:disabled) {
-  background-color: var(--color-card, #fff) !important;
+  background-color: var(--color-card, #ffffff) !important;
   opacity: 0.8;
 }
 
 .showAllButton:active:not(:disabled) {
-  background-color: var(--color-card, #fff) !important;
+  background-color: var(--color-card, #ffffff) !important;
   opacity: 0.6;
 }
 
@@ -73,7 +73,7 @@
 }
 
 .showAllButton:disabled {
-  color: var(--color-disabled-text, #999);
+  color: var(--color-disabled-text, #999999);
   cursor: not-allowed;
 }
 
@@ -110,7 +110,6 @@
    При раскрытии секция сдвинет блоки ниже.
    ═══════════════════════════════════════════════════════
 */
-
 /*
 .extraCards {
   display: grid;
@@ -156,7 +155,7 @@
 */
 
 /* ─── Адаптивность для планшетов и маленьких экранов ─── */
-@media (width <= 1024px) {
+@media (max-width: 1024px) {
   .cardsGrid {
     grid-template-columns: repeat(2, 1fr);
     gap: var(--space-12, 12px);
@@ -169,7 +168,7 @@
 }
 
 /* ─── Адаптивность для мобильных устройств ─── */
-@media (width <= 640px) {
+@media (max-width: 640px) {
   .cardsGrid {
     grid-template-columns: 1fr;
     gap: var(--space-12, 12px);
@@ -192,7 +191,7 @@
 }
 
 /* ─── Адаптивность для очень маленьких экранов ─── */
-@media (width <= 380px) {
+@media (max-width: 380px) {
   .cardsGrid {
     gap: var(--space-8, 8px);
   }

@@ -1,10 +1,10 @@
 import { Button } from '@/shared/ui/button'
 import { Icon } from '@/shared/ui/icon'
-import { SkillCard, type SkillCardProps } from '@/entities/skill/ui/skill-card'
+import { SkillCard, type SkillCardProps } from '@/entities/user/ui/skill-card' 
 import styles from './skill-section.module.css'
 
 export interface SkillSectionProps {
-  /** Заголовок секции  */
+  /** Заголовок секции (например, "Популярное" / "Новое") */
   title: string
   /** Массив карточек для отображения */
   skillCards: SkillCardProps[]
