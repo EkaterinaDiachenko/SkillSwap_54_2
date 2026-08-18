@@ -1,0 +1,65 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-32);
+  width: 100%;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-h2);
+  line-height: 28px;
+  letter-spacing: -0.011em;
+  color: var(--color-text);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.track {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: var(--space-24);
+  min-width: 0;
+  max-width: calc(4 * 324px + 3 * var(--space-24));
+  overflow: hidden;
+  transition: max-width 0.35s ease;
+}
+
+.trackExpanded {
+  max-width: 100%;
+}
+
+.card {
+  flex-shrink: 0;
+}
+
+.moreTag {
+  box-sizing: border-box;
+  z-index: 1;
+  flex-shrink: 0;
+  width: 32px;
+  min-width: 32px;
+  height: 32px;
+  min-height: 32px;
+  padding: 0;
+  margin-left: -16px;
+  background-color: var(--color-disabled);
+}
+
+.moreButton {
+  box-sizing: border-box;
+  width: 32px;
+  height: 32px;
+  padding: var(--space-8);
+}
+
+.moreButton svg {
+  width: 16px;
+  height: 16px;
+}
