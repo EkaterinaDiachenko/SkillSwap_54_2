@@ -19,12 +19,12 @@ export type InputProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'className'
   error?: string
   /** Подсказка под полем (отображается, если нет error) */
   helperText?: string
-  /** Иконка справа внутри поля (например, eye для пароля) */
+  /** Иконка справа внутри поля (не используется для type="password") */
   inputIcon?: IconName
   className?: string
 }
 
-/** Пример: <Input label="Имя" placeholder="Введите пароль" inputIcon="eye" /> */
+/** Пример: <Input label="Пароль" type="password" placeholder="Введите пароль" /> */
 export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   {
     label,
@@ -74,6 +74,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   const [uncontrolledValue, setUncontrolledValue] = useState(
     () => defaultValue?.toString() ?? '',
   )
+
+  const isPasswordField = type === 'password'
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false)
+  const inputType = isPasswordField && isPasswordVisible ? 'text' : type
 
   const currentValue = isControlled ? String(value ?? '') : uncontrolledValue
   const hasValue = currentValue.length > 0
@@ -131,7 +135,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
           ref={setInputRef}
           id={inputId}
           className={styles.input}
-          type={type}
+          type={inputType}
           name={name}
           value={isControlled ? String(value ?? '') : undefined}
           defaultValue={isControlled ? undefined : defaultValue}
@@ -154,7 +158,18 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
           />
         )}
 
-        {inputIcon && (
+        {isPasswordField && (
+          <IconButton
+            iconName="eye"
+            active={isPasswordVisible}
+            aria-label={isPasswordVisible ? 'Скрыть пароль' : 'Показать пароль'}
+            disabled={disabled}
+            onClick={() => setIsPasswordVisible((prev) => !prev)}
+            className={styles.passwordToggle}
+          />
+        )}
+
+        {!isPasswordField && inputIcon && (
           <Icon
             name={inputIcon}
             className={styles.inputIcon}

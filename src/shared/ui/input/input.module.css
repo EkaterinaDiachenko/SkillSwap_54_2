@@ -69,6 +69,10 @@
   color: var(--color-text-secondary);
 }
 
+.input:focus::placeholder {
+  color: transparent;
+}
+
 .input:disabled {
   color: var(--color-disabled-text);
   cursor: not-allowed;
@@ -79,11 +83,13 @@
 }
 
 .clearButton,
+.passwordToggle,
 .inputIcon {
   flex-shrink: 0;
 }
 
-.clearButton {
+.clearButton,
+.passwordToggle {
   padding: 0;
 }
 
