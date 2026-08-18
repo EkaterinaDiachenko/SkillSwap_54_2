@@ -10,7 +10,8 @@
 
 .summaryWrap {
   position: relative;
-  min-height: 100px;
+  width: 100%;
+  max-width: 284px;
 }
 
 .likeControl {
