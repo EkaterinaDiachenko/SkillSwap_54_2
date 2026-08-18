@@ -1,6 +1,6 @@
 import { Button } from '@/shared/ui/button'
 import { Icon } from '@/shared/ui/icon'
-import { SkillCard, type SkillCardProps } from '@/entities/user/ui/skill-card' 
+import { SkillCard, type SkillCardProps } from '@/widgets/skill-card' 
 import styles from './skill-section.module.css'
 
 export interface SkillSectionProps {
