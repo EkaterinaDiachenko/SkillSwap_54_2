@@ -1,0 +1,117 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+  max-width: 460px;
+}
+
+.label {
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+/* Обёртка поля: default / focus / filled / error / disabled */
+.field {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  height: 48px;
+  padding: var(--space-12) var(--space-20);
+  border: 1px solid var(--color-text-secondary);
+  border-radius: var(--radius-12);
+  background-color: var(--color-card);
+  transition: border-color 0.2s ease;
+}
+
+.field:focus-within {
+  border-color: var(--color-text);
+}
+
+.fieldFilled {
+  border-color: var(--color-text-secondary);
+}
+
+.fieldError {
+  border-color: var(--color-error);
+}
+
+.fieldError:focus-within {
+  border-color: var(--color-error);
+}
+
+.fieldDisabled {
+  border-color: var(--color-disabled);
+  background-color: var(--color-disabled);
+  cursor: not-allowed;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: none;
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  color: var(--color-text);
+  caret-color: var(--color-link);
+}
+
+.input:focus {
+  outline: none;
+}
+
+.input::placeholder {
+  color: var(--color-text-secondary);
+}
+
+.input:focus::placeholder {
+  color: transparent;
+}
+
+.input:disabled {
+  color: var(--color-disabled-text);
+  cursor: not-allowed;
+}
+
+.input:disabled::placeholder {
+  color: var(--color-disabled-text);
+}
+
+.clearButton,
+.passwordToggle,
+.inputIcon {
+  flex-shrink: 0;
+}
+
+.clearButton,
+.passwordToggle {
+  padding: 0;
+}
+
+.inputIcon {
+  color: var(--color-text);
+}
+
+.fieldDisabled .inputIcon {
+  color: var(--color-disabled-text);
+}
+
+.helper {
+  font-family: var(--font-body);
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  color: var(--color-text-secondary);
+}
+
+.helperError {
+  color: var(--color-error);
+}
+
+.fieldDisabled ~ .helper {
+  color: var(--color-disabled-text);
+}
