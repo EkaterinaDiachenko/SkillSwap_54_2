@@ -40,7 +40,7 @@ export function SkillExchangeInfo({ canTeach, wantsToLearn }: SkillExchangeInfoP
           />
         ))}
 
-        {otherSkills > 0 && (<Tag size={'small'} label={`+${otherSkills}`} color='more' />)}
+        {otherSkills > 0 && (<Tag label={`+${otherSkills}`} color='more' />)}
       </div>
     </div>
     </div>
