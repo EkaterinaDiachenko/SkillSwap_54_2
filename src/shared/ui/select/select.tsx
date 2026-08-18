@@ -89,7 +89,7 @@ export function Select({
 
   const showSearchInput = searchable && isOpen
   const showClear = searchable && isOpen && query.length > 0
-  const showChevron = !disabled && (!searchable || !isOpen) && !showClear
+  const showChevron = !showClear
 
   useEffect(() => {
     if (!isOpen) {
