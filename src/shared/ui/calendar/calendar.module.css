@@ -1,0 +1,159 @@
+/* stylelint-disable selector-pseudo-class-no-unknown */
+
+.wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 208px;
+}
+
+.label {
+  letter-spacing: 0.02em;
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 48px;
+  padding: var(--space-12) var(--space-20);
+  border: 1px solid var(--color-text-secondary);
+  border-radius: var(--radius-12);
+  background-color: var(--color-card);
+}
+
+.field:focus-within {
+  border-color: var(--color-text);
+}
+
+.fieldError {
+  border-color: var(--color-error);
+}
+
+.field.fieldError:focus-within {
+  border-color: var(--color-error);
+}
+
+.fieldDisabled {
+  border-color: var(--color-disabled);
+  background-color: var(--color-disabled);
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  box-shadow: none;
+  caret-color: var(--color-link);
+  cursor: pointer;
+}
+
+.input:disabled {
+  color: var(--color-disabled-text);
+  cursor: not-allowed;
+}
+
+.calendarButton {
+  padding: 0;
+}
+
+.errorText {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  color: var(--color-error);
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + var(--space-12));
+  left: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  width: 280px;
+  padding: 16px 28px;
+  border: 1px solid var(--color-text-secondary);
+  border-radius: var(--radius-12);
+  background-color: var(--color-card);
+  box-shadow: var(--shadow-md);
+}
+
+.dayPicker {
+  --rdp-today-color: var(--color-link);
+  --rdp-day-width: 32px;
+  --rdp-day-height: 32px;
+
+  /* stylelint-disable custom-property-pattern */
+  --rdp-day_button-width: 32px;
+  --rdp-day_button-height: 32px;
+  --rdp-day_button-border: 0;
+  /* stylelint-enable custom-property-pattern */
+
+  --rdp-selected-border: 0;
+  --rdp-nav-height: 40px;
+  --rdp-weekday-padding: 0;
+  --rdp-weekday-opacity: 1;
+  --rdp-outside-opacity: 1;
+  --rdp-dropdown-gap: var(--space-12);
+
+  width: 224px;
+  margin: 0 auto;
+  font-family: var(--font-body);
+  color: var(--color-text);
+}
+
+.dayPicker :global(.rdp-month_caption) {
+  justify-content: center;
+  width: 216px;
+}
+
+.dayPicker :global(.rdp-caption_label) {
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-body);
+  text-transform: capitalize;
+}
+
+.dayPicker :global(.rdp-chevron) {
+  fill: var(--color-text);
+  width: 20px;
+  height: 20px;
+}
+
+.dayPicker :global(.rdp-weekday) {
+  width: 32px;
+  height: 32px;
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-caption);
+  color: var(--color-link);
+  text-transform: capitalize;
+}
+
+.dayPicker :global(.rdp-day_button) {
+  font-size: var(--font-size-caption);
+  color: var(--color-text);
+}
+
+.dayPicker :global(.rdp-selected .rdp-day_button) {
+  background-color: var(--color-primary);
+}
+
+.dayPicker :global(.rdp-outside) {
+  color: var(--color-disabled-text);
+}
+
+.buttons {
+  display: flex;
+  gap: var(--space-8);
+}
+
+.buttons > * {
+  flex: 1;
+  min-width: 0;
+  min-height: 48px;
+}
