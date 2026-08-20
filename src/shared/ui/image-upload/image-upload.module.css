@@ -1,0 +1,154 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  width: 100%;
+}
+
+.label {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+  line-height: var(--line-height-body);
+}
+
+.dropzone {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-16);
+  padding: var(--space-24);
+  min-height: 180px;
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius-12);
+  background: var(--color-card);
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.dropzone:hover:not(.disabled, .error) {
+  border-color: var(--color-primary);
+  background-color: var(--color-background-hover);
+}
+
+.dropzone.dragging:not(.disabled) {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-light);
+}
+
+.dropzone.disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.dropzone.error {
+  border-color: var(--color-error);
+  background-color: var(--color-error-light);
+}
+
+.hiddenInput {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+  white-space: nowrap;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-12);
+  width: 100%;
+}
+
+.placeholder {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-body);
+  color: var(--color-text-secondary);
+  text-align: center;
+  line-height: var(--line-height-body);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.iconButton {
+  flex-shrink: 0;
+}
+
+.selectButton {
+  min-width: auto;
+  padding: 8px 16px;
+  font-size: var(--font-size-body);
+  color: var(--color-text);
+  background: transparent;
+  border: none;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.selectButton:hover:not(:disabled) {
+  color: var(--color-primary);
+}
+
+.selectButton:disabled {
+  color: var(--color-disabled-text);
+  cursor: not-allowed;
+}
+
+.previewList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-12);
+  width: 100%;
+  margin-top: var(--space-8);
+}
+
+.previewItem {
+  position: relative;
+  flex: 0 0 auto;
+  width: 100px;
+  height: 100px;
+  border-radius: var(--radius-8);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+}
+
+.previewImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.removeButton {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: rgb(0 0 0 / 60%);
+  border-radius: 50%;
+  padding: 4px;
+  color: #fff;
+  transition: background 0.2s ease;
+}
+
+.removeButton:hover:not(:disabled) {
+  background: rgb(0 0 0 / 80%);
+}
+
+.errorText {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-small);
+  color: var(--color-error);
+  line-height: var(--line-height-body);
+}
