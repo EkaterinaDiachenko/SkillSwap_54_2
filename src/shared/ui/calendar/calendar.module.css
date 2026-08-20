@@ -71,13 +71,12 @@
 
 .dropdown {
   position: absolute;
-  top: calc(100% + var(--space-12));
+  top: calc(100% + var(--space-4));
   left: 0;
   z-index: 10;
   display: flex;
   flex-direction: column;
   width: 280px;
-  padding: 16px 28px;
   border: 1px solid var(--color-text-secondary);
   border-radius: var(--radius-12);
   background-color: var(--color-card);
@@ -103,7 +102,7 @@
   --rdp-dropdown-gap: var(--space-12);
 
   width: 224px;
-  margin: 0 auto;
+  margin: 16px 28px;
   font-family: var(--font-body);
   color: var(--color-text);
 }
@@ -150,10 +149,11 @@
 .buttons {
   display: flex;
   gap: var(--space-8);
+  margin: 0 16px 16px;
 }
 
 .buttons > * {
   flex: 1;
   min-width: 0;
-  min-height: 48px;
+  max-height: 48px;
 }
