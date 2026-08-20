@@ -1,0 +1,19 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: color-mix(in srgb, var(--color-text) 50%, transparent);
+}
+
+.container {
+  position: relative;
+  z-index: 101;
+  width: fit-content;
+  max-width: calc(100vw - var(--space-32) * 2);
+  background-color: var(--color-card);
+  border-radius: var(--radius-12);
+  box-shadow: var(--shadow-md);
+}
