@@ -1,0 +1,13 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  width: 100%;
+  margin-bottom: 32px;
+}
+
+.closeIcon {
+  flex-shrink: 0;
+  color: var(--color-text);
+  margin-left: 4px;
+}
