@@ -52,19 +52,19 @@
   color: var(--color-text);
 }
 
-.cardsGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 324px);
+.cards {
+  display: flex;
+  flex-wrap: wrap;
   gap: 24px;
-  align-items: stretch;
-  justify-content: space-between;
 }
 
 .card {
-  width: 324px !important;
-  max-width: 324px !important;
+  flex: 1 1 calc((100% - 48px) / 3);
+  min-width: 300px;
+  width: auto !important;
+  max-width: none !important;
   min-height: 368px;
-  height: 368px;
+  height: auto;
 }
 
 .emptyState {
@@ -76,21 +76,4 @@
   font-family: var(--font-body);
   font-size: var(--font-size-body);
   line-height: var(--line-height-body);
-}
-
-@media (width <= 980px) {
-  .cardsGrid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (width <= 640px) {
-  .headerRow {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .cardsGrid {
-    grid-template-columns: 1fr;
-  }
 }

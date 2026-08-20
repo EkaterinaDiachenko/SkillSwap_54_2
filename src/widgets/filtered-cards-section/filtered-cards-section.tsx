@@ -43,7 +43,7 @@ export function FilteredCardsSection({
       </div>
 
       {cards.length > 0 ? (
-        <div className={styles.cardsGrid}>
+        <div className={styles.cards}>
           {cards.map((card, index) => (
             <SkillCard
               key={`${card.name}-${index}`}
