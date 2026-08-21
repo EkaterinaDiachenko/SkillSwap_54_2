@@ -37,7 +37,19 @@ export function ImageUpload({
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    setImages(initialImages);
+    if (initialImages.length > 0) {
+      const newImages = initialImages.map((file) => {
+        if (!file.preview) {
+          const imageFile = file as ImageFile;
+          const previewUrl = URL.createObjectURL(file);
+          imageFile.preview = previewUrl;
+          imageFile.id = `${file.name}-${Date.now()}-${Math.random()}`;
+          return imageFile;
+        }
+        return file;
+      });
+      setImages(newImages);
+    }
   }, [initialImages]);
 
   useEffect(() => {
@@ -48,7 +60,7 @@ export function ImageUpload({
         }
       });
     };
-  }, [images]);
+  }, []);
 
   const handleFileChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,7 +69,8 @@ export function ImageUpload({
 
       const newFiles: ImageFile[] = Array.from(files).map((file) => {
         const imageFile = file as ImageFile;
-        imageFile.preview = URL.createObjectURL(file);
+        const previewUrl = URL.createObjectURL(file);
+        imageFile.preview = previewUrl;
         imageFile.id = `${file.name}-${Date.now()}-${Math.random()}`;
         return imageFile;
       });
@@ -121,7 +134,8 @@ export function ImageUpload({
 
       const newFiles: ImageFile[] = Array.from(files).map((file) => {
         const imageFile = file as ImageFile;
-        imageFile.preview = URL.createObjectURL(file);
+        const previewUrl = URL.createObjectURL(file);
+        imageFile.preview = previewUrl;
         imageFile.id = `${file.name}-${Date.now()}-${Math.random()}`;
         return imageFile;
       });
@@ -139,6 +153,7 @@ export function ImageUpload({
       [styles.dragging]: isDragging,
       [styles.disabled]: disabled,
       [styles.error]: error,
+      [styles.hasImages]: images.length > 0,
     },
     className
   );
@@ -168,9 +183,35 @@ export function ImageUpload({
             <span>{placeholder}</span>
           </div>
 
+          {/* Превью - между текстом и иконками */}
+          {images.length > 0 && (
+            <div className={styles.previewList}>
+              {images.map((file, index) => (
+                <div key={file.id || index} className={styles.previewItem}>
+                  <img
+                    src={file.preview}
+                    alt={file.name || 'Превью изображения'}
+                    className={styles.previewImage}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => handleRemove(index)}
+                    className={styles.removeButton}
+                    aria-label={`Удалить изображение ${file.name || index + 1}`}
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="18" y1="6" x2="6" y2="18" />
+                      <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+
           <div className={styles.actions}>
             <IconButton
-              iconName="like"
+              iconName="gallery-add"
               aria-label="Загрузить изображения"
               disabled={disabled}
               onClick={handleButtonClick}
@@ -186,27 +227,6 @@ export function ImageUpload({
             </Button>
           </div>
         </div>
-
-        {images.length > 0 && (
-          <div className={styles.previewList}>
-            {images.map((file, index) => (
-              <div key={file.id || index} className={styles.previewItem}>
-                <img
-                  src={file.preview}
-                  alt={file.name || 'Превью изображения'}
-                  className={styles.previewImage}
-                />
-                <IconButton
-                  iconName="eye"
-                  aria-label={`Удалить изображение ${file.name || index + 1}`}
-                  onClick={() => handleRemove(index)}
-                  disabled={disabled}
-                  className={styles.removeButton}
-                />
-              </div>
-            ))}
-          </div>
-        )}
       </div>
 
       {error && <span className={styles.errorText}>{error}</span>}
