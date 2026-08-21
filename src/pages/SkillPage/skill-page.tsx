@@ -1,0 +1,126 @@
+import { Header, AuthHeader } from '@/widgets/header'
+import { Footer } from '@/widgets/footer'
+import { SkillOwnerCard, type SkillOwnerCardProps } from '@/widgets/skill-owner-card'
+import { RelatedCards } from '@/widgets/related-cards'
+import { SkillOffer, type SkillOfferProps } from '@/widgets/skill-offer'
+import type { SkillCardProps } from '@/widgets/skill-card'
+import type { SkillCategory } from '@/widgets/skills-mega-menu'
+import styles from './skill-page.module.css'
+import gallery1 from './mocks/gallery-1.jpg'
+import gallery2 from './mocks/gallery-2.jpg'
+import gallery3 from './mocks/gallery-3.jpg'
+import gallery4 from './mocks/gallery-4.jpg'
+import gallery5 from './mocks/gallery-5.jpg'
+import gallery6 from './mocks/gallery-6.jpg'
+import gallery7 from './mocks/gallery-7.jpg'
+
+export type SkillPageProps = {
+  isAuth: boolean
+  categories: SkillCategory[]
+  userName?: string
+  avatarSrc?: string
+  owner: SkillOwnerCardProps
+  offer: Omit<SkillOfferProps, 'className'>
+  relatedCards: SkillCardProps[]
+}
+
+const DEFAULT_OWNER: SkillOwnerCardProps = {
+  avatar: '',
+  name: 'Иван',
+  city: 'Санкт-Петербург',
+  age: 34,
+  about:
+    'Привет! Люблю ритм, кофе по утрам и людей, которые не боятся пробовать новое.',
+  canTeach: ['Английский язык'],
+  wantsToLearn: ['Тайм менеджмент', 'Медитация'],
+}
+
+const DEFAULT_OFFER: Omit<SkillOfferProps, 'className'> = {
+  title: 'Игра на барабанах',
+  category: 'Творчество и искусство',
+  subcategory: 'Музыка и звук',
+  description:
+    'Привет! Меня зовут Иван, и я уже более 10 лет играю на барабанах — от репетиций в гараже до выступлений на сцене. Готов делиться опытом и помочь освоить инструмент с нуля или подтянуть навыки.',
+  variant: 'primary',
+  buttonText: 'Предложить обмен',
+  images: [gallery1, gallery2, gallery3, gallery4, gallery5, gallery6, gallery7],
+}
+
+const DEFAULT_RELATED: SkillCardProps[] = [
+  {
+    name: 'Илона',
+    city: 'Екатеринбург',
+    age: 33,
+    likesCount: 0,
+    canTeach: ['Английский язык'],
+    wantsToLearn: ['Тайм менеджмент', 'Медитация', 'Йога', 'Пилатес'],
+  },
+  {
+    name: 'Михаил',
+    city: 'Екатеринбург',
+    age: 33,
+    likesCount: 0,
+    canTeach: ['Английский язык'],
+    wantsToLearn: ['Тайм менеджмент', 'Медитация', 'Йога', 'Пилатес'],
+  },
+  {
+    name: 'Анна',
+    city: 'Екатеринбург',
+    age: 33,
+    likesCount: 0,
+    canTeach: ['Английский язык'],
+    wantsToLearn: ['Тайм менеджмент', 'Медитация', 'Йога', 'Пилатес'],
+  },
+  {
+    name: 'Олег',
+    city: 'Екатеринбург',
+    age: 33,
+    likesCount: 0,
+    canTeach: ['Английский язык'],
+    wantsToLearn: ['Тайм менеджмент', 'Медитация', 'Йога', 'Пилатес'],
+  },
+  {
+    name: 'Мария',
+    city: 'Москва',
+    age: 28,
+    likesCount: 2,
+    canTeach: ['Английский язык'],
+    wantsToLearn: ['Тайм менеджмент', 'Медитация', 'Йога'],
+  },
+]
+
+/** Страница навыка — только композиция готовых блоков, без бизнес-логики. */
+export default function SkillPage({
+  isAuth = true,
+  categories = [],
+  userName = 'Мария',
+  avatarSrc,
+  owner = DEFAULT_OWNER,
+  offer = DEFAULT_OFFER,
+  relatedCards = DEFAULT_RELATED,
+}: Partial<SkillPageProps> = {}) {
+  return (
+    <div className={styles.page}>
+      {isAuth ? (
+        <AuthHeader
+          name={userName}
+          avatarSrc={avatarSrc}
+          categories={categories}
+        />
+      ) : (
+        <Header categories={categories} />
+      )}
+
+      <main className={styles.main}>
+        <div className={styles.hero}>
+          <SkillOwnerCard {...owner} className={styles.owner} />
+          <SkillOffer {...offer} className={styles.offer} />
+        </div>
+
+        <RelatedCards cards={relatedCards} />
+      </main>
+
+      <Footer categories={categories} />
+    </div>
+  )
+}
