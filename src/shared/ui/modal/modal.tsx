@@ -46,11 +46,12 @@ export function Modal({ isOpen, onClose, children, className }: ModalProps) {
   }
 
   return (
-    <div className={styles.overlay} onClick={onClose} aria-hidden="true">
+    <div className={styles.overlay} onClick={onClose}>
       <div
         className={clsx(styles.container, className)}
         role="dialog"
         aria-modal="true"
+        aria-label="Модальное окно"
         onClick={(event) => event.stopPropagation()}
       >
         {children}
