@@ -1,22 +1,26 @@
 .container {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: var(--space-12);
   width: 100%;
+  max-width: 212px;
+  height: 44px;
 }
 
 .title {
-  font-family: var(--font-body);
-  font-weight: var(--font-weight-regular);
-  font-size: var(--font-size-body);
-  line-height: var(--line-height-body);
-  color: var(--color-text-secondary);
-  margin: 0;
+  display: flex;
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-h2);
+  line-height: 28px;
+  color: var(--color-text);
+  justify-content: center;
 }
 
 .linesWrapper {
   display: flex;
-  gap: var(--space-8);
+  gap: var(--space-12);
   width: 100%;
 }
 
