@@ -1,0 +1,72 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  padding: 0 var(--space-36);
+}
+
+.columns {
+  display: flex;
+  gap: var(--space-24);
+  width: 100%;
+  max-width: 1136px;
+}
+
+.leftColumn {
+  display: flex;
+  flex: 1;
+  background-color: var(--color-card);
+  border-radius: var(--radius-12);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  width: 100%;
+  max-width: 436px;
+  margin: auto;
+  padding: var(--space-60);
+}
+
+.submitButton {
+  margin-top: var(--space-4);
+}
+
+.rightColumn {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-card);
+  border-radius: var(--radius-12);
+  padding: var(--space-60);
+  gap: var(--space-12);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-h2);
+  text-align: center;
+  letter-spacing: -0.264px;
+}
+
+.description {
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  text-align: center;
+  color: var(--color-text-secondary);
+  letter-spacing: 0.32px;
+  max-width: 436px;
+}
