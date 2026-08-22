@@ -3,7 +3,6 @@
   flex-direction: column;
   gap: var(--space-32);
   width: 100%;
-  max-width: 460px;
 }
 
 .fields {
@@ -12,16 +11,9 @@
   gap: var(--space-16);
 }
 
-.link {
-  color: var(--color-link);
-  font-family: var(--font-body);
-  font-size: var(--font-size-body);
-  line-height: var(--line-height-body);
-  text-decoration: none;
-}
-
-.link:hover {
-  text-decoration: underline;
+.passwordSection {
+  display: flex;
+  flex-direction: column;
 }
 
 .row {
@@ -34,11 +26,7 @@
   min-width: 0;
 }
 
-.submitButton.submitButton {
+.submitButton {
   width: 100%;
-  background-color: #dee8c5;
-}
-
-.submitButton.submitButton:hover:not(:disabled) {
-  background-color: #dee8c5;
+  min-height: 48px;
 }
