@@ -11,9 +11,16 @@
   gap: var(--space-16);
 }
 
-.passwordSection {
+.passwordSection  {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+}
+
+.passwordSection > button {
+  padding-left: 0;
+  min-width: auto;
+  color: var(--color-link);
 }
 
 .row {

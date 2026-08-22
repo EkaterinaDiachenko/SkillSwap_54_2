@@ -33,11 +33,22 @@ export function PersonalDataForm({
   className,
 }: PersonalDataFormProps) {
   const [showPassword, setShowPassword] = useState(false)
+  const [passwordValue, setPasswordValue] = useState('')
   const [aboutValue, setAboutValue] = useState(about)
   const [isDirty, setIsDirty] = useState(false)
 
+  const passwordHelperText =
+    passwordValue.length >= 8
+      ? 'Надежный'
+      : 'Пароль должен содержать не менее 8 знаков'
+
   const handleAboutChange = (value: string) => {
     setAboutValue(value)
+    setIsDirty(true)
+  }
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPasswordValue(e.target.value)
     setIsDirty(true)
   }
 
@@ -79,7 +90,9 @@ export function PersonalDataForm({
               type="password"
               label="Пароль"
               placeholder="Введите пароль"
-              helperText="Пароль должен содержать не менее 8 знаков"
+              value={passwordValue}
+              onChange={handlePasswordChange}
+              helperText={passwordHelperText}
               onBlur={handlePasswordBlur}
             />
           )}
