@@ -36,11 +36,7 @@
 }
 
 .itemActive {
-  background-color: #dee8c5;
-}
-
-.itemActive:hover {
-  background-color: #dee8c5;
+  background-color: var(--color-button-hover);
 }
 
 .label {

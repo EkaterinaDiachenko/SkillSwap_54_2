@@ -8,10 +8,10 @@
   position: relative;
 }
 
-.avatar {
+.container .avatar {
   width: 100%;
   height: 100%;
-  border-radius: var(--radius-100);
+  border-radius: 50%;
 }
 
 .editButton {
@@ -21,9 +21,10 @@
   width: 56px;
   height: 56px;
   border-radius: var(--radius-100);
-  background-color: #dee8c5;
+  background-color: var(--color-button-hover);
+  transition: background-color 0.15s ease;
 }
 
 .editButton:hover:not(:disabled) {
-  background-color: #dee8c5;
+  background-color: var(--color-primary);
 }
