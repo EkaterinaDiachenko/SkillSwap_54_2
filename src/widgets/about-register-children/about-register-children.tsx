@@ -103,7 +103,7 @@ export function AboutRegisterChildren({
 
       <div className={styles.fields}>
         <Input
-          className={clsx(styles.input, styles.control)}
+          className={clsx(styles.input)}
           type="text"
           label="Имя"
           placeholder="Введите ваше имя"
@@ -115,7 +115,7 @@ export function AboutRegisterChildren({
 
         <div className={styles.row}>
           <Calendar
-            className={clsx(styles.birthDate, styles.control)}
+            className={clsx(styles.birthDate)}
             label="Дата рождения"
             placeholder="дд.мм.гггг"
             value={birthDate}
@@ -123,7 +123,7 @@ export function AboutRegisterChildren({
             onChange={onBirthDateChange}
           />
           <Select
-            className={clsx(styles.gender, styles.control)}
+            className={clsx(styles.gender)}
             label="Пол"
             placeholder="Не указан"
             options={genderOptions}
@@ -134,7 +134,6 @@ export function AboutRegisterChildren({
         </div>
 
         <Select
-          className={styles.control}
           label="Город"
           placeholder="Не указан"
           options={cities}
@@ -145,7 +144,6 @@ export function AboutRegisterChildren({
         />
 
         <Select
-          className={styles.control}
           label="Категория навыка, которому хотите научиться"
           placeholder="Выберите категорию"
           options={categories}
@@ -156,7 +154,6 @@ export function AboutRegisterChildren({
         />
 
         <Select
-          className={styles.control}
           label="Подкатегория навыка, которому хотите научиться"
           placeholder="Выберите подкатегорию"
           options={subcategories}
