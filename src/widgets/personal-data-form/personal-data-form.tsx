@@ -8,22 +8,36 @@ import { Select, type SelectOption } from '@/shared/ui/select'
 import styles from './personal-data-form.module.css'
 
 export type PersonalDataFormProps = {
-  className?: string
-  genderOptions: SelectOption[]
+  email?: string
+  name?: string
+  birthDate?: Date
+  gender?: string
+  city?: string
+  about?: string
   cities: SelectOption[]
+  genderOptions: SelectOption[]
+  onSaveClick?: () => void
+  className?: string
 }
 
 export function PersonalDataForm({
-  className,
-  genderOptions,
+  email,
+  name,
+  birthDate,
+  gender,
+  city,
+  about = '',
   cities,
+  genderOptions,
+  onSaveClick,
+  className,
 }: PersonalDataFormProps) {
   const [showPassword, setShowPassword] = useState(false)
-  const [about, setAbout] = useState('')
+  const [aboutValue, setAboutValue] = useState(about)
   const [isDirty, setIsDirty] = useState(false)
 
   const handleAboutChange = (value: string) => {
-    setAbout(value)
+    setAboutValue(value)
     setIsDirty(true)
   }
 
@@ -42,9 +56,10 @@ export function PersonalDataForm({
     >
       <div className={styles.fields}>
         <Input
+          type="email"
           label="Почта"
           placeholder="Введите вашу почту"
-          defaultValue="Mariia@gmail.com"
+          defaultValue={email}
           inputIcon="edit"
         />
 
@@ -71,9 +86,10 @@ export function PersonalDataForm({
         </div>
 
         <Input
+          type="text"
           label="Имя"
           placeholder="Введите ваше имя"
-          defaultValue="Мария"
+          defaultValue={name}
           inputIcon="edit"
         />
 
@@ -81,11 +97,14 @@ export function PersonalDataForm({
           <Calendar
             label="Дата рождения"
             placeholder="дд.мм.гггг"
+            value={birthDate}
+            onChange={() => setIsDirty(true)}
           />
           <Select
             label="Пол"
             placeholder="Не указан"
             options={genderOptions}
+            value={gender}
             onChange={() => setIsDirty(true)}
           />
         </div>
@@ -94,6 +113,7 @@ export function PersonalDataForm({
           label="Город"
           placeholder="Не указан"
           options={cities}
+          value={city}
           searchable
           onChange={() => setIsDirty(true)}
         />
@@ -101,7 +121,7 @@ export function PersonalDataForm({
         <Textarea
           label="О себе"
           placeholder="Расскажите немного о себе"
-          value={about}
+          value={aboutValue}
           onChange={handleAboutChange}
         />
       </div>
@@ -111,6 +131,7 @@ export function PersonalDataForm({
         variant="primary"
         disabled={!isDirty}
         className={styles.submitButton}
+        onClick={onSaveClick}
       >
         Сохранить
       </Button>
