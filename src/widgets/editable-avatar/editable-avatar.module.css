@@ -1,0 +1,41 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 244px;
+  flex-shrink: 0;
+}
+
+.avatarContainer {
+  position: relative;
+  width: 244px;
+  height: 244px;
+}
+
+.avatar {
+  width: 244px;
+  height: 244px;
+  border-radius: var(--radius-100);
+}
+
+.editButton {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-100);
+  background-color: #dee8c5;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.editButton:hover {
+  background-color: var(--color-button-hover);
+}
