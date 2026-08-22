@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useCallback } from 'react';
+import React, { useRef, useState, useEffect, useCallback, useId } from 'react';
 import clsx from 'clsx';
 import { IconButton } from '@/shared/ui/icon-button';
 import { Button } from '@/shared/ui/button';
@@ -35,6 +35,8 @@ export function ImageUpload({
   const [images, setImages] = useState<ImageFile[]>(initialImages);
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const inputId = useId();
 
   useEffect(() => {
     if (initialImages.length > 0) {
@@ -154,13 +156,12 @@ export function ImageUpload({
       [styles.disabled]: disabled,
       [styles.error]: error,
       [styles.hasImages]: images.length > 0,
-    },
-    className
+    }
   );
 
   return (
-    <div className={styles.container}>
-      {label && <label className={styles.label}>{label}</label>}
+    <div className={clsx(styles.container, className)}>
+      {label && <label className={styles.label} htmlFor={inputId}>{label}</label>}
 
       <div
         className={dropzoneClasses}
@@ -176,6 +177,7 @@ export function ImageUpload({
           onChange={handleFileChange}
           disabled={disabled}
           className={styles.hiddenInput}
+          id={inputId}
         />
 
         <div className={styles.content}>
@@ -193,17 +195,14 @@ export function ImageUpload({
                     alt={file.name || 'Превью изображения'}
                     className={styles.previewImage}
                   />
-                  <button
-                    type="button"
-                    onClick={() => handleRemove(index)}
+                  <IconButton
+                    iconName="cross"
+                    aria-label={`Удалить изображение ${file.name}`}
+                    disabled={disabled}
                     className={styles.removeButton}
-                    aria-label={`Удалить изображение ${file.name || index + 1}`}
-                  >
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <line x1="18" y1="6" x2="6" y2="18" />
-                      <line x1="6" y1="6" x2="18" y2="18" />
-                    </svg>
-                  </button>
+                    onClick={() => handleRemove(index)}
+
+                  />
                 </div>
               ))}
             </div>
@@ -218,6 +217,7 @@ export function ImageUpload({
               className={styles.iconButton}
             />
             <Button
+              type="button"
               variant="quaternary"
               disabled={disabled}
               onClick={handleButtonClick}
