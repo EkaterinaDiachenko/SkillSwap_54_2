@@ -1,0 +1,120 @@
+/* stylelint-disable selector-pseudo-class-no-unknown */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 556px;
+  height: 692px;
+  padding: 49px var(--space-60) var(--space-40);
+  overflow: hidden;
+}
+
+.avatar {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  margin: 0 auto;
+}
+
+.avatarUser {
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  color: var(--color-text);
+}
+
+.avatarUser svg {
+  width: 56px;
+  height: 56px;
+}
+
+.avatarAdd {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: var(--space-16);
+  height: var(--space-16);
+  padding: 0;
+  border-radius: var(--radius-100);
+  color: var(--color-card);
+  background-color: var(--color-primary);
+}
+
+.avatarAdd svg {
+  width: var(--space-16);
+  height: var(--space-16);
+}
+
+.avatarAdd:hover:not(:disabled),
+.avatarAdd:active:not(:disabled) {
+  color: var(--color-card);
+  background-color: var(--color-primary);
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  margin-top: var(--space-16);
+}
+
+.input {
+  max-width: none;
+}
+
+/* Рамка поля 48px: у Input/Calendar border уже внутри height.
+   У Select рамка на обёртке, поэтому строка выбора = 46. */
+.control :global([class*='field']) {
+  box-sizing: border-box;
+  height: 48px;
+  min-height: 48px;
+  max-height: 48px;
+}
+
+.control :global([class*='trigger']) {
+  box-sizing: border-box;
+  height: 46px;
+  min-height: 46px;
+  max-height: 46px;
+}
+
+.row {
+  display: flex;
+  gap: var(--space-24);
+  align-items: flex-start;
+  width: 100%;
+}
+
+.birthDate {
+  flex: 1.2 1 0;
+  width: auto;
+  min-width: 0;
+}
+
+.gender {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.actions {
+  display: flex;
+  flex-shrink: 0;
+  gap: var(--space-16);
+  width: 100%;
+  margin-top: auto;
+  padding-top: var(--space-32);
+}
+
+.actionButton {
+  flex: 1 1 0;
+  box-sizing: border-box;
+  min-width: 0;
+  height: 48px;
+  min-height: 48px;
+  max-height: 48px;
+}
+
+.backButton {
+  border-width: 1px;
+}
