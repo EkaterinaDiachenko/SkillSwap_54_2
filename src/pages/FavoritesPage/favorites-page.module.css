@@ -14,12 +14,13 @@
   flex: 1;
   flex-direction: column;
   width: 100%;
-  padding: var(--space-40) var(--space-36) var(--space-60);
+  padding: var(--space-32) var(--space-36) var(--space-60);
   box-sizing: border-box;
 }
 
 .section {
   display: flex;
+  flex: 1;
   flex-direction: column;
   gap: var(--space-32);
   width: 100%;
