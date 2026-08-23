@@ -31,9 +31,9 @@ export function SkillOffer({
   return (
     <article className={[styles.offer, className].filter(Boolean).join(' ')}>
       <div className={styles.actions}>
-        <IconButton iconName="like" aria-label="В избранное" />
-        <IconButton iconName="share" aria-label="Поделиться" />
-        <IconButton iconName="more-square" aria-label="Дополнительные действия" />
+        <IconButton iconName="like" aria-label="В избранное" className={styles.actionButton}/>
+        <IconButton iconName="share" aria-label="Поделиться" className={styles.actionButton}/>
+        <IconButton iconName="more-square" aria-label="Дополнительные действия" className={styles.actionButton}/>
       </div>
 
       <div className={styles.content}>

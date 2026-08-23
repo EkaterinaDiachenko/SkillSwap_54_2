@@ -16,16 +16,23 @@
   right: var(--space-20);
   display: flex;
   align-items: center;
-  gap: var(--space-4);
+  gap: var(--space-16);
+}
+
+.actions .actionButton {
+  width: 24px;
+  height: 24px;
+  padding: 0;
 }
 
 /* Детали слева, галерея справа; 404 = галерея 324 + внутренние отступы */
 .content {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: var(--space-40);
   min-height: 404px;
-  padding: var(--space-40);
+  padding:  var(--space-80) 52px var(--space-40) 52px;
 }
 
 /* Детали занимают левую часть по ширине макета (399px) */
