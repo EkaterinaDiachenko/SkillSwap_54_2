@@ -5,7 +5,15 @@
 }
 
 /* Не перекрашивать точку Notification New (#E0796E / alarm) */
-.icon [fill]:not([fill='none'], [fill='#E0796E'], [fill='#e0796e']) {
+.icon [fill]:not(
+  [fill='none'],
+  [fill='#E0796E'],
+  [fill='#e0796e'],
+  [fill='#4285F4'],
+  [fill='#34A853'],
+  [fill='#FBBC05'],
+  [fill='#EA4335']
+) {
   fill: currentcolor;
 }
 
