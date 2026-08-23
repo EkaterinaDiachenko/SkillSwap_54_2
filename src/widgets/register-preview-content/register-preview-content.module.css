@@ -3,14 +3,14 @@
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  padding: var(--space-60);
+  padding: var(--space-40) var(--space-60) var(--space-72) var(--space-60);
 }
 
 /* Заголовок и подзаголовок по центру над основным контентом */
 .header {
   display: flex;
   flex-direction: column;
-  gap: var(--space-12);
+  gap: var(--space-8);
   margin-bottom: var(--space-40);
   text-align: center;
 }
@@ -38,7 +38,7 @@
 /* Горизонтальная раскладка: SkillDetails (399px) + SkillGallery (440px) */
 .content {
   display: flex;
-  gap: var(--space-24);
+  gap: var(--space-44);
   align-items: stretch;
 }
 
@@ -46,6 +46,8 @@
 .details {
   flex-shrink: 0;
   min-height: 324px;
+  width: 420px;
+  max-width: 420px;
 }
 
 .details > :last-child {
