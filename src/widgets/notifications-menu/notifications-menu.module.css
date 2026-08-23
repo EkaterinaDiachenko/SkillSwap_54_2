@@ -16,7 +16,7 @@
 .section {
   display: flex;
   flex-direction: column;
-  gap: var(--space-20);
+  gap: var(--space-32);
 }
 
 .sectionHeader {
@@ -64,13 +64,13 @@
 .item {
   display: flex;
   flex-direction: column;
-  gap: var(--space-12);
+  gap: var(--space-16);
 }
 
 /* Первый ряд: иконка слева, текст и дата справа */
 .itemTop {
   display: grid;
-  grid-template-columns: 32px minmax(0, 1fr) auto;
+  grid-template-columns: 40px minmax(0, 1fr) auto;
   gap: 0 var(--space-12);
   align-items: start;
 }

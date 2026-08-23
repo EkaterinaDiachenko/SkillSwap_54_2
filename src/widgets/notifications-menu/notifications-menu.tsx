@@ -50,7 +50,7 @@ function NotificationRow({
   return (
     <li className={styles.item}>
       <div className={styles.itemTop}>
-        <Icon name="idea" size={32} className={styles.icon} />
+        <Icon name="idea" size={40} className={styles.icon} />
         <p className={styles.title}>{notification.title}</p>
         <time className={styles.date} dateTime={notification.date}>
           {notification.date}
