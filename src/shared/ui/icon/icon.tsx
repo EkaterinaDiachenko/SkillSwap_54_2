@@ -51,6 +51,7 @@ export type IconName =
   | 'sun'
   | 'user'
   | 'user-circle'
+  | 'user-circle-large'
 
 type SvgComponent = FC<SVGProps<SVGSVGElement>>
 
