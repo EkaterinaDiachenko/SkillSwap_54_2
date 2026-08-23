@@ -35,7 +35,6 @@ export function PersonalDataForm({
   const [showPassword, setShowPassword] = useState(false)
   const [passwordValue, setPasswordValue] = useState('')
   const [aboutValue, setAboutValue] = useState(about)
-  const [isDirty, setIsDirty] = useState(false)
 
   const passwordHelperText =
     passwordValue.length >= 8
@@ -44,20 +43,10 @@ export function PersonalDataForm({
 
   const handleAboutChange = (value: string) => {
     setAboutValue(value)
-    setIsDirty(true)
   }
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPasswordValue(e.target.value)
-    setIsDirty(true)
-  }
-
-  const handlePasswordBlur = (
-    e: React.FocusEvent<HTMLInputElement>,
-  ) => {
-    if (e.target.value.length > 0) {
-      setIsDirty(true)
-    }
   }
 
   return (
@@ -93,7 +82,6 @@ export function PersonalDataForm({
               value={passwordValue}
               onChange={handlePasswordChange}
               helperText={passwordHelperText}
-              onBlur={handlePasswordBlur}
             />
           )}
         </div>
@@ -111,14 +99,13 @@ export function PersonalDataForm({
             label="Дата рождения"
             placeholder="дд.мм.гггг"
             value={birthDate}
-            onChange={() => setIsDirty(true)}
           />
           <Select
             label="Пол"
             placeholder="Не указан"
             options={genderOptions}
             value={gender}
-            onChange={() => setIsDirty(true)}
+            onChange={() => undefined}
           />
         </div>
 
@@ -128,7 +115,7 @@ export function PersonalDataForm({
           options={cities}
           value={city}
           searchable
-          onChange={() => setIsDirty(true)}
+          onChange={() => undefined}
         />
 
         <Textarea
@@ -142,7 +129,7 @@ export function PersonalDataForm({
       <Button
         type="button"
         variant="primary"
-        disabled={!isDirty}
+        disabled
         className={styles.submitButton}
         onClick={onSaveClick}
       >
