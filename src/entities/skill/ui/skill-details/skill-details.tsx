@@ -17,6 +17,10 @@ export type SkillDetailsProps = {
   buttonText?: string
   /** Превью после регистрации: «Редактировать» + «Готово» в один ряд */
   showDualButtons?: boolean
+  /** Колбэк при клике на «Редактировать» (режим превью) */
+  onEditClick?: () => void
+  /** Колбэк при клике на «Готово» (режим превью) */
+  onDoneClick?: () => void
   className?: string
 }
 
@@ -46,6 +50,8 @@ export function SkillDetails({
   variant = 'primary',
   buttonText,
   showDualButtons = false,
+  onEditClick,
+  onDoneClick,
   className,
 }: SkillDetailsProps) {
   const iconName =
@@ -69,11 +75,21 @@ export function SkillDetails({
       {showDualButtons ? (
         /* Модалка превью: белая «Редактировать» + зелёная «Готово» */
         <div className={styles.actions}>
-          <Button type="button" variant="secondary" className={styles.button}>
+          <Button
+            type="button"
+            variant="secondary"
+            className={styles.button}
+            onClick={onEditClick}
+          >
             <span>Редактировать</span>
             <Icon name="edit" size={24} aria-hidden="true" />
           </Button>
-          <Button type="button" variant="primary" className={styles.button}>
+          <Button
+            type="button"
+            variant="primary"
+            className={styles.button}
+            onClick={onDoneClick}
+          >
             Готово
           </Button>
         </div>
