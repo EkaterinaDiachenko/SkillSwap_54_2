@@ -1,0 +1,42 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-32);
+  width: 100%;
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+}
+
+.passwordSection  {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.passwordSection > button {
+  width: 138px;
+  height: 24px;
+  min-width: 138px;
+  min-height: 24px;
+  padding: 0;
+  color: var(--color-link);
+}
+
+.row {
+  display: flex;
+  gap: var(--space-16);
+}
+
+.row > * {
+  flex: 1;
+  min-width: 0;
+}
+
+.submitButton {
+  width: 100%;
+  min-height: 48px;
+}
