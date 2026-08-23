@@ -67,3 +67,15 @@
   top: 100%;
   left: var(--space-36);
 }
+
+/* Обёртка колокольчика: anchor для выпадающего NotificationsMenu */
+.notificationsWrapper {
+  position: relative;
+  display: inline-flex;
+}
+
+/* Меню уведомлений — под иконкой, выравнивание по правому краю */
+.notificationsMenu {
+  top: calc(100% + var(--space-8));
+  right: 0;
+}
