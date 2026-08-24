@@ -53,6 +53,8 @@ export type IconName =
   | 'user'
   | 'user-circle'
   | 'user-circle-large'
+  | 'offer-success'
+  | 'exchange-notification'
 
 type SvgComponent = FC<SVGProps<SVGSVGElement>>
 
