@@ -6,6 +6,10 @@ import { IconButton } from '@/shared/ui/icon-button'
 import { UserMenu } from '@/shared/ui/user-menu'
 import styles from './header.module.css'
 import { SkillsMegaMenu, type SkillCategory } from '@/widgets/skills-mega-menu'
+import {
+  NotificationsMenu,
+  type NotificationItem,
+} from '@/widgets/notifications-menu'
 
 export type AuthHeaderProps = {
   /** Имя пользователя в UserMenu */
@@ -18,8 +22,16 @@ export type AuthHeaderProps = {
   onLogout?: () => void
   /** Клик по иконке сердца (избранное) */
   onFavoritesClick?: () => void
-  /** Клик по иконке колокольчика (уведомления) */
-  onNotificationsClick?: () => void
+  /** Новые уведомления для NotificationsMenu */
+  newNotifications?: NotificationItem[]
+  /** Просмотренные уведомления для NotificationsMenu */
+  viewedNotifications?: NotificationItem[]
+  /** Заглушка: переход к карточке по «Перейти» */
+  onNavigateToCard?: (id: string) => void
+  /** Заглушка: «Прочитать все» */
+  onReadAll?: () => void
+  /** Заглушка: «Очистить» просмотренные */
+  onClearViewed?: () => void
   className?: string
   categories: SkillCategory[]
 }
@@ -34,12 +46,20 @@ export function AuthHeader({
   onProfileClick,
   onLogout,
   onFavoritesClick,
-  onNotificationsClick,
+  newNotifications = [],
+  viewedNotifications = [],
+  onNavigateToCard,
+  onReadAll,
+  onClearViewed,
   className,
   categories
 }: AuthHeaderProps) {
   const [search, setSearch] = useState('')
   const [isSkillsOpen, setIsSkillsOpen] = useState(false)
+  // Открытие/закрытие меню уведомлений — только по клику на колокольчик
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false)
+
+  const hasNewNotifications = newNotifications.length > 0
 
   return (
     <header
@@ -64,11 +84,27 @@ export function AuthHeader({
         {/* Группа из трёх иконок: тема (заглушка), уведомления, избранное */}
         <div className={styles.iconGroup}>
           <IconButton iconName="moon" aria-label="Переключить тему" />
-          <IconButton
-            iconName="notification"
-            aria-label="Уведомления"
-            onClick={onNotificationsClick}
-          />
+
+          {/* relative-обёртка: меню позиционируется под колокольчиком */}
+          <div className={styles.notificationsWrapper}>
+            <IconButton
+              iconName={hasNewNotifications ? 'notification-new' : 'notification'}
+              aria-label="Уведомления"
+              aria-expanded={isNotificationsOpen}
+              onClick={() => setIsNotificationsOpen((open) => !open)}
+            />
+
+            <NotificationsMenu
+              isOpen={isNotificationsOpen}
+              newNotifications={newNotifications}
+              viewedNotifications={viewedNotifications}
+              onNavigateToCard={onNavigateToCard}
+              onReadAll={onReadAll}
+              onClearViewed={onClearViewed}
+              className={styles.notificationsMenu}
+            />
+          </div>
+
           <IconButton
             iconName="like"
             aria-label="Избранное"

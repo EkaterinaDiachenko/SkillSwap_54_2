@@ -1,0 +1,37 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1440px;
+  min-height: 100vh;
+  margin: 0 auto;
+  background-color: var(--color-bg);
+}
+
+.main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-60);
+  width: 100%;
+  padding: var(--space-32) var(--space-36) var(--space-60);
+}
+
+.hero {
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-24);
+  width: 100%;
+}
+
+.owner {
+  flex: 0 0 324px;
+  width: 324px;
+  max-width: 324px;
+}
+
+.offer {
+  flex: 1;
+  min-width: 0;
+}

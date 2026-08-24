@@ -32,6 +32,7 @@ export type IconName =
   | 'idea'
   | 'like'
   | 'like-filled'
+  | 'lifestyle'
   | 'logout'
   | 'message-text'
   | 'moon'
@@ -52,6 +53,8 @@ export type IconName =
   | 'user'
   | 'user-circle'
   | 'user-circle-large'
+  | 'offer-success'
+  | 'exchange-notification'
 
 type SvgComponent = FC<SVGProps<SVGSVGElement>>
 
