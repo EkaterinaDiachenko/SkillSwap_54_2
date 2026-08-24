@@ -20,7 +20,7 @@ export function ExchangeOfferContent({
 }: ExchangeOfferContentProps) {
   return (
     <div className={clsx(styles.content, className)}>
-      <Icon name="notification" size={100} aria-label="Предложение обмена отправлено" />
+      <Icon name="exchange-notification" size={100} aria-label="Предложение обмена отправлено" />
 
       <div className={styles.body}>
         <div className={styles.text}>
