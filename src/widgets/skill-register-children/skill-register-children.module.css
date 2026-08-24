@@ -1,0 +1,98 @@
+/* stylelint-disable selector-pseudo-class-no-unknown */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 556px;
+  height: 692px;
+  padding: 49px var(--space-60) var(--space-40);
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+}
+
+.input,
+.textarea {
+  max-width: none;
+}
+
+/* Рамка поля 48px: у Input border уже внутри height.
+   У Select рамка на обёртке, поэтому строка выбора = 46. */
+.control :global([class*='field']) {
+  box-sizing: border-box;
+  height: 48px;
+  min-height: 48px;
+  max-height: 48px;
+}
+
+.control :global([class*='trigger']) {
+  box-sizing: border-box;
+  height: 46px;
+  min-height: 46px;
+  max-height: 46px;
+}
+
+.textarea :global([class*='field']) {
+  box-sizing: border-box;
+  height: 96px;
+  min-height: 96px;
+  max-height: 96px;
+}
+
+.textarea :global(textarea) {
+  box-sizing: border-box;
+  height: 100%;
+  min-height: 0;
+  max-height: none;
+}
+
+/* gap полей 16 + 4 = 20 до пунктирной рамки */
+.upload {
+  margin-top: var(--space-4);
+}
+
+.upload :global([class*='dropzone']) {
+  box-sizing: border-box;
+  height: 96px;
+  min-height: 96px;
+  padding: 16px 20px;
+  border-width: 1px;
+  border-color: rgb(105 115 93 / 80%);
+}
+
+.upload :global([class*='content']) {
+  gap: var(--space-8);
+}
+
+.upload :global([class*='iconButton']),
+.upload :global([class*='iconButton']):hover:not(:disabled),
+.upload :global([class*='selectButton']),
+.upload :global([class*='selectButton']):hover:not(:disabled) {
+  color: var(--color-link);
+}
+
+.actions {
+  display: flex;
+  flex-shrink: 0;
+  gap: var(--space-16);
+  width: 100%;
+  margin-top: auto;
+  padding-top: var(--space-32);
+}
+
+.actionButton {
+  flex: 1 1 0;
+  box-sizing: border-box;
+  min-width: 0;
+  height: 48px;
+  min-height: 48px;
+  max-height: 48px;
+}
+
+.backButton {
+  border-width: 1px;
+}
