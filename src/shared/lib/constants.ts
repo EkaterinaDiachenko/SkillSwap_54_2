@@ -29,4 +29,13 @@ export const LOCAL_STORAGE_KEYS = {
   FAVORITES: 'skillswap_favorites',
   REQUESTS: 'skillswap_requests',
   THEME: 'skillswap_theme',
+  REGISTERED_USERS: 'skillswap_registered_users',
+  REGISTERED_SKILLS: 'skillswap_registered_skills',
+  AUTH_SESSION: 'skillswap_auth_session',
+  REFRESH_TOKEN: 'skillswap_refresh_token',
+  REGISTRATION_DRAFT: 'skillswap_registration_draft',
+} as const
+
+export const COOKIE_KEYS = {
+  ACCESS_TOKEN: 'skillswap_access_token',
 } as const
