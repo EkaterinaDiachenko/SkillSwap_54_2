@@ -32,6 +32,7 @@ export type IconName =
   | 'idea'
   | 'like'
   | 'like-filled'
+  | 'lifestyle'
   | 'logout'
   | 'message-text'
   | 'moon'
