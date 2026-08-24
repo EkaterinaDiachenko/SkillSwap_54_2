@@ -52,6 +52,8 @@ export function SkillRegisterChildren({
   onSubcategoryChange,
   onDescriptionChange,
   onImagesChange,
+  onBackClick,
+  onNextClick,
   className,
 }: SkillRegisterChildrenProps) {
   const handleSkillNameChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -108,6 +110,7 @@ export function SkillRegisterChildren({
           label="Описание"
           placeholder="Коротко опишите, чему можете научить"
           value={description ?? ''}
+          maxLength={500}
           error={descriptionError}
           onChange={handleDescriptionChange}
         />
@@ -126,6 +129,7 @@ export function SkillRegisterChildren({
           type="button"
           variant="secondary"
           className={clsx(styles.actionButton, styles.backButton)}
+          onClick={onBackClick}
         >
           Назад
         </Button>
@@ -133,6 +137,7 @@ export function SkillRegisterChildren({
           type="button"
           variant="primary"
           className={styles.actionButton}
+          onClick={onNextClick}
         >
           Продолжить
         </Button>
