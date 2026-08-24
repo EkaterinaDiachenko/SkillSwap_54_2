@@ -1,11 +1,55 @@
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { useNavigate } from 'react-router-dom'
 import { RegisterLayout } from '@/widgets/register-layout'
 import { WelcomeRegisterChildren } from '@/widgets/welcome-register-children'
+import { ROUTES } from '@/shared/lib/constants'
+import {
+  welcomeRegisterSchema,
+  type WelcomeRegisterFormValues,
+} from '@/features/registration/model'
 
 /**
- * Первый шаг регистрации: оболочка RegisterLayout + форма WelcomeRegisterChildren.
- * Без бизнес-логики.
+ * Первый шаг регистрации.
+ * Валидация срабатывает по клику «Далее»; после первой проверки поля перевалидируются при изменении.
  */
 export default function WelcomeRegisterPage() {
+  const navigate = useNavigate()
+
+  const {
+    watch,
+    setValue,
+    handleSubmit,
+    formState: { errors, isSubmitted },
+  } = useForm<WelcomeRegisterFormValues>({
+    resolver: yupResolver(welcomeRegisterSchema),
+    // Ошибки не показываем до первого submit
+    mode: 'onSubmit',
+    // После submit — повторная проверка при каждом изменении поля
+    reValidateMode: 'onChange',
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  })
+
+  const email = watch('email')
+  const password = watch('password')
+
+  /** Обновляет поле; перевалидация только после первой попытки отправки */
+  const handleEmailChange = (value: string) => {
+    setValue('email', value, { shouldValidate: isSubmitted })
+  }
+
+  const handlePasswordChange = (value: string) => {
+    setValue('password', value, { shouldValidate: isSubmitted })
+  }
+
+  /** При успешной валидации переходим на второй шаг */
+  const handleNext = handleSubmit(() => {
+    navigate(ROUTES.REGISTER_STEP_2)
+  })
+
   return (
     <RegisterLayout
       currentStep={1}
@@ -14,7 +58,15 @@ export default function WelcomeRegisterPage() {
       title="Добро пожаловать в SkillSwap!"
       description="Присоединяйтесь к SkillSwap и обменивайтесь знаниями и навыками с другими людьми"
     >
-      <WelcomeRegisterChildren />
+      <WelcomeRegisterChildren
+        email={email}
+        password={password}
+        emailError={errors.email?.message}
+        passwordError={errors.password?.message}
+        onEmailChange={handleEmailChange}
+        onPasswordChange={handlePasswordChange}
+        onNextClick={handleNext}
+      />
     </RegisterLayout>
   )
 }
