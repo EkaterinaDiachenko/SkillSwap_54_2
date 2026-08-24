@@ -9,6 +9,8 @@ const ProfilePage = lazy(() => import('@/pages/ProfilePage'))
 const FavoritesPage = lazy(() => import('@/pages/FavoritesPage'))
 const CreateSkillPage = lazy(() => import('@/pages/CreateSkillPage'))
 const LoginPage = lazy(() => import('@/pages/LoginPage'))
+const WelcomeRegisterPage = lazy(() => import('@/pages/RegisterPages/WelcomeRegisterPage'))
+const AboutRegisterPage = lazy(() => import('@/pages/RegisterPages/AboutRegisterPage'))
 const Error404Page = lazy(() =>
   import('@/pages/error-404').then(({ Error404 }) => ({ default: Error404 })),
 )
@@ -44,7 +46,8 @@ export function AppRouter() {
           <Route path={ROUTES.SKILL} element={<SkillPage />} />
           <Route path={ROUTES.FAVORITES} element={<FavoritesPage />} />
           <Route path={ROUTES.LOGIN} element={<LoginPage />} />
-          <Route path={ROUTES.REGISTER} element={<LoginPage />} />
+          <Route path={ROUTES.REGISTER} element={<WelcomeRegisterPage />} />
+          <Route path={ROUTES.REGISTER_STEP_2} element={<AboutRegisterPage />} />
 
           {/* Защищённые маршруты — добавь PrivateRoute обёртку */}
           <Route path={ROUTES.PROFILE} element={<ProfilePage />} />

@@ -3,6 +3,7 @@ import styles from './icon.module.css'
 
 export type IconName =
   | 'add'
+  | 'apple'
   | 'arrow-left'
   | 'arrow-square-left'
   | 'arrow-square-right'
@@ -26,6 +27,7 @@ export type IconName =
   | 'gallery-add'
   | 'gallery-edit'
   | 'global'
+  | 'google'
   | 'home'
   | 'idea'
   | 'like'
@@ -49,6 +51,7 @@ export type IconName =
   | 'sun'
   | 'user'
   | 'user-circle'
+  | 'user-circle-large'
 
 type SvgComponent = FC<SVGProps<SVGSVGElement>>
 

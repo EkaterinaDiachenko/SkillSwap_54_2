@@ -1,16 +1,63 @@
-.card {
-  display: flex;
-  flex: 1;
-  gap: var(--space-24);
-  min-width: 0;
-  padding: var(--space-32);
+/* Большой горизонтальный блок предложения навыка */
+.offer {
+  position: relative;
+  width: 100%;
+  max-width: 1020px;
+  overflow: hidden;
+  border-radius: var(--radius-20);
   background-color: var(--color-card);
-  border-radius: var(--radius-12);
 }
 
+/* Действия: избранное/поделиться/доп. действия — поверх карточки справа вверху */
 .actions {
+  position: absolute;
+  z-index: 1;
+  top: var(--space-20);
+  right: var(--space-20);
   display: flex;
-  flex-shrink: 0;
-  flex-direction: column;
-  gap: var(--space-4);
+  align-items: center;
+  gap: var(--space-16);
+}
+
+.actions .actionButton {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+}
+
+/* Детали слева, галерея справа; 404 = галерея 324 + внутренние отступы */
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-40);
+  min-height: 404px;
+  padding:  var(--space-80) 52px var(--space-40) 52px;
+}
+
+/* Детали занимают левую часть по ширине макета (399px) */
+.details {
+  flex: 1 1 399px;
+  min-width: 0;
+}
+
+/* Галерея сохраняет собственные размеры и занимает правую часть */
+.gallery {
+  flex: 0 0 auto;
+}
+
+@media (width <= 900px) {
+  .content {
+    flex-direction: column;
+    align-items: center;
+    min-height: 0;
+    gap: var(--space-32);
+  }
+
+  /* Заголовок не залезает под кнопки в правом верхнем углу */
+  .details {
+    flex: none;
+    width: 100%;
+    padding-top: var(--space-24);
+  }
 }

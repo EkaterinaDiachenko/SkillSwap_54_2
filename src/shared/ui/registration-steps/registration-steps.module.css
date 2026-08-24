@@ -1,0 +1,45 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-12);
+  width: 100%;
+  max-width: 212px;
+  height: 44px;
+}
+
+.title {
+  display: flex;
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-h2);
+  line-height: 28px;
+  color: var(--color-text);
+  justify-content: center;
+}
+
+.linesWrapper {
+  display: flex;
+  gap: var(--space-12);
+  width: 100%;
+}
+
+.line {
+  flex: 1;
+  height: 4px;
+  border-radius: var(--radius-100);
+  transition: background-color 0.3s ease;
+  background-color: var(--color-disabled);
+}
+
+.lineCompleted {
+  background-color: var(--color-primary);
+}
+
+.lineActive {
+  background-color: var(--color-primary);
+}
+
+.lineIncomplete {
+  background-color: var(--color-disabled);
+}

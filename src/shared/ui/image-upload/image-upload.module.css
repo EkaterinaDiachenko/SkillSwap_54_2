@@ -1,0 +1,191 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+}
+
+.label {
+  line-height: var(--line-height-body);
+}
+
+.dropzone {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  padding: 20px;
+  min-height: 120px;
+  border: 2px dashed var(--color-text-secondary);
+  border-radius: var(--radius-12);
+  background: var(--color-card);
+  transition:
+  border-color 0.2s ease,
+  background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.dropzone.hasImages {
+  padding: 10px 20px;
+  min-height: 120px;
+}
+
+.dropzone:hover:not(.disabled, .error) {
+  border-color: var(--color-primary);
+}
+
+.dropzone.dragging:not(.disabled) {
+  border-color: var(--color-primary);
+}
+
+.dropzone.disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.dropzone.error {
+  border-color: var(--color-error);
+}
+
+.hiddenInput {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+  white-space: nowrap;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.placeholder {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: var(--font-weight-regular);
+  line-height: 24px;
+  color: var(--color-text-secondary);
+  text-align: center;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  height: 24px;
+}
+
+.iconButton {
+  flex-shrink: 0;
+  color: var(--color-primary);
+  padding: 0;
+}
+
+.iconButton:hover:not(:disabled) {
+  color: var(--color-primary);
+}
+
+.selectButton {
+  min-width: auto;
+  min-height: 24px;
+  padding: 2px 4px;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: var(--font-weight-regular);
+  line-height: 24px;
+  color: var(--color-primary);
+  background: transparent;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.selectButton:hover:not(:disabled) {
+  color: var(--color-primary);
+}
+
+.selectButton:disabled {
+  color: var(--color-disabled-text);
+  cursor: not-allowed;
+}
+
+.previewList {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--space-12);
+  width: 100%;
+  overflow: auto hidden;
+  scrollbar-width: none;
+}
+
+.previewList::-webkit-scrollbar {
+  display: none;
+}
+
+.previewItem {
+  position: relative;
+  flex: 0 0 60px;
+  width: 60px;
+  height: 60px;
+  border-radius: var(--radius-12);
+  overflow: hidden;
+  border: none;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
+}
+
+.previewImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.removeButton {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 24px;
+  height: 24px;
+  background: var(--color-card);
+  border: none;
+  border-radius: 50%;
+  padding: 4px;
+  color: var(--color-text);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+}
+
+.removeButton:hover:not(:disabled) {
+  background: var(--color-card);
+  color: var(--color-primary);
+  transform: scale(1.1);
+}
+
+.removeButton svg {
+  width: 14px;
+  height: 14px;
+}
+
+.errorText {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-caption);
+  color: var(--color-error);
+  line-height: var(--line-height-body);
+}
