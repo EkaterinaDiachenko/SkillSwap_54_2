@@ -1,1 +1,666 @@
-[]
+[
+  {
+    "id": "user-1",
+    "name": "Мария",
+    "email": "mariya1@example.com",
+    "password": "12345678",
+    "avatarUrl": "/avatars/avatar-01.png",
+    "city": "Москва",
+    "gender": "female",
+    "age": 22,
+    "about": "Я люблю музыку и открыта к новым знакомствам",
+    "likesCount": 3,
+    "favoriteSkillIds": [],
+    "createdAt": "2026-01-01T08:00:00.000Z"
+  },
+  {
+    "id": "user-2",
+    "name": "Алексей",
+    "email": "aleksey2@example.com",
+    "password": "12345678",
+    "avatarUrl": "/avatars/avatar-02.png",
+    "city": "Санкт-Петербург",
+    "gender": "male",
+    "age": 23,
+    "about": "Работаю в IT и хочу обмениваться знаниями",
+    "likesCount": 10,
+    "favoriteSkillIds": [
+      "skill-44"
+    ],
+    "createdAt": "2026-01-03T09:01:00.000Z"
+  },
+  {
+    "id": "user-3",
+    "name": "Елена",
+    "email": "elena3@example.com",
+    "password": "12345678",
+    "avatarUrl": "/avatars/avatar-03.png",
+    "city": "Новосибирск",
+    "gender": "female",
+    "age": 24,
+    "about": "Увлекаюсь фотографией и путешествиями",
+    "likesCount": 17,
+    "favoriteSkillIds": [
+      "skill-3",
+      "skill-48"
+    ],
+    "createdAt": "2026-01-05T10:02:00.000Z"
+  },
+  {
+    "id": "user-4",
+    "name": "Дмитрий",
+    "email": "dmitriy4@example.com",
+    "password": "12345678",
+    "avatarUrl": "/avatars/avatar-04.png",
+    "city": "Екатеринбург",
+    "gender": "male",
+    "age": 25,
+    "about": "Люблю готовить и делиться рецептами",
+    "likesCount": 24,
+    "favoriteSkillIds": [
+      "skill-4",
+      "skill-54",
+      "skill-64"
+    ],
+    "createdAt": "2026-01-07T11:03:00.000Z"
+  },
+  {
+    "id": "user-5",
+    "name": "Анна",
+    "email": "anna5@example.com",
+    "password": "12345678",
+    "avatarUrl": "/avatars/avatar-05.png",
+    "city": "Казань",
+    "gender": "female",
+    "age": 26,
+    "about": "Занимаюсь йогой каждое утро",
+    "likesCount": 31,
+    "favoriteSkillIds": [
+      "skill-5",
+      "skill-55",
+      "skill-65"
+    ],
+    "createdAt": "2026-01-09T12:04:00.000Z"
+  },
+  {
+    "id": "user-6",
+    "name": "Иван",
+    "email": "ivan6@example.com",
+    "password": "12345678",
+    "avatarUrl": "/avatars/avatar-06.png",
+    "city": "Нижний Новгород",
+    "gender": "male",
+    "age": 27,
+    "about": "Изучаю иностранные языки в свободное время",
+    "likesCount": 38,
+    "favoriteSkillIds": [],
+    "createdAt": "2026-01-11T13:05:00.000Z"
+  },
+  {
+    "id": "user-7",
+    "name": "Ольга",
+    "email": "olga7@example.com",
+    "password": "12345678",
+    "avatarUrl": "/avatars/avatar-07.png",
+    "city": "Челябинск",
+    "gender": "female",
+    "age": 28,
+    "about": "Верю, что обмен навыками делает жизнь интереснее",
+    "likesCount": 45,
+    "favoriteSkillIds": [
+      "skill-59"
+    ],
+    "createdAt": "2026-01-13T14:06:00.000Z"
+  },
+  {
+    "id": "user-8",
+    "name": "Сергей",
+    "email": "sergey8@example.com",
+    "password": "12345678",
+    "avatarUrl": "/avatars/avatar-08.png",
+    "city": "Самара",
+    "gender": "male",
+    "age": 29,
+    "about": "Люблю читать и учиться новому",
+    "likesCount": 1,
+    "favoriteSkillIds": [
+      "skill-8",
+      "skill-53"
+    ],
+    "createdAt": "2026-01-15T15:07:00.000Z"
+  },
+  {
+    "id": "user-9",
+    "name": "Наталья",
+    "email": "natalya9@example.com",
+    "password": "12345678",
+    "avatarUrl": "/avatars/avatar-09.png",
+    "city": "Омск",
+    "gender": "female",
+    "age": 30,
+    "about": "",
+    "likesCount": 8,
+    "favoriteSkillIds": [
+      "skill-9",
+      "skill-59",
+      "skill-69"
+    ],
+    "createdAt": "2026-01-17T16:08:00.000Z"
+  },
+  {
+    "id": "user-10",
+    "name": "Павел",
+    "email": "pavel10@example.com",
+    "password": "12345678",
+    "avatarUrl": "/avatars/avatar-10.png",
+    "city": "Ростов-на-Дону",
+    "gender": "male",
+    "age": 31,
+    "about": "Мечтаю открыть своё дело и помогаю другим расти",
+    "likesCount": 15,
+    "favoriteSkillIds": [
+      "skill-10",
+      "skill-60",
+      "skill-70"
+    ],
+    "createdAt": "2026-01-19T17:09:00.000Z"
+  },
+  {
+    "id": "user-11",
+    "name": "Татьяна",
+    "email": "tatyana11@example.com",
+    "password": "12345678",
+    "avatarUrl": "/avatars/avatar-11.png",
+    "city": "Уфа",
+    "gender": "female",
+    "age": 32,
+    "about": "Рисую акварелью и веду творческий блог",
+    "likesCount": 22,
+    "favoriteSkillIds": [],
+    "createdAt": "2026-01-21T08:10:00.000Z"
+  },
+  {
+    "id": "user-12",
+    "name": "Андрей",
+    "email": "andrey12@example.com",
+    "password": "12345678",
+    "avatarUrl": "/avatars/avatar-12.png",
+    "city": "Красноярск",
+    "gender": "male",
+    "age": 33,
+    "about": "Спортсмен-любитель, всегда готов к новым вызовам",
+    "likesCount": 29,
+    "favoriteSkillIds": [
+      "skill-74"
+    ],
+    "createdAt": "2026-01-23T09:11:00.000Z"
+  },
+  {
+    "id": "user-13",
+    "name": "Екатерина",
+    "email": "ekaterina13@example.com",
+    "password": "12345678",
+    "avatarUrl": "/avatars/avatar-13.png",
+    "city": "Воронеж",
+    "gender": "female",
+    "age": 34,
+    "about": "",
+    "likesCount": 36,
+    "favoriteSkillIds": [
+      "skill-13",
+      "skill-58"
+    ],
+    "createdAt": "2026-01-25T10:12:00.000Z"
+  },
+  {
+    "id": "user-14",
+    "name": "Михаил",
+    "email": "mihail14@example.com",
+    "password": "12345678",
+    "avatarUrl": "/avatars/avatar-14.png",
+    "city": "Пермь",
+    "gender": "male",
+    "age": 35,
+    "about": "Преподаю онлайн и ищу интересных собеседников",
+    "likesCount": 43,
+    "favoriteSkillIds": [
+      "skill-14",
+      "skill-64",
+      "skill-74"
+    ],
+    "createdAt": "2026-01-27T11:13:00.000Z"
+  },
+  {
+    "id": "user-15",
+    "name": "Юлия",
+    "email": "yuliya15@example.com",
+    "password": "12345678",
+    "avatarUrl": "/avatars/avatar-15.png",
+    "city": "Архангельск",
+    "gender": "female",
+    "age": 36,
+    "about": "Обожаю садоводство и домашних растений",
+    "likesCount": 50,
+    "favoriteSkillIds": [
+      "skill-15",
+      "skill-65",
+      "skill-75"
+    ],
+    "createdAt": "2026-01-29T12:14:00.000Z"
+  },
+  {
+    "id": "user-16",
+    "name": "Николай",
+    "email": "nikolay16@example.com",
+    "password": "12345678",
+    "avatarUrl": "/avatars/avatar-16.png",
+    "city": "Москва",
+    "gender": "male",
+    "age": 37,
+    "about": "Я люблю музыку и открыта к новым знакомствам",
+    "likesCount": 6,
+    "favoriteSkillIds": [],
+    "createdAt": "2026-01-31T13:15:00.000Z"
+  },
+  {
+    "id": "user-17",
+    "name": "Виктория",
+    "email": "viktoriya17@example.com",
+    "password": "12345678",
+    "avatarUrl": "/avatars/avatar-17.png",
+    "city": "Санкт-Петербург",
+    "gender": "female",
+    "age": 38,
+    "about": "Работаю в IT и хочу обмениваться знаниями",
+    "likesCount": 13,
+    "favoriteSkillIds": [
+      "skill-49"
+    ],
+    "createdAt": "2026-02-02T14:16:00.000Z"
+  },
+  {
+    "id": "user-18",
+    "name": "Артём",
+    "email": "artem18@example.com",
+    "password": "12345678",
+    "avatarUrl": "/avatars/avatar-18.png",
+    "city": "Новосибирск",
+    "gender": "male",
+    "age": 39,
+    "about": "Увлекаюсь фотографией и путешествиями",
+    "likesCount": 20,
+    "favoriteSkillIds": [
+      "skill-18",
+      "skill-63"
+    ],
+    "createdAt": "2026-02-04T15:17:00.000Z"
+  },
+  {
+    "id": "user-19",
+    "name": "Светлана",
+    "email": "svetlana19@example.com",
+    "password": "12345678",
+    "avatarUrl": "/avatars/avatar-19.png",
+    "city": "Екатеринбург",
+    "gender": "female",
+    "age": 40,
+    "about": "Люблю готовить и делиться рецептами",
+    "likesCount": 27,
+    "favoriteSkillIds": [
+      "skill-19",
+      "skill-69",
+      "skill-79"
+    ],
+    "createdAt": "2026-02-06T16:18:00.000Z"
+  },
+  {
+    "id": "user-20",
+    "name": "Максим",
+    "email": "maksim20@example.com",
+    "password": "12345678",
+    "avatarUrl": "/avatars/avatar-20.png",
+    "city": "Казань",
+    "gender": "male",
+    "age": 41,
+    "about": "Занимаюсь йогой каждое утро",
+    "likesCount": 34,
+    "favoriteSkillIds": [
+      "skill-20",
+      "skill-70",
+      "skill-80"
+    ],
+    "createdAt": "2026-02-08T17:19:00.000Z"
+  },
+  {
+    "id": "user-21",
+    "name": "Ксения",
+    "email": "kseniya21@example.com",
+    "password": "12345678",
+    "avatarUrl": "/avatars/avatar-21.png",
+    "city": "Нижний Новгород",
+    "gender": "female",
+    "age": 42,
+    "about": "Изучаю иностранные языки в свободное время",
+    "likesCount": 41,
+    "favoriteSkillIds": [],
+    "createdAt": "2026-02-10T08:20:00.000Z"
+  },
+  {
+    "id": "user-22",
+    "name": "Роман",
+    "email": "roman22@example.com",
+    "password": "12345678",
+    "avatarUrl": "/avatars/avatar-22.png",
+    "city": "Челябинск",
+    "gender": "male",
+    "age": 43,
+    "about": "Верю, что обмен навыками делает жизнь интереснее",
+    "likesCount": 48,
+    "favoriteSkillIds": [
+      "skill-64"
+    ],
+    "createdAt": "2026-02-12T09:21:00.000Z"
+  },
+  {
+    "id": "user-23",
+    "name": "Дарья",
+    "email": "darya23@example.com",
+    "password": "12345678",
+    "avatarUrl": "/avatars/avatar-23.png",
+    "city": "Самара",
+    "gender": "female",
+    "age": 44,
+    "about": "Люблю читать и учиться новому",
+    "likesCount": 4,
+    "favoriteSkillIds": [
+      "skill-23",
+      "skill-68"
+    ],
+    "createdAt": "2026-02-14T10:22:00.000Z"
+  },
+  {
+    "id": "user-24",
+    "name": "Владимир",
+    "email": "vladimir24@example.com",
+    "password": "12345678",
+    "avatarUrl": "/avatars/avatar-24.png",
+    "city": "Омск",
+    "gender": "male",
+    "age": 45,
+    "about": "",
+    "likesCount": 11,
+    "favoriteSkillIds": [
+      "skill-24",
+      "skill-74",
+      "skill-44"
+    ],
+    "createdAt": "2026-02-16T11:23:00.000Z"
+  },
+  {
+    "id": "user-25",
+    "name": "Полина",
+    "email": "polina25@example.com",
+    "password": "12345678",
+    "avatarUrl": "/avatars/avatar-25.png",
+    "city": "Ростов-на-Дону",
+    "gender": "female",
+    "age": 46,
+    "about": "Мечтаю открыть своё дело и помогаю другим расти",
+    "likesCount": 18,
+    "favoriteSkillIds": [
+      "skill-25",
+      "skill-75",
+      "skill-45"
+    ],
+    "createdAt": "2026-02-18T12:24:00.000Z"
+  },
+  {
+    "id": "user-26",
+    "name": "Кирилл",
+    "email": "kirill26@example.com",
+    "password": "12345678",
+    "avatarUrl": "/avatars/avatar-26.png",
+    "city": "Уфа",
+    "gender": "male",
+    "age": 22,
+    "about": "Рисую акварелью и веду творческий блог",
+    "likesCount": 25,
+    "favoriteSkillIds": [],
+    "createdAt": "2026-02-20T13:25:00.000Z"
+  },
+  {
+    "id": "user-27",
+    "name": "Алина",
+    "email": "alina27@example.com",
+    "password": "12345678",
+    "avatarUrl": "/avatars/avatar-27.png",
+    "city": "Красноярск",
+    "gender": "female",
+    "age": 23,
+    "about": "Спортсмен-любитель, всегда готов к новым вызовам",
+    "likesCount": 32,
+    "favoriteSkillIds": [
+      "skill-79"
+    ],
+    "createdAt": "2026-02-22T14:26:00.000Z"
+  },
+  {
+    "id": "user-28",
+    "name": "Егор",
+    "email": "egor28@example.com",
+    "password": "12345678",
+    "avatarUrl": "/avatars/avatar-28.png",
+    "city": "Воронеж",
+    "gender": "male",
+    "age": 24,
+    "about": "",
+    "likesCount": 39,
+    "favoriteSkillIds": [
+      "skill-28",
+      "skill-73"
+    ],
+    "createdAt": "2026-02-24T15:27:00.000Z"
+  },
+  {
+    "id": "user-29",
+    "name": "Людмила",
+    "email": "lyudmila29@example.com",
+    "password": "12345678",
+    "avatarUrl": "/avatars/avatar-29.png",
+    "city": "Пермь",
+    "gender": "female",
+    "age": 25,
+    "about": "Преподаю онлайн и ищу интересных собеседников",
+    "likesCount": 46,
+    "favoriteSkillIds": [
+      "skill-29",
+      "skill-79",
+      "skill-49"
+    ],
+    "createdAt": "2026-02-26T16:28:00.000Z"
+  },
+  {
+    "id": "user-30",
+    "name": "Олег",
+    "email": "oleg30@example.com",
+    "password": "12345678",
+    "avatarUrl": "/avatars/avatar-30.png",
+    "city": "Архангельск",
+    "gender": "male",
+    "age": 26,
+    "about": "Обожаю садоводство и домашних растений",
+    "likesCount": 2,
+    "favoriteSkillIds": [
+      "skill-30",
+      "skill-80",
+      "skill-50"
+    ],
+    "createdAt": "2026-02-28T17:29:00.000Z"
+  },
+  {
+    "id": "user-31",
+    "name": "Вера",
+    "email": "vera31@example.com",
+    "password": "12345678",
+    "avatarUrl": "/avatars/avatar-31.png",
+    "city": "Москва",
+    "gender": "female",
+    "age": 27,
+    "about": "Я люблю музыку и открыта к новым знакомствам",
+    "likesCount": 9,
+    "favoriteSkillIds": [],
+    "createdAt": "2026-03-02T08:30:00.000Z"
+  },
+  {
+    "id": "user-32",
+    "name": "Игорь",
+    "email": "igor32@example.com",
+    "password": "12345678",
+    "avatarUrl": "/avatars/avatar-32.png",
+    "city": "Санкт-Петербург",
+    "gender": "male",
+    "age": 28,
+    "about": "Работаю в IT и хочу обмениваться знаниями",
+    "likesCount": 16,
+    "favoriteSkillIds": [
+      "skill-54"
+    ],
+    "createdAt": "2026-03-04T09:31:00.000Z"
+  },
+  {
+    "id": "user-33",
+    "name": "Марина",
+    "email": "marina33@example.com",
+    "password": "12345678",
+    "avatarUrl": "/avatars/avatar-33.png",
+    "city": "Новосибирск",
+    "gender": "female",
+    "age": 29,
+    "about": "Увлекаюсь фотографией и путешествиями",
+    "likesCount": 23,
+    "favoriteSkillIds": [
+      "skill-33",
+      "skill-78"
+    ],
+    "createdAt": "2026-03-06T10:32:00.000Z"
+  },
+  {
+    "id": "user-34",
+    "name": "Станислав",
+    "email": "stanislav34@example.com",
+    "password": "12345678",
+    "avatarUrl": "/avatars/avatar-34.png",
+    "city": "Екатеринбург",
+    "gender": "male",
+    "age": 30,
+    "about": "Люблю готовить и делиться рецептами",
+    "likesCount": 30,
+    "favoriteSkillIds": [
+      "skill-34",
+      "skill-44",
+      "skill-54"
+    ],
+    "createdAt": "2026-03-08T11:33:00.000Z"
+  },
+  {
+    "id": "user-35",
+    "name": "Надежда",
+    "email": "nadezhda35@example.com",
+    "password": "12345678",
+    "avatarUrl": "/avatars/avatar-35.png",
+    "city": "Казань",
+    "gender": "female",
+    "age": 31,
+    "about": "Занимаюсь йогой каждое утро",
+    "likesCount": 37,
+    "favoriteSkillIds": [
+      "skill-35",
+      "skill-45",
+      "skill-55"
+    ],
+    "createdAt": "2026-03-10T12:34:00.000Z"
+  },
+  {
+    "id": "user-36",
+    "name": "Глеб",
+    "email": "gleb36@example.com",
+    "password": "12345678",
+    "avatarUrl": "/avatars/avatar-36.png",
+    "city": "Нижний Новгород",
+    "gender": "male",
+    "age": 32,
+    "about": "Изучаю иностранные языки в свободное время",
+    "likesCount": 44,
+    "favoriteSkillIds": [],
+    "createdAt": "2026-03-12T13:35:00.000Z"
+  },
+  {
+    "id": "user-37",
+    "name": "София",
+    "email": "sofiya37@example.com",
+    "password": "12345678",
+    "avatarUrl": "/avatars/avatar-37.png",
+    "city": "Челябинск",
+    "gender": "female",
+    "age": 33,
+    "about": "Верю, что обмен навыками делает жизнь интереснее",
+    "likesCount": 0,
+    "favoriteSkillIds": [
+      "skill-69"
+    ],
+    "createdAt": "2026-03-14T14:36:00.000Z"
+  },
+  {
+    "id": "user-38",
+    "name": "Тимур",
+    "email": "timur38@example.com",
+    "password": "12345678",
+    "avatarUrl": "/avatars/avatar-38.png",
+    "city": "Самара",
+    "gender": "male",
+    "age": 34,
+    "about": "Люблю читать и учиться новому",
+    "likesCount": 7,
+    "favoriteSkillIds": [
+      "skill-38",
+      "skill-43"
+    ],
+    "createdAt": "2026-03-16T15:37:00.000Z"
+  },
+  {
+    "id": "user-39",
+    "name": "Валерия",
+    "email": "valeriya39@example.com",
+    "password": "12345678",
+    "avatarUrl": "/avatars/avatar-39.png",
+    "city": "Омск",
+    "gender": "female",
+    "age": 35,
+    "about": "",
+    "likesCount": 14,
+    "favoriteSkillIds": [
+      "skill-39",
+      "skill-49",
+      "skill-59"
+    ],
+    "createdAt": "2026-03-18T16:38:00.000Z"
+  },
+  {
+    "id": "user-40",
+    "name": "Фёдор",
+    "email": "fedor40@example.com",
+    "password": "12345678",
+    "avatarUrl": "/avatars/avatar-40.png",
+    "city": "Ростов-на-Дону",
+    "gender": "male",
+    "age": 36,
+    "about": "Мечтаю открыть своё дело и помогаю другим расти",
+    "likesCount": 21,
+    "favoriteSkillIds": [
+      "skill-40",
+      "skill-50",
+      "skill-60"
+    ],
+    "createdAt": "2026-03-20T17:39:00.000Z"
+  }
+]
