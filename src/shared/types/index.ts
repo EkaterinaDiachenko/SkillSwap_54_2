@@ -12,7 +12,7 @@ export interface Skill {
   categoryId: string
   /** ID подкатегории внутри выбранной категории */
   subcategoryId: string
-  imageUrl: string | null
+  imageUrl: string[]
   /** ID автора навыка — ссылка на User.id */
   authorId: string
   createdAt: string
