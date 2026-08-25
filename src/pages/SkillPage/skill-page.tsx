@@ -4,7 +4,7 @@ import { SkillOwnerCard, type SkillOwnerCardProps } from '@/widgets/skill-owner-
 import { RelatedCards } from '@/widgets/related-cards'
 import { SkillOffer, type SkillOfferProps } from '@/widgets/skill-offer'
 import type { SkillCardProps } from '@/widgets/skill-card'
-import type { SkillCategory } from '@/widgets/skills-mega-menu'
+import type { SkillCategory } from '@/entities/skill'
 import styles from './skill-page.module.css'
 import gallery1 from './mocks/gallery-1.jpg'
 import gallery2 from './mocks/gallery-2.jpg'

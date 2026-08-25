@@ -3,7 +3,7 @@ import { AuthHeader } from '@/widgets/header'
 import { Footer } from '@/widgets/footer'
 import { SkillCard, type SkillCardProps } from '@/widgets/skill-card'
 import { Button } from '@/shared/ui/button'
-import type { SkillCategory } from '@/widgets/skills-mega-menu'
+import type { SkillCategory } from '@/entities/skill'
 import styles from './favorites-page.module.css'
 
 export type FavoriteCard = SkillCardProps & { id: string }

@@ -2,7 +2,8 @@ import { Logo } from '@/shared/ui/logo'
 import { FooterMenu } from '@/shared/ui/footer-menu'
 import styles from './footer.module.css'
 import { useState } from 'react'
-import { SkillsMegaMenu, type SkillCategory } from '@/widgets/skills-mega-menu'
+import { SkillsMegaMenu } from '@/widgets/skills-mega-menu'
+import type { SkillCategory } from '@/entities/skill'
 
 export type FooterProps = {
   categories: SkillCategory[]
