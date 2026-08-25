@@ -1,3 +1,4 @@
+import type { SkillCategory } from '@/entities/skill'
 import { HeaderFiltersBar } from '@/shared/ui/header-filters-bar'
 import { RadioButtons } from '@/shared/ui/radio-buttons'
 import { Checkbox, CheckboxGroup } from '@/shared/ui/checkbox'
@@ -13,18 +14,11 @@ export type FiltersBarSelectedFilters = {
   cityIds?: string[]
 }
 
-/** Категория навыка — детальная структура будет позже */
-export type FiltersBarSkillCategory = {
-  id: string
-  title: string
-  subcategories?: { id: string; title: string }[]
-}
-
 export type FiltersBarProps = {
   selectedFilters: FiltersBarSelectedFilters
   onFilterChange: (next: FiltersBarSelectedFilters) => void
   onReset: () => void
-  skillsCategories: FiltersBarSkillCategory[]
+  skillsCategories: SkillCategory[]
   cities: Array<string | { id: string; name: string }>
   className?: string
 }

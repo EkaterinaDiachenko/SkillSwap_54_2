@@ -1,6 +1,6 @@
 import { Header, AuthHeader } from '@/widgets/header'
 import { Footer } from '@/widgets/footer'
-import type { SkillCategory } from '@/widgets/skills-mega-menu'
+import type { SkillCategory } from '@/entities/skill'
 import { Button } from '@/shared/ui/button'
 import { Illustration } from '@/shared/ui/illustration'
 import styles from './error-404.module.css'

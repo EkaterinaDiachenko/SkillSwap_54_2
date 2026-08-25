@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { lazy, Suspense } from 'react'
+import { SKILL_CATEGORIES } from '@/entities/skill'
 import { ROUTES } from '@/shared/lib/constants'
 
 // Lazy-загрузка страниц — каждая страница грузится только при переходе на неё
@@ -29,11 +30,10 @@ export function AppRouter() {
             element={
               <CatalogPage
                 isAuth={false}
-                categories={[]}
+                categories={SKILL_CATEGORIES}
                 selectedFilters={{}}
                 onFilterChange={() => undefined}
                 onReset={() => undefined}
-                skillsCategories={[]}
                 cities={[]}
                 recommendationCards={[]}
                 popularCards={[]}

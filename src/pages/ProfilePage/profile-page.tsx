@@ -4,7 +4,7 @@ import { ProfileSidebar } from '@/widgets/profile-sidebar'
 import { PersonalDataForm } from '@/widgets/personal-data-form'
 import { EditableAvatar } from '@/entities/user/ui/editable-avatar'
 import { Footer } from '@/widgets/footer'
-import type { SkillCategory } from '@/widgets/skills-mega-menu'
+import type { SkillCategory } from '@/entities/skill'
 import type { SelectOption } from '@/shared/ui/select'
 import styles from './profile-page.module.css'
 

@@ -1,15 +1,14 @@
 
+import type { SkillCategory } from '@/entities/skill'
 import { FiltersBar } from "@/widgets/filters-bar";
 import type {
   FiltersBarSelectedFilters,
-  FiltersBarSkillCategory,
 } from '@/widgets/filters-bar'
 import { Footer } from "@/widgets/footer";
 import { AuthHeader, Header } from "@/widgets/header";
 import { RecommendationSection } from "@/widgets/recommendation-section";
 import { SkillSection } from "@/widgets/skill-section";
 import type { SkillCardProps } from '@/widgets/skill-card'
-import type { SkillCategory } from '@/widgets/skills-mega-menu'
 import styles from './catalog-page.module.css'
 
 export type CatalogPageProps = {
@@ -23,7 +22,6 @@ export type CatalogPageProps = {
   selectedFilters: FiltersBarSelectedFilters
   onFilterChange: (next: FiltersBarSelectedFilters) => void
   onReset: () => void
-  skillsCategories: FiltersBarSkillCategory[]
   cities: Array<string | { id: string; name: string }>
 
   recommendationCards: SkillCardProps[]
@@ -45,7 +43,6 @@ export default function CatalogPage({
   selectedFilters,
   onFilterChange,
   onReset,
-  skillsCategories,
   cities,
   recommendationCards,
   popularCards,
@@ -71,7 +68,7 @@ export default function CatalogPage({
           selectedFilters={selectedFilters}
           onFilterChange={onFilterChange}
           onReset={onReset}
-          skillsCategories={skillsCategories}
+          skillsCategories={categories}
           cities={cities}
         />
 

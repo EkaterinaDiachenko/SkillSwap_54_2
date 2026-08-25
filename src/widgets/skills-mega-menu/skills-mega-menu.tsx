@@ -13,21 +13,10 @@
 // -isOpen (флаг, показывающий открыто меню или нет)
 // -className?
 
-import { Icon, type IconName } from '../../shared/ui/icon'
-import { Tag, type Color } from '@/shared/ui/tag'
+import type { SkillCategory } from '@/entities/skill'
+import { Icon } from '@/shared/ui/icon'
+import { Tag } from '@/shared/ui/tag'
 import styles from './skills-mega-menu.module.css'
-
-export type SkillCategory = {
-  id: string
-  title: string
-  icon: IconName
-  color: Color
-  subcategories: SkillSubcategory[]
-}
-export type SkillSubcategory = {
-  id: string
-  title: string
-}
 
 export type SkillsMegaMenuProps = {
   categories: SkillCategory[]

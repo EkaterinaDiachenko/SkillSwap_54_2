@@ -5,7 +5,8 @@ import { SearchInput } from '@/shared/ui/search-input'
 import { IconButton } from '@/shared/ui/icon-button'
 import { UserMenu } from '@/shared/ui/user-menu'
 import styles from './header.module.css'
-import { SkillsMegaMenu, type SkillCategory } from '@/widgets/skills-mega-menu'
+import { SkillsMegaMenu } from '@/widgets/skills-mega-menu'
+import type { SkillCategory } from '@/entities/skill'
 import {
   NotificationsMenu,
   type NotificationItem,
