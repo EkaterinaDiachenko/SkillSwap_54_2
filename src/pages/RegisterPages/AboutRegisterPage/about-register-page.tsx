@@ -1,9 +1,11 @@
+import { useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useNavigate } from 'react-router-dom'
 import { RegisterLayout } from '@/widgets/register-layout'
 import { AboutRegisterChildren } from '@/widgets/about-register-children'
 import type { SelectOption } from '@/shared/ui/select'
+import { getCategoryOptions, getSubcategoryOptions } from '@/entities/skill'
 import { ROUTES } from '@/shared/lib/constants'
 import type { City } from '@/shared/types'
 import {
@@ -38,24 +40,7 @@ const CITY_OPTIONS: SelectOption[] = (
   ] as City[]
 ).map((city) => ({ value: city, label: city }))
 
-/**
- * Заглушки категорий и подкатегорий.
- * Связь между ними не реализуется — это отдельная задача со справочником.
- */
-const CATEGORY_OPTIONS: SelectOption[] = [
-  { value: 'business', label: 'Бизнес и карьера' },
-  { value: 'art', label: 'Творчество и искусство' },
-  { value: 'languages', label: 'Иностранные языки' },
-  { value: 'education', label: 'Образование и развитие' },
-  { value: 'health', label: 'Здоровье и лайфстайл' },
-  { value: 'home', label: 'Дом и уют' },
-]
-
-const SUBCATEGORY_OPTIONS: SelectOption[] = [
-  { value: 'music-sound', label: 'Музыка и звук' },
-  { value: 'photography', label: 'Фотография' },
-  { value: 'english', label: 'Английский язык' },
-]
+const CATEGORY_OPTIONS = getCategoryOptions()
 
 /**
  * Второй шаг регистрации — личные данные.
@@ -84,6 +69,12 @@ export default function AboutRegisterPage() {
   })
 
   const shouldValidate = { shouldValidate: isSubmitted }
+  const selectedCategoryIds = watch('category')
+  const selectedSubcategoryIds = watch('subcategory')
+  const subcategoryOptions = useMemo(
+    () => getSubcategoryOptions(selectedCategoryIds),
+    [selectedCategoryIds],
+  )
 
   const handleNext = handleSubmit(() => {
     navigate(ROUTES.REGISTER_STEP_3)
@@ -91,6 +82,18 @@ export default function AboutRegisterPage() {
 
   const handleBack = () => {
     navigate(ROUTES.REGISTER)
+  }
+
+  const handleCategoryChange = (categoryIds: string[]) => {
+    const availableSubcategoryIds = new Set(
+      getSubcategoryOptions(categoryIds).map((option) => option.value),
+    )
+    const nextSubcategoryIds = selectedSubcategoryIds.filter((subcategoryId) =>
+      availableSubcategoryIds.has(subcategoryId),
+    )
+
+    setValue('category', categoryIds, shouldValidate)
+    setValue('subcategory', nextSubcategoryIds, shouldValidate)
   }
 
   return (
@@ -103,7 +106,7 @@ export default function AboutRegisterPage() {
     >
       <AboutRegisterChildren
         categories={CATEGORY_OPTIONS}
-        subcategories={SUBCATEGORY_OPTIONS}
+        subcategories={subcategoryOptions}
         cities={CITY_OPTIONS}
         genderOptions={GENDER_OPTIONS}
         name={watch('name')}
@@ -122,7 +125,7 @@ export default function AboutRegisterPage() {
         onBirthDateChange={(date) => setValue('birthDate', date, shouldValidate)}
         onGenderChange={(value) => setValue('gender', value, shouldValidate)}
         onCityChange={(value) => setValue('city', value, shouldValidate)}
-        onCategoryChange={(value) => setValue('category', value, shouldValidate)}
+        onCategoryChange={handleCategoryChange}
         onSubcategoryChange={(value) => setValue('subcategory', value, shouldValidate)}
         onBackClick={handleBack}
         onNextClick={handleNext}

@@ -6,3 +6,7 @@ export type {
 } from './model/types'
 
 export { SKILL_CATEGORIES } from './model/skill-categories'
+export {
+  getCategoryOptions,
+  getSubcategoryOptions,
+} from './lib/category-options'
