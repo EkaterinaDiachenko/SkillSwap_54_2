@@ -1,24 +1,45 @@
-import type { AuthUser } from '@/shared/types'
-import { LOCAL_STORAGE_KEYS } from '@/shared/lib/constants'
+import { LOCAL_STORAGE_KEYS, COOKIE_KEYS } from '@/shared/lib/constants'
+import { generateId } from '@/shared/lib/helpers'
+import { setCookie, deleteCookie } from '@/shared/lib/cookies'
 
-/** Читает текущего авторизованного пользователя из localStorage */
-export function getAuthUser(): AuthUser | null {
+type AuthSession = {
+  userId: string
+  refreshToken: string
+}
+
+type AuthTokens = {
+  accessToken: string
+  refreshToken: string
+}
+
+export function getAuthSession(): AuthSession | null {
   try {
-    const raw = localStorage.getItem(LOCAL_STORAGE_KEYS.AUTH_USER)
-    return raw ? (JSON.parse(raw) as AuthUser) : null
+    const userId = localStorage.getItem(LOCAL_STORAGE_KEYS.AUTH_SESSION)
+    const refreshToken = localStorage.getItem(LOCAL_STORAGE_KEYS.REFRESH_TOKEN)
+
+    if (!userId || !refreshToken) {
+      return null
+    }
+
+    return { userId, refreshToken }
   } catch {
     return null
   }
 }
 
-/** Сохраняет пользователя и mock-токен в localStorage */
-export function saveAuthUser(user: Omit<AuthUser, 'token'>): AuthUser {
-  const authUser: AuthUser = { ...user, token: 'mock_token_' + user.id }
-  localStorage.setItem(LOCAL_STORAGE_KEYS.AUTH_USER, JSON.stringify(authUser))
-  return authUser
+export function saveAuthSession(userId: string): AuthTokens {
+  const accessToken = generateId()
+  const refreshToken = generateId()
+
+  setCookie(COOKIE_KEYS.ACCESS_TOKEN, accessToken)
+  localStorage.setItem(LOCAL_STORAGE_KEYS.REFRESH_TOKEN, refreshToken)
+  localStorage.setItem(LOCAL_STORAGE_KEYS.AUTH_SESSION, userId)
+
+  return { accessToken, refreshToken }
 }
 
-/** Удаляет пользователя из localStorage (logout) */
-export function clearAuthUser(): void {
-  localStorage.removeItem(LOCAL_STORAGE_KEYS.AUTH_USER)
+export function clearAuthSession(): void {
+  deleteCookie(COOKIE_KEYS.ACCESS_TOKEN)
+  localStorage.removeItem(LOCAL_STORAGE_KEYS.REFRESH_TOKEN)
+  localStorage.removeItem(LOCAL_STORAGE_KEYS.AUTH_SESSION)
 }
