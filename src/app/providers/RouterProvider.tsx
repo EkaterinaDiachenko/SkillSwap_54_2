@@ -1,7 +1,13 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useEffect, useRef } from 'react'
 import { SKILL_CATEGORIES } from '@/entities/skill'
 import { ROUTES } from '@/shared/lib/constants'
+import { useAppDispatch, useAppSelector } from '@/store/hooks'
+import { loadUsers, selectUsersLoading } from '@/entities/user/model'
+import { loadSkills, selectSkillsLoading } from '@/entities/skill/model'
+import { checkUserAuth } from '@/features/auth/model'
+import { loadRegistrationDraft } from '@/features/registration/model'
+import { Spinner } from '@/shared/ui/spinner'
 
 // Lazy-загрузка страниц — каждая страница грузится только при переходе на неё
 const CatalogPage = lazy(() => import('@/pages/CatalogPage'))
@@ -21,44 +27,65 @@ const Error500Page = lazy(() =>
 )
 
 export function AppRouter() {
+  const dispatch = useAppDispatch()
+  const hasLoaded = useRef(false)
+
+  const usersLoading = useAppSelector(selectUsersLoading)
+  const skillsLoading = useAppSelector(selectSkillsLoading)
+  const isInitialLoading = usersLoading || skillsLoading
+
+  useEffect(() => {
+    if (hasLoaded.current) return
+    hasLoaded.current = true
+
+    dispatch(loadUsers())
+    dispatch(loadSkills())
+    dispatch(checkUserAuth())
+    dispatch(loadRegistrationDraft())
+  }, [dispatch])
+
   return (
     <BrowserRouter>
-      <Suspense fallback={<div>Загрузка...</div>}>
-        <Routes>
-          <Route
-            path={ROUTES.HOME}
-            element={
-              <CatalogPage
-                isAuth={false}
-                categories={SKILL_CATEGORIES}
-                selectedFilters={{}}
-                onFilterChange={() => undefined}
-                onReset={() => undefined}
-                cities={[]}
-                recommendationCards={[]}
-                popularCards={[]}
-                newCards={[]}
-                isLoading={false}
-                onShowPopular={() => undefined}
-                onShowNew={() => undefined}
-              />
-            }
-          />
-          <Route path={ROUTES.SKILL} element={<SkillPage />} />
-          <Route path={ROUTES.FAVORITES} element={<FavoritesPage />} />
-          <Route path={ROUTES.LOGIN} element={<LoginPage />} />
-          <Route path={ROUTES.REGISTER} element={<WelcomeRegisterPage />} />
-          <Route path={ROUTES.REGISTER_STEP_2} element={<AboutRegisterPage />} />
-          <Route path={ROUTES.REGISTER_STEP_3} element={<SkillRegisterPage />} />
+      <Suspense fallback={<Spinner />}>
+        {isInitialLoading ? (
+          <Spinner />
+        ) : (
+          <Routes>
+            <Route
+              path={ROUTES.HOME}
+              element={
+                <CatalogPage
+                  isAuth={false}
+                  categories={SKILL_CATEGORIES}
+                  selectedFilters={{}}
+                  onFilterChange={() => undefined}
+                  onReset={() => undefined}
+                  cities={[]}
+                  recommendationCards={[]}
+                  popularCards={[]}
+                  newCards={[]}
+                  isLoading={false}
+                  onShowPopular={() => undefined}
+                  onShowNew={() => undefined}
+                />
+              }
+            />
+            <Route path={ROUTES.SKILL} element={<SkillPage />} />
+            <Route path={ROUTES.FAVORITES} element={<FavoritesPage />} />
+            <Route path={ROUTES.LOGIN} element={<LoginPage />} />
+            <Route path={ROUTES.REGISTER} element={<WelcomeRegisterPage />} />
+            <Route path={ROUTES.REGISTER_STEP_2} element={<AboutRegisterPage />} />
+            <Route path={ROUTES.REGISTER_STEP_3} element={<SkillRegisterPage />} />
 
-          {/* Защищённые маршруты — добавь PrivateRoute обёртку */}
-          <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
-          <Route path={ROUTES.CREATE} element={<CreateSkillPage />} />
+            {/* Защищённые маршруты — добавь PrivateRoute обёртку */}
+            <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
+            <Route path={ROUTES.CREATE} element={<CreateSkillPage />} />
 
-          <Route path={ROUTES.ERROR_404} element={<Error404Page isAuth={false} />} />
-          <Route path={ROUTES.ERROR_500} element={<Error500Page isAuth={false} />} />
-          <Route path="*" element={<Error404Page isAuth={false} />} />
-        </Routes>
+            <Route path={ROUTES.ERROR_404} element={<Error404Page isAuth={false} />} />
+            <Route path={ROUTES.ERROR_500} element={<Error500Page isAuth={false} />} />
+            <Route path="*" element={<Error404Page isAuth={false} />} />
+          </Routes>
+        )}
       </Suspense>
     </BrowserRouter>
   )
