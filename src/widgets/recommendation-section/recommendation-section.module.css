@@ -24,3 +24,8 @@
 .skillCard {
   flex: 1 1 30%;
 }
+
+.loadMoreTrigger {
+  width: 100%;
+  height: 1px;
+}
