@@ -1,4 +1,5 @@
 import * as yup from 'yup'
+import { SKILL_CATEGORIES } from '@/entities/skill/model/skill-categories'
 
 /** Поля второго шага регистрации — личные данные и интересы */
 export type AboutRegisterFormValues = {
@@ -21,7 +22,6 @@ function startOfToday(): Date {
 
 /**
  * Схема валидации шага 2.
- * Связь категорий и подкатегорий намеренно не проверяется — это отдельная задача.
  */
 export const aboutRegisterSchema = yup.object({
   name: yup
@@ -49,5 +49,32 @@ export const aboutRegisterSchema = yup.object({
     .array()
     .of(yup.string().required())
     .min(1, 'Выберите подкатегорию')
-    .required('Выберите подкатегорию'),
+    .required('Выберите подкатегорию')
+    .test(
+      'category-subcategory-relation',
+      'Для каждой выбранной категории выберите хотя бы одну подкатегорию',
+      function validateCategorySubcategoryRelation(subcategoryIds, context) {
+        const categoryIds = context.parent?.category
+
+        if (!Array.isArray(categoryIds) || !Array.isArray(subcategoryIds)) {
+          return true
+        }
+
+        return categoryIds.every((categoryId) => {
+          const category = SKILL_CATEGORIES.find((item) => item.id === categoryId)
+
+          if (!category) {
+            return false
+          }
+
+          const categorySubcategoryIds = new Set(
+            category.subcategories.map((subcategory) => subcategory.id),
+          )
+
+          return subcategoryIds.some((subcategoryId) =>
+            categorySubcategoryIds.has(subcategoryId),
+          )
+        })
+      },
+    ),
 })

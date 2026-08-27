@@ -1,12 +1,13 @@
-import { SKILL_CATEGORIES } from '@/entities/skill/model/skill-categories'
 import { getUsersApi } from '@/entities/user/api/users-api'
 import { saveAuthSession } from '@/features/auth/model/authUtils'
 import { LOCAL_STORAGE_KEYS } from '@/shared/lib/constants'
 import { generateId } from '@/shared/lib/helpers'
 import type { City, Gender, Skill, User } from '@/shared/types'
+import { findSubcategoryParentId, getSubcategoryTitle } from '../lib/registration-helpers'
 import type {
   RegisterUserApiResult,
   RegistrationDraft,
+  RegistrationLearningSkill,
 } from '../model/registration-types'
 
 const RESPONSE_DELAY_MS = 200
@@ -42,6 +43,18 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null
 }
 
+function isStringArray(value: unknown): value is string[] {
+  return Array.isArray(value) && value.every((item) => typeof item === 'string')
+}
+
+function isRegistrationLearningSkill(value: unknown): value is RegistrationLearningSkill {
+  return (
+    isRecord(value) &&
+    isStringArray(value.categoryIds) &&
+    isStringArray(value.subcategoryIds)
+  )
+}
+
 function isRegistrationDraft(value: unknown): value is RegistrationDraft {
   if (!isRecord(value)) {
     return false
@@ -50,7 +63,7 @@ function isRegistrationDraft(value: unknown): value is RegistrationDraft {
   return (
     isRecord(value.credentials) &&
     isRecord(value.personalData) &&
-    isRecord(value.learningSkill) &&
+    isRegistrationLearningSkill(value.learningSkill) &&
     isRecord(value.offer)
   )
 }
@@ -93,13 +106,6 @@ function getAge(birthDate: string): number {
   }
 
   return age
-}
-
-function getSubcategoryTitle(categoryId: string, subcategoryId: string): string {
-  const category = SKILL_CATEGORIES.find((item) => item.id === categoryId)
-  const subcategory = category?.subcategories.find((item) => item.id === subcategoryId)
-
-  return subcategory?.title ?? subcategoryId
 }
 
 export function getRegistrationDraft(): RegistrationDraft | null {
@@ -146,7 +152,6 @@ export async function registerUserApi(draft: RegistrationDraft): Promise<Registe
 
   const userId = generateId()
   const teachSkillId = generateId()
-  const learnSkillId = generateId()
   const createdAt = new Date().toISOString()
 
   const user: User = {
@@ -176,21 +181,33 @@ export async function registerUserApi(draft: RegistrationDraft): Promise<Registe
     createdAt,
   }
 
-  const learnSkill: Skill = {
-    id: learnSkillId,
-    title: getSubcategoryTitle(draft.learningSkill.category, draft.learningSkill.subcategory),
-    description: '',
-    type: 'learn',
-    categoryId: draft.learningSkill.category,
-    subcategoryId: draft.learningSkill.subcategory,
-    imageUrl: [],
-    authorId: userId,
-    createdAt,
-  }
+  const learnSkills: Skill[] = draft.learningSkill.subcategoryIds.flatMap((subcategoryId) => {
+    const parentCategoryId = findSubcategoryParentId(subcategoryId)
+
+    if (!parentCategoryId || !draft.learningSkill.categoryIds.includes(parentCategoryId)) {
+      return []
+    }
+
+    return [
+      {
+        id: generateId(),
+        title: getSubcategoryTitle(parentCategoryId, subcategoryId),
+        description: '',
+        type: 'learn' as const,
+        categoryId: parentCategoryId,
+        subcategoryId,
+        imageUrl: [],
+        authorId: userId,
+        createdAt,
+      },
+    ]
+  })
 
   appendStoredItem(LOCAL_STORAGE_KEYS.REGISTERED_USERS, user)
   appendStoredItem(LOCAL_STORAGE_KEYS.REGISTERED_SKILLS, teachSkill)
-  appendStoredItem(LOCAL_STORAGE_KEYS.REGISTERED_SKILLS, learnSkill)
+  learnSkills.forEach((skill) => {
+    appendStoredItem(LOCAL_STORAGE_KEYS.REGISTERED_SKILLS, skill)
+  })
 
   const { accessToken } = saveAuthSession(userId)
 
@@ -206,7 +223,7 @@ export async function registerUserApi(draft: RegistrationDraft): Promise<Registe
 
   return {
     user,
-    skills: [teachSkill, learnSkill],
+    skills: [teachSkill, ...learnSkills],
     authUser,
   }
 }

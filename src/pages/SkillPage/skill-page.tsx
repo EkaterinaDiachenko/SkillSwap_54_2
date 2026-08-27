@@ -19,6 +19,7 @@ export type SkillPageProps = {
   categories: SkillCategory[]
   userName?: string
   avatarSrc?: string
+  onLogout?: () => void
   owner: SkillOwnerCardProps
   offer: Omit<SkillOfferProps, 'className'>
   relatedCards: SkillCardProps[]
@@ -91,10 +92,11 @@ const DEFAULT_RELATED: SkillCardProps[] = [
 
 /** Страница навыка — только композиция готовых блоков, без бизнес-логики. */
 export default function SkillPage({
-  isAuth = true,
+  isAuth = false,
   categories = [],
-  userName = 'Мария',
+  userName = '',
   avatarSrc,
+  onLogout,
   owner = DEFAULT_OWNER,
   offer = DEFAULT_OFFER,
   relatedCards = DEFAULT_RELATED,
@@ -106,6 +108,7 @@ export default function SkillPage({
           name={userName}
           avatarSrc={avatarSrc}
           categories={categories}
+          onLogout={onLogout}
         />
       ) : (
         <Header categories={categories} />

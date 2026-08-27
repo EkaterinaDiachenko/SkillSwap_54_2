@@ -44,7 +44,9 @@ export const selectHasPreviousSteps = (state: RegistrationRootState) => {
     hasPersonalData: Boolean(
       personalData.name && personalData.birthDate && personalData.gender && personalData.city,
     ),
-    hasLearningSkill: Boolean(learningSkill.category && learningSkill.subcategory),
+    hasLearningSkill: Boolean(
+      learningSkill.categoryIds.length > 0 && learningSkill.subcategoryIds.length > 0,
+    ),
   }
 }
 

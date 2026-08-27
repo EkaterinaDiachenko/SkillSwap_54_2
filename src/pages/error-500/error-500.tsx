@@ -8,13 +8,21 @@ import styles from './error-500.module.css'
 export type Error500Props = {
   /** true — AuthHeader (авторизован), false — Header (гость) */
   isAuth: boolean
+  userName?: string
+  avatarSrc?: string
+  onLogout?: () => void
 }
 
 /**
  * Страница ошибки 500 — та же структура, что у Error404.
  * Отличаются только иллюстрация, заголовок и текст параграфа.
  */
-export function Error500({ isAuth }: Error500Props) {
+export function Error500({
+  isAuth,
+  userName = '',
+  avatarSrc,
+  onLogout,
+}: Error500Props) {
   // Пустой массив — мегаменю на странице ошибки не используется
   const categories: SkillCategory[] = []
 
@@ -22,9 +30,10 @@ export function Error500({ isAuth }: Error500Props) {
     <div className={styles.page}>
       {isAuth ? (
         <AuthHeader
-          name="Мария"
-          avatarSrc="/avatars/avatar-01.png"
+          name={userName}
+          avatarSrc={avatarSrc}
           categories={categories}
+          onLogout={onLogout}
         />
       ) : (
         <Header categories={categories} />

@@ -1,17 +1,26 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { RegisterLayout } from '@/widgets/register-layout'
 import { AboutRegisterChildren } from '@/widgets/about-register-children'
 import type { SelectOption } from '@/shared/ui/select'
 import { getCategoryOptions, getSubcategoryOptions } from '@/entities/skill'
 import { ROUTES } from '@/shared/lib/constants'
-import type { City } from '@/shared/types'
+import type { City, Gender } from '@/shared/types'
+import type { RegistrationDraft } from '@/features/registration/model'
 import {
   aboutRegisterSchema,
+  saveRegistrationDraft,
+  selectLearningSkill,
+  selectPersonalData,
+  selectRegistrationDraft,
+  setCurrentStep,
+  updateLearningSkill,
+  updatePersonalData,
   type AboutRegisterFormValues,
 } from '@/features/registration/model'
+import { useAppDispatch, useAppSelector } from '@/store/hooks'
 
 /** Варианты пола — значения совпадают с типом Gender */
 const GENDER_OPTIONS: SelectOption[] = [
@@ -42,16 +51,26 @@ const CITY_OPTIONS: SelectOption[] = (
 
 const CATEGORY_OPTIONS = getCategoryOptions()
 
+type LocationState = {
+  from?: string
+}
+
 /**
  * Второй шаг регистрации — личные данные.
  * Валидация подключена через react-hook-form + yup, UI не меняется.
  */
 export default function AboutRegisterPage() {
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const location = useLocation()
+  const personalData = useAppSelector(selectPersonalData)
+  const learningSkill = useAppSelector(selectLearningSkill)
+  const draft = useAppSelector(selectRegistrationDraft)
 
   const {
     watch,
     setValue,
+    reset,
     handleSubmit,
     formState: { errors, isSubmitted },
   } = useForm<AboutRegisterFormValues>({
@@ -59,14 +78,38 @@ export default function AboutRegisterPage() {
     mode: 'onSubmit',
     reValidateMode: 'onChange',
     defaultValues: {
-      name: '',
-      birthDate: undefined,
-      gender: '',
-      city: '',
-      category: [],
-      subcategory: [],
+      name: personalData.name,
+      birthDate: personalData.birthDate ? new Date(personalData.birthDate) : undefined,
+      gender: personalData.gender,
+      city: personalData.city,
+      category: learningSkill.categoryIds,
+      subcategory: learningSkill.subcategoryIds,
     },
   })
+
+  const learningCategoryIdsKey = learningSkill.categoryIds.join('|')
+  const learningSubcategoryIdsKey = learningSkill.subcategoryIds.join('|')
+
+  useEffect(() => {
+    reset({
+      name: personalData.name,
+      birthDate: personalData.birthDate ? new Date(personalData.birthDate) : undefined,
+      gender: personalData.gender,
+      city: personalData.city,
+      category: learningSkill.categoryIds,
+      subcategory: learningSkill.subcategoryIds,
+    })
+  }, [
+    learningCategoryIdsKey,
+    learningSubcategoryIdsKey,
+    learningSkill.categoryIds,
+    learningSkill.subcategoryIds,
+    personalData.birthDate,
+    personalData.city,
+    personalData.gender,
+    personalData.name,
+    reset,
+  ])
 
   const shouldValidate = { shouldValidate: isSubmitted }
   const selectedCategoryIds = watch('category')
@@ -76,12 +119,57 @@ export default function AboutRegisterPage() {
     [selectedCategoryIds],
   )
 
-  const handleNext = handleSubmit(() => {
-    navigate(ROUTES.REGISTER_STEP_3)
+  const handleNext = handleSubmit((values) => {
+    if (!values.birthDate) {
+      return
+    }
+
+    dispatch(
+      updatePersonalData({
+        name: values.name,
+        birthDate: values.birthDate.toISOString(),
+        gender: values.gender as Gender,
+        city: values.city as City,
+      }),
+    )
+    dispatch(
+      updateLearningSkill({
+        categoryIds: values.category,
+        subcategoryIds: values.subcategory,
+      }),
+    )
+
+    const updatedDraft: RegistrationDraft = {
+      ...draft,
+      personalData: {
+        ...personalData,
+        name: values.name,
+        birthDate: values.birthDate.toISOString(),
+        gender: values.gender as Gender,
+        city: values.city as City,
+      },
+      learningSkill: {
+        categoryIds: values.category,
+        subcategoryIds: values.subcategory,
+      },
+    }
+
+    saveRegistrationDraft(updatedDraft)
+    dispatch(setCurrentStep(3))
+
+    navigate(ROUTES.REGISTER_STEP_3, {
+      state: {
+        from: (location.state as LocationState | null)?.from,
+      },
+    })
   })
 
   const handleBack = () => {
-    navigate(ROUTES.REGISTER)
+    navigate(ROUTES.REGISTER, {
+      state: {
+        from: (location.state as LocationState | null)?.from,
+      },
+    })
   }
 
   const handleCategoryChange = (categoryIds: string[]) => {

@@ -18,6 +18,9 @@ export type CatalogPageProps = {
 
   userName?: string
   avatarSrc?: string
+  onLogout?: () => void
+  onLogin?: () => void
+  onRegister?: () => void
 
   selectedFilters: FiltersBarSelectedFilters
   onFilterChange: (next: FiltersBarSelectedFilters) => void
@@ -40,6 +43,9 @@ export default function CatalogPage({
   categories,
   userName,
   avatarSrc,
+  onLogout,
+  onLogin,
+  onRegister,
   selectedFilters,
   onFilterChange,
   onReset,
@@ -58,9 +64,10 @@ export default function CatalogPage({
           name={userName ?? ''}
           avatarSrc={avatarSrc}
           categories={categories}
+          onLogout={onLogout}
         />
       ) : (
-        <Header categories={categories} />
+        <Header categories={categories} onLogin={onLogin} onRegister={onRegister} />
       )}
 
       <main className={styles.main}>

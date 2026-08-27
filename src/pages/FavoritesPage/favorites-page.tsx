@@ -10,12 +10,18 @@ export type FavoriteCard = SkillCardProps & { id: string }
 
 export type FavoritesPageProps = {
   cards?: FavoriteCard[]
+  userName?: string
+  avatarSrc?: string
+  onLogout?: () => void
   onBackClick?: () => void
   className?: string
 }
 
 export default function FavoritesPage({
   cards = [],
+  userName = '',
+  avatarSrc,
+  onLogout,
   onBackClick,
   className,
 }: FavoritesPageProps) {
@@ -24,9 +30,10 @@ export default function FavoritesPage({
   return (
     <div className={clsx(styles.page, className)}>
       <AuthHeader
-        name="Мария"
-        avatarSrc="/avatars/avatar-01.png"
+        name={userName}
+        avatarSrc={avatarSrc}
         categories={categories}
+        onLogout={onLogout}
       />
 
       <main className={styles.main}>

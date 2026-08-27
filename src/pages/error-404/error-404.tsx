@@ -8,27 +8,34 @@ import styles from './error-404.module.css'
 export type Error404Props = {
   /** true — AuthHeader (авторизован), false — Header (гость) */
   isAuth: boolean
+  userName?: string
+  avatarSrc?: string
+  onLogout?: () => void
 }
 
 /**
  * Страница ошибки 404 — только композиция готовых виджетов, без бизнес-логики.
  * Хедер выбирается по флагу isAuth, основной блок центрирован, внизу Footer.
  */
-export function Error404({ isAuth }: Error404Props) {
+export function Error404({
+  isAuth,
+  userName = '',
+  avatarSrc,
+  onLogout,
+}: Error404Props) {
   // Header и Footer требуют categories; для UI-страницы достаточно пустого массива
   const categories: SkillCategory[] = []
 
   return (
     <div className={styles.page}>
       {isAuth ? (
-        // Макет: авторизованный пользователь «Мария» с аватаром
         <AuthHeader
-          name="Мария"
-          avatarSrc="/avatars/avatar-01.png"
+          name={userName}
+          avatarSrc={avatarSrc}
           categories={categories}
+          onLogout={onLogout}
         />
       ) : (
-        // Макет: гость — кнопки «Войти» / «Зарегистрироваться»
         <Header categories={categories} />
       )}
 
