@@ -5,9 +5,14 @@ import styles from './related-cards.module.css'
 
 const VISIBLE_COUNT = 4
 
+export type RelatedCard = SkillCardProps & {
+  skillId: string
+}
+
 export type RelatedCardsProps = {
-  cards: SkillCardProps[]
+  cards: RelatedCard[]
   title?: string
+  onCardDetailsClick: (skillId: string) => void
   onShowMore?: () => void
   className?: string
 }
@@ -16,6 +21,7 @@ export function RelatedCards({
   cards,
   title = 'Похожие предложения',
   onShowMore,
+  onCardDetailsClick,
   className,
 }: RelatedCardsProps) {
   const hasMore = cards.length > VISIBLE_COUNT
@@ -31,6 +37,7 @@ export function RelatedCards({
               key={`${card.name}-${index}`}
               className={styles.card}
               {...card}
+              onDetailsClick={() => onCardDetailsClick(card.skillId)}
             />
           ))}
         </div>
