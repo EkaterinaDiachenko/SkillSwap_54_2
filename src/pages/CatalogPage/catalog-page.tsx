@@ -1,13 +1,10 @@
-
 import type { SkillCategory } from '@/entities/skill'
-import { FiltersBar } from "@/widgets/filters-bar";
-import type {
-  FiltersBarSelectedFilters,
-} from '@/widgets/filters-bar'
-import { Footer } from "@/widgets/footer";
-import { AuthHeader, Header } from "@/widgets/header";
-import { RecommendationSection } from "@/widgets/recommendation-section";
-import { SkillSection } from "@/widgets/skill-section";
+import { FiltersBar } from '@/widgets/filters-bar'
+import type { FiltersBarSelectedFilters } from '@/widgets/filters-bar'
+import { Footer } from '@/widgets/footer'
+import { AuthHeader, Header } from '@/widgets/header'
+import { RecommendationSection } from '@/widgets/recommendation-section'
+import { SkillSection } from '@/widgets/skill-section'
 import type { SkillCardProps } from '@/widgets/skill-card'
 import styles from './catalog-page.module.css'
 
@@ -33,6 +30,10 @@ export type CatalogPageProps = {
   onShowPopular: () => void
   onShowNew: () => void
 
+  onLogin: () => void
+  onRegister: () => void
+  onProfileClick: () => void
+  onFavoritesClick: () => void
 }
 
 export default function CatalogPage({
@@ -40,6 +41,10 @@ export default function CatalogPage({
   categories,
   userName,
   avatarSrc,
+  onLogin,
+  onRegister,
+  onProfileClick,
+  onFavoritesClick,
   selectedFilters,
   onFilterChange,
   onReset,
@@ -58,9 +63,11 @@ export default function CatalogPage({
           name={userName ?? ''}
           avatarSrc={avatarSrc}
           categories={categories}
+          onProfileClick={onProfileClick}
+          onFavoritesClick={onFavoritesClick}
         />
       ) : (
-        <Header categories={categories} />
+        <Header categories={categories} onLogin={onLogin} onRegister={onRegister} />
       )}
 
       <main className={styles.main}>
@@ -73,22 +80,11 @@ export default function CatalogPage({
         />
 
         <div className={styles.content}>
-          <SkillSection
-            title="Популярное"
-            skillCards={popularCards}
-            onShowAll={onShowPopular}
-          />
+          <SkillSection title="Популярное" skillCards={popularCards} onShowAll={onShowPopular} />
 
-          <SkillSection
-            title="Новое"
-            skillCards={newCards}
-            onShowAll={onShowNew}
-          />
+          <SkillSection title="Новое" skillCards={newCards} onShowAll={onShowNew} />
 
-          <RecommendationSection
-            skillCards={recommendationCards}
-            isLoading={isLoading}
-          />
+          <RecommendationSection skillCards={recommendationCards} isLoading={isLoading} />
         </div>
       </main>
 

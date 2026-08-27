@@ -1,15 +1,12 @@
 import { useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, type Location } from 'react-router-dom'
 import { RegisterLayout } from '@/widgets/register-layout'
 import { SkillRegisterChildren } from '@/widgets/skill-register-children'
 import { getCategoryOptions, getSubcategoryOptions } from '@/entities/skill'
 import { ROUTES } from '@/shared/lib/constants'
-import {
-  skillRegisterSchema,
-  type SkillRegisterFormValues,
-} from '@/features/registration/model'
+import { skillRegisterSchema, type SkillRegisterFormValues } from '@/features/registration/model'
 
 const CATEGORY_OPTIONS = getCategoryOptions()
 
@@ -19,6 +16,8 @@ const CATEGORY_OPTIONS = getCategoryOptions()
  */
 export default function SkillRegisterPage() {
   const navigate = useNavigate()
+  const location = useLocation()
+  const state = location.state as { from?: Location } | null
 
   const {
     watch,
@@ -46,11 +45,20 @@ export default function SkillRegisterPage() {
   )
 
   const handleNext = handleSubmit(() => {
-    navigate(ROUTES.HOME)
+    navigate(ROUTES.REGISTER_PREVIEW, {
+      state: {
+        backgroundLocation: location,
+        from: state?.from,
+      },
+    })
   })
 
   const handleBack = () => {
-    navigate(ROUTES.REGISTER_STEP_2)
+    navigate(ROUTES.REGISTER_STEP_2, {
+      state: {
+        from: state?.from,
+      },
+    })
   }
 
   const handleCategoryChange = (categoryId: string) => {
@@ -58,8 +66,15 @@ export default function SkillRegisterPage() {
     setValue('subcategory', '', shouldValidate)
   }
 
+  const handleClose = () => {
+    const from = state?.from
+
+    navigate(from ? `${from.pathname}${from.search}${from.hash}` : ROUTES.HOME, { replace: true })
+  }
+
   return (
     <RegisterLayout
+      onClose={handleClose}
       currentStep={3}
       totalSteps={3}
       image="board"

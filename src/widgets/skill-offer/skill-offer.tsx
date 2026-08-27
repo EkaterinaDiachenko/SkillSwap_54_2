@@ -27,13 +27,18 @@ export function SkillOffer({
   images,
   activeImage,
   className,
+  onButtonClick,
 }: SkillOfferProps) {
   return (
     <article className={[styles.offer, className].filter(Boolean).join(' ')}>
       <div className={styles.actions}>
-        <IconButton iconName="like" aria-label="В избранное" className={styles.actionButton}/>
-        <IconButton iconName="share" aria-label="Поделиться" className={styles.actionButton}/>
-        <IconButton iconName="more-square" aria-label="Дополнительные действия" className={styles.actionButton}/>
+        <IconButton iconName="like" aria-label="В избранное" className={styles.actionButton} />
+        <IconButton iconName="share" aria-label="Поделиться" className={styles.actionButton} />
+        <IconButton
+          iconName="more-square"
+          aria-label="Дополнительные действия"
+          className={styles.actionButton}
+        />
       </div>
 
       <div className={styles.content}>
@@ -46,6 +51,7 @@ export function SkillOffer({
           buttonText={buttonText}
           showDualButtons={showDualButtons}
           className={styles.details}
+          onButtonClick={onButtonClick}
         />
         <SkillGallery images={images} activeImage={activeImage} className={styles.gallery} />
       </div>

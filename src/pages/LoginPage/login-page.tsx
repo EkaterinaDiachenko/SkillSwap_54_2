@@ -68,17 +68,10 @@ export function LoginPage({
           </div>
 
           <div className={styles.rightColumn}>
-            <Illustration
-              name="lamp"
-              size={300}
-              alt="Иллюстрация лампочки"
-            />
-            <h2 className={styles.title}>
-              С возвращением в SkillSwap!
-            </h2>
+            <Illustration name="lamp" size={300} alt="Иллюстрация лампочки" />
+            <h2 className={styles.title}>С возвращением в SkillSwap!</h2>
             <p className={styles.description}>
-              Войдите в аккаунт, чтобы продолжить обмениваться
-              знаниями и навыками с другими людьми
+              Войдите в аккаунт, чтобы продолжить обмениваться знаниями и навыками с другими людьми
             </p>
           </div>
         </div>

@@ -10,6 +10,9 @@ export const ROUTES = {
   REGISTER_STEP_3: '/register/3',
   ERROR_404: '/404',
   ERROR_500: '/500',
+  REGISTER_PREVIEW: '/register/preview',
+  OFFER_CONFIRM: '/offer-confirm',
+  EXCHANGE_OFFER: '/exchange-offer',
 } as const
 
 export const LOCAL_STORAGE_KEYS = {
