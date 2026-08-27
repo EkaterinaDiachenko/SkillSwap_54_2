@@ -10,6 +10,7 @@ export const ROUTES = {
   REGISTER_STEP_3: '/register/3',
   REGISTER_PREVIEW: '/register/preview',
   OFFER_CONFIRM: '/offer-confirm',
+  EXCHANGE_OFFER: '/exchange-offer',
   ERROR_404: '/404',
   ERROR_500: '/500',
 } as const

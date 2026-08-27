@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, type Location } from 'react-router-dom'
 import { RegisterLayout } from '@/widgets/register-layout'
 import { WelcomeRegisterChildren } from '@/widgets/welcome-register-children'
 import { ROUTES } from '@/shared/lib/constants'
@@ -18,7 +18,7 @@ import {
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 
 type LocationState = {
-  from?: string
+  from?: Location
 }
 
 /**
@@ -31,6 +31,7 @@ export default function WelcomeRegisterPage() {
   const location = useLocation()
   const credentials = useAppSelector(selectCredentials)
   const draft = useAppSelector(selectRegistrationDraft)
+  const state = location.state as LocationState | null
 
   const {
     watch,
@@ -80,13 +81,18 @@ export default function WelcomeRegisterPage() {
 
     navigate(ROUTES.REGISTER_STEP_2, {
       state: {
-        from: (location.state as LocationState | null)?.from,
+        from: state?.from,
       },
     })
   })
 
+  const handleClose = () => {
+    navigate(ROUTES.HOME, { replace: true })
+  }
+
   return (
     <RegisterLayout
+      onClose={handleClose}
       currentStep={1}
       totalSteps={3}
       image="lamp"

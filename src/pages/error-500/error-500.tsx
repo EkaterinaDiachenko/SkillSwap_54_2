@@ -8,9 +8,15 @@ import styles from './error-500.module.css'
 export type Error500Props = {
   /** true — AuthHeader (авторизован), false — Header (гость) */
   isAuth: boolean
+  categories?: SkillCategory[]
   userName?: string
   avatarSrc?: string
   onLogout?: () => void
+  onLogin?: () => void
+  onRegister?: () => void
+  onProfileClick?: () => void
+  onFavoritesClick?: () => void
+  onHomeClick?: () => void
 }
 
 /**
@@ -19,13 +25,16 @@ export type Error500Props = {
  */
 export function Error500({
   isAuth,
+  categories = [],
   userName = '',
   avatarSrc,
   onLogout,
+  onLogin,
+  onRegister,
+  onProfileClick,
+  onFavoritesClick,
+  onHomeClick,
 }: Error500Props) {
-  // Пустой массив — мегаменю на странице ошибки не используется
-  const categories: SkillCategory[] = []
-
   return (
     <div className={styles.page}>
       {isAuth ? (
@@ -34,9 +43,11 @@ export function Error500({
           avatarSrc={avatarSrc}
           categories={categories}
           onLogout={onLogout}
+          onProfileClick={onProfileClick}
+          onFavoritesClick={onFavoritesClick}
         />
       ) : (
-        <Header categories={categories} />
+        <Header categories={categories} onLogin={onLogin} onRegister={onRegister} />
       )}
 
       <main className={styles.content}>
@@ -48,15 +59,13 @@ export function Error500({
 
         <h1 className={styles.title}>На сервере произошла ошибка</h1>
 
-        <p className={styles.description}>
-          Попробуйте позже или вернитесь на главную страницу
-        </p>
+        <p className={styles.description}>Попробуйте позже или вернитесь на главную страницу</p>
 
         <div className={styles.actions}>
           <Button variant="secondary" type="button">
             Сообщить об ошибке
           </Button>
-          <Button variant="primary" type="button">
+          <Button variant="primary" type="button" onClick={onHomeClick}>
             На главную
           </Button>
         </div>

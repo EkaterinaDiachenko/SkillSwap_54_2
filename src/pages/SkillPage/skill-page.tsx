@@ -23,6 +23,12 @@ export type SkillPageProps = {
   owner: SkillOwnerCardProps
   offer: Omit<SkillOfferProps, 'className'>
   relatedCards: SkillCardProps[]
+  onLogin?: () => void
+  onRegister?: () => void
+  onProfileClick?: () => void
+  onFavoritesClick?: () => void
+  onOfferClick?: () => void
+  isExchangeOffered?: boolean
 }
 
 const DEFAULT_OWNER: SkillOwnerCardProps = {
@@ -30,8 +36,7 @@ const DEFAULT_OWNER: SkillOwnerCardProps = {
   name: 'Иван',
   city: 'Санкт-Петербург',
   age: 34,
-  about:
-    'Привет! Люблю ритм, кофе по утрам и людей, которые не боятся пробовать новое.',
+  about: 'Привет! Люблю ритм, кофе по утрам и людей, которые не боятся пробовать новое.',
   canTeach: ['Английский язык'],
   wantsToLearn: ['Тайм менеджмент', 'Медитация'],
 }
@@ -100,6 +105,12 @@ export default function SkillPage({
   owner = DEFAULT_OWNER,
   offer = DEFAULT_OFFER,
   relatedCards = DEFAULT_RELATED,
+  onLogin,
+  onRegister,
+  onProfileClick,
+  onFavoritesClick,
+  onOfferClick,
+  isExchangeOffered = false,
 }: Partial<SkillPageProps> = {}) {
   return (
     <div className={styles.page}>
@@ -109,15 +120,23 @@ export default function SkillPage({
           avatarSrc={avatarSrc}
           categories={categories}
           onLogout={onLogout}
+          onProfileClick={onProfileClick}
+          onFavoritesClick={onFavoritesClick}
         />
       ) : (
-        <Header categories={categories} />
+        <Header categories={categories} onLogin={onLogin} onRegister={onRegister} />
       )}
 
       <main className={styles.main}>
         <div className={styles.hero}>
           <SkillOwnerCard {...owner} className={styles.owner} />
-          <SkillOffer {...offer} className={styles.offer} />
+          <SkillOffer
+            {...offer}
+            variant={isExchangeOffered ? 'secondary' : offer.variant}
+            buttonText={isExchangeOffered ? 'Обмен предложен' : offer.buttonText}
+            className={styles.offer}
+            onButtonClick={isExchangeOffered ? undefined : onOfferClick}
+          />
         </div>
 
         <RelatedCards cards={relatedCards} />

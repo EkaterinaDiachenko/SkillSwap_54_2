@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, type Location } from 'react-router-dom'
 import { RegisterLayout } from '@/widgets/register-layout'
 import { AboutRegisterChildren } from '@/widgets/about-register-children'
 import type { SelectOption } from '@/shared/ui/select'
@@ -52,7 +52,7 @@ const CITY_OPTIONS: SelectOption[] = (
 const CATEGORY_OPTIONS = getCategoryOptions()
 
 type LocationState = {
-  from?: string
+  from?: Location
 }
 
 /**
@@ -66,6 +66,7 @@ export default function AboutRegisterPage() {
   const personalData = useAppSelector(selectPersonalData)
   const learningSkill = useAppSelector(selectLearningSkill)
   const draft = useAppSelector(selectRegistrationDraft)
+  const state = location.state as LocationState | null
 
   const {
     watch,
@@ -159,7 +160,7 @@ export default function AboutRegisterPage() {
 
     navigate(ROUTES.REGISTER_STEP_3, {
       state: {
-        from: (location.state as LocationState | null)?.from,
+        from: state?.from,
       },
     })
   })
@@ -167,7 +168,7 @@ export default function AboutRegisterPage() {
   const handleBack = () => {
     navigate(ROUTES.REGISTER, {
       state: {
-        from: (location.state as LocationState | null)?.from,
+        from: state?.from,
       },
     })
   }
@@ -184,8 +185,13 @@ export default function AboutRegisterPage() {
     setValue('subcategory', nextSubcategoryIds, shouldValidate)
   }
 
+  const handleClose = () => {
+    navigate(ROUTES.HOME, { replace: true })
+  }
+
   return (
     <RegisterLayout
+      onClose={handleClose}
       currentStep={2}
       totalSteps={3}
       image="user"

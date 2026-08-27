@@ -15,18 +15,11 @@ export type RegisterHeaderProps = {
  */
 export function RegisterHeader({ onClose, className }: RegisterHeaderProps) {
   return (
-    <header
-      className={[styles.registerHeader, className].filter(Boolean).join(' ')}
-    >
+    <header className={[styles.registerHeader, className].filter(Boolean).join(' ')}>
       <Logo />
 
       {/* tertiary — белая кнопка с обводкой по макету */}
-      <Button
-        type="button"
-        variant="tertiary"
-        className={styles.closeButton}
-        onClick={onClose}
-      >
+      <Button type="button" variant="tertiary" className={styles.closeButton} onClick={onClose}>
         Закрыть
         <Icon name="cross" size={24} aria-hidden="true" />
       </Button>

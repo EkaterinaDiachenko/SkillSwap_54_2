@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, type Location } from 'react-router-dom'
 import {
   loginSchema,
   loginUser,
@@ -13,7 +13,15 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { LoginPageUI } from './login-page'
 
 type LocationState = {
-  from?: string
+  from?: Location
+}
+
+function getFromPath(from: Location | undefined): string {
+  if (!from) {
+    return ROUTES.HOME
+  }
+
+  return `${from.pathname}${from.search}${from.hash}`
 }
 
 export default function LoginPage() {
@@ -39,18 +47,16 @@ export default function LoginPage() {
   })
 
   const shouldValidate = { shouldValidate: isSubmitted }
+  const from = (location.state as LocationState | null)?.from
 
   const handleClose = () => {
-    const from = (location.state as LocationState | null)?.from ?? ROUTES.HOME
-    navigate(from, { replace: true })
+    navigate(getFromPath(from), { replace: true })
   }
 
   const handleLogin = handleSubmit(async (values) => {
     try {
       await dispatch(loginUser(values)).unwrap()
-
-      const from = (location.state as LocationState | null)?.from ?? ROUTES.HOME
-      navigate(from, { replace: true })
+      navigate(getFromPath(from), { replace: true })
     } catch {
       setValue('email', values.email)
       setValue('password', values.password)

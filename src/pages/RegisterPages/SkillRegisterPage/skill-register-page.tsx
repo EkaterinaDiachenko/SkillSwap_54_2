@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, type Location } from 'react-router-dom'
 import { RegisterLayout } from '@/widgets/register-layout'
 import { SkillRegisterChildren } from '@/widgets/skill-register-children'
 import { getCategoryOptions, getSubcategoryOptions } from '@/entities/skill'
@@ -24,7 +24,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks'
 const CATEGORY_OPTIONS = getCategoryOptions()
 
 type LocationState = {
-  from?: string
+  from?: Location
 }
 
 /**
@@ -37,6 +37,7 @@ export default function SkillRegisterPage() {
   const location = useLocation()
   const offer = useAppSelector(selectOffer)
   const draft = useAppSelector(selectRegistrationDraft)
+  const state = location.state as LocationState | null
   const [saveError, setSaveError] = useState<string | null>(null)
 
   const {
@@ -133,7 +134,7 @@ export default function SkillRegisterPage() {
 
       navigate(ROUTES.REGISTER_PREVIEW, {
         state: {
-          from: (location.state as LocationState | null)?.from,
+          from: state?.from,
           backgroundLocation: location,
         },
       })
@@ -145,7 +146,7 @@ export default function SkillRegisterPage() {
   const handleBack = () => {
     navigate(ROUTES.REGISTER_STEP_2, {
       state: {
-        from: (location.state as LocationState | null)?.from,
+        from: state?.from,
       },
     })
   }
@@ -155,8 +156,13 @@ export default function SkillRegisterPage() {
     setValue('subcategory', '', shouldValidate)
   }
 
+  const handleClose = () => {
+    navigate(ROUTES.HOME, { replace: true })
+  }
+
   return (
     <RegisterLayout
+      onClose={handleClose}
       currentStep={3}
       totalSteps={3}
       image="board"
