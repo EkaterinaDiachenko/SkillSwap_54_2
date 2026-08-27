@@ -10,23 +10,33 @@ export type FavoriteCard = SkillCardProps & { id: string }
 
 export type FavoritesPageProps = {
   cards?: FavoriteCard[]
+  userName?: string
+  avatarSrc?: string
+  categories?: SkillCategory[]
   onBackClick?: () => void
   className?: string
+  onProfileClick?: () => void
+  onFavoritesClick?: () => void
 }
 
 export default function FavoritesPage({
   cards = [],
+  userName = '',
+  avatarSrc,
+  categories = [],
   onBackClick,
   className,
+  onProfileClick,
+  onFavoritesClick,
 }: FavoritesPageProps) {
-  const categories: SkillCategory[] = []
-
   return (
     <div className={clsx(styles.page, className)}>
       <AuthHeader
-        name="Мария"
-        avatarSrc="/avatars/avatar-01.png"
+        name={userName}
+        avatarSrc={avatarSrc}
         categories={categories}
+        onProfileClick={onProfileClick}
+        onFavoritesClick={onFavoritesClick}
       />
 
       <main className={styles.main}>
@@ -36,21 +46,13 @@ export default function FavoritesPage({
           {cards.length > 0 ? (
             <div className={styles.grid}>
               {cards.map(({ id, ...cardProps }) => (
-                <SkillCard
-                  key={id}
-                  {...cardProps}
-                  className={styles.card}
-                />
+                <SkillCard key={id} {...cardProps} className={styles.card} />
               ))}
             </div>
           ) : (
             <div className={styles.empty}>
               <p className={styles.emptyText}>В избранном пока ничего нет</p>
-              <Button
-                type="button"
-                variant="primary"
-                onClick={onBackClick}
-              >
+              <Button type="button" variant="primary" onClick={onBackClick}>
                 Вернуться в каталог
               </Button>
             </div>

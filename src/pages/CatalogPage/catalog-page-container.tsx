@@ -14,9 +14,20 @@ import {
   selectRecommendedCards,
 } from '@/features/catalog/model'
 import { useAppSelector } from '@/store/hooks'
-import { CatalogPageUI } from './catalog-page'
+import { CatalogPageUI, type CatalogPageProps } from './catalog-page'
 
-export default function CatalogPage() {
+type CatalogPageContainerProps = Pick<
+  CatalogPageProps,
+  | 'isAuth'
+  | 'userName'
+  | 'avatarSrc'
+  | 'onLogin'
+  | 'onRegister'
+  | 'onProfileClick'
+  | 'onFavoritesClick'
+>
+
+export default function CatalogPage({ isAuth, userName, avatarSrc, onLogin, onRegister, onProfileClick, onFavoritesClick }: CatalogPageContainerProps) {
   const allCards = useAppSelector(selectAllCatalogCards)
   const popularCards = useAppSelector(selectPopularCards)
   const newCards = useAppSelector(selectNewCards)
@@ -28,7 +39,13 @@ export default function CatalogPage() {
 
   return (
     <CatalogPageUI
-      isAuth={false}
+      isAuth={isAuth}
+      userName={userName}
+      avatarSrc={avatarSrc}
+      onLogin={onLogin}
+      onRegister={onRegister}
+      onProfileClick={onProfileClick}
+      onFavoritesClick={onFavoritesClick}
       categories={SKILL_CATEGORIES}
       selectedFilters={{}}
       onFilterChange={() => undefined}

@@ -2,10 +2,7 @@ import type { ReactNode } from 'react'
 import clsx from 'clsx'
 import { RegisterHeader } from '@/widgets/header'
 import { RegistrationSteps } from '@/shared/ui/registration-steps'
-import {
-  Illustration,
-  type IllustrationName,
-} from '@/shared/ui/illustration'
+import { Illustration, type IllustrationName } from '@/shared/ui/illustration'
 import styles from './register-layout.module.css'
 
 export type RegisterLayoutProps = {
@@ -16,6 +13,7 @@ export type RegisterLayoutProps = {
   description?: string
   children: ReactNode
   className?: string
+  onClose?: () => void
 }
 
 /**
@@ -30,11 +28,12 @@ export function RegisterLayout({
   description,
   children,
   className,
+  onClose,
 }: RegisterLayoutProps) {
   return (
     <div className={clsx(styles.page, className)}>
       <div className={styles.header}>
-        <RegisterHeader />
+        <RegisterHeader onClose={onClose} />
         <RegistrationSteps
           className={styles.steps}
           currentStep={currentStep}
@@ -46,15 +45,9 @@ export function RegisterLayout({
         <div className={styles.form}>{children}</div>
 
         <section className={styles.info}>
-          <Illustration
-            name={image}
-            className={styles.illustration}
-            alt=""
-          />
+          <Illustration name={image} className={styles.illustration} alt="" />
           <h1 className={styles.title}>{title}</h1>
-          {description ? (
-            <p className={styles.description}>{description}</p>
-          ) : null}
+          {description ? <p className={styles.description}>{description}</p> : null}
         </section>
       </main>
     </div>

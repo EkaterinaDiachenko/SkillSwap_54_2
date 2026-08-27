@@ -1,17 +1,14 @@
 import { useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, type Location } from 'react-router-dom'
 import { RegisterLayout } from '@/widgets/register-layout'
 import { AboutRegisterChildren } from '@/widgets/about-register-children'
 import type { SelectOption } from '@/shared/ui/select'
 import { getCategoryOptions, getSubcategoryOptions } from '@/entities/skill'
 import { ROUTES } from '@/shared/lib/constants'
 import type { City } from '@/shared/types'
-import {
-  aboutRegisterSchema,
-  type AboutRegisterFormValues,
-} from '@/features/registration/model'
+import { aboutRegisterSchema, type AboutRegisterFormValues } from '@/features/registration/model'
 
 /** Варианты пола — значения совпадают с типом Gender */
 const GENDER_OPTIONS: SelectOption[] = [
@@ -48,6 +45,8 @@ const CATEGORY_OPTIONS = getCategoryOptions()
  */
 export default function AboutRegisterPage() {
   const navigate = useNavigate()
+  const location = useLocation()
+  const state = location.state as { from?: Location } | null
 
   const {
     watch,
@@ -77,11 +76,19 @@ export default function AboutRegisterPage() {
   )
 
   const handleNext = handleSubmit(() => {
-    navigate(ROUTES.REGISTER_STEP_3)
+    navigate(ROUTES.REGISTER_STEP_3, {
+      state: {
+        from: state?.from,
+      },
+    })
   })
 
   const handleBack = () => {
-    navigate(ROUTES.REGISTER)
+    navigate(ROUTES.REGISTER, {
+      state: {
+        from: state?.from,
+      },
+    })
   }
 
   const handleCategoryChange = (categoryIds: string[]) => {
@@ -96,8 +103,13 @@ export default function AboutRegisterPage() {
     setValue('subcategory', nextSubcategoryIds, shouldValidate)
   }
 
+  const handleClose = () => {
+    navigate(ROUTES.HOME, { replace: true })
+  }
+
   return (
     <RegisterLayout
+      onClose={handleClose}
       currentStep={2}
       totalSteps={3}
       image="user"

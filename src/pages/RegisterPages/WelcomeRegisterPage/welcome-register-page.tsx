@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, type Location } from 'react-router-dom'
 import { RegisterLayout } from '@/widgets/register-layout'
 import { WelcomeRegisterChildren } from '@/widgets/welcome-register-children'
 import { ROUTES } from '@/shared/lib/constants'
@@ -15,6 +15,8 @@ import {
  */
 export default function WelcomeRegisterPage() {
   const navigate = useNavigate()
+  const location = useLocation()
+  const state = location.state as { from?: Location } | null
 
   const {
     watch,
@@ -45,13 +47,21 @@ export default function WelcomeRegisterPage() {
     setValue('password', value, { shouldValidate: isSubmitted })
   }
 
-  /** При успешной валидации переходим на второй шаг */
   const handleNext = handleSubmit(() => {
-    navigate(ROUTES.REGISTER_STEP_2)
+    navigate(ROUTES.REGISTER_STEP_2, {
+      state: {
+        from: state?.from,
+      },
+    })
   })
+
+  const handleClose = () => {
+    navigate(ROUTES.HOME, { replace: true })
+  }
 
   return (
     <RegisterLayout
+      onClose={handleClose}
       currentStep={1}
       totalSteps={3}
       image="lamp"

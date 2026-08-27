@@ -1,11 +1,14 @@
 import { StoreProvider } from './providers/StoreProvider'
 import { AppRouter } from './providers/RouterProvider'
 import './styles/global.css'
+import { BrowserRouter } from 'react-router-dom'
 
 export function App() {
   return (
     <StoreProvider>
-      <AppRouter />
+      <BrowserRouter>
+        <AppRouter />
+      </BrowserRouter>
     </StoreProvider>
   )
 }

@@ -39,6 +39,11 @@ export type CatalogPageProps = {
 
   onShowPopular: () => void
   onShowNew: () => void
+
+  onLogin: () => void
+  onRegister: () => void
+  onProfileClick: () => void
+  onFavoritesClick: () => void
 }
 
 export function CatalogPageUI({
@@ -58,6 +63,10 @@ export function CatalogPageUI({
   loadError,
   onShowPopular,
   onShowNew,
+  onLogin,
+  onRegister,
+  onProfileClick,
+  onFavoritesClick,
 }: CatalogPageProps) {
   const isEmpty = !isLoading && !loadError && allCards.length === 0
   const shouldShowSections = !isLoading && !loadError && allCards.length > 0
@@ -69,9 +78,15 @@ export function CatalogPageUI({
           name={userName ?? ''}
           avatarSrc={avatarSrc}
           categories={categories}
+          onProfileClick={onProfileClick}
+          onFavoritesClick={onFavoritesClick}
         />
       ) : (
-        <Header categories={categories} />
+        <Header
+          categories={categories}
+          onLogin={onLogin}
+          onRegister={onRegister}
+        />
       )}
 
       <main className={styles.main}>
