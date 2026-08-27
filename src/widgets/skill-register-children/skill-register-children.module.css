@@ -57,7 +57,6 @@
 
 .upload :global([class*='dropzone']) {
   box-sizing: border-box;
-  /* height: 96px; */
   min-height: 96px;
   padding: 4px 20px;
   border-width: 1px;
@@ -67,7 +66,6 @@
 .upload :global([class*='content']) {
   gap: 2px;
 }
-
 
 .upload :global([class*='iconButton']),
 .upload :global([class*='iconButton']):hover:not(:disabled),
