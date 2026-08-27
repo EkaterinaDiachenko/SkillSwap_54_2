@@ -7,7 +7,7 @@ export interface SkillSectionProps {
   /** Заголовок секции (например, "Популярное" / "Новое") */
   title: string
   /** Массив карточек для отображения */
-  skillCards: SkillCardProps[]
+  skillCards: Array<SkillCardProps & { skillId: string }>
   /** Колбэк при клике на "Смотреть все" */
   onShowAll: () => void
   /** Дополнительный CSS-класс */
@@ -37,9 +37,9 @@ export function SkillSection({
 
       {/* Сетка карточек */}
       <div className={styles.cards}>
-        {skillCards.map((card, index) => (
+        {skillCards.map((card) => (
           <SkillCard
-            key={index}
+            key={card.skillId}
             {...card}
             className={styles.skillCard}
           />
