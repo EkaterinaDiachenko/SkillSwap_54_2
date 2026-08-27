@@ -288,6 +288,7 @@ export function Select({
                     key={option.value}
                     className={clsx(
                       styles.option,
+                      multiple && styles.optionMultiple,
                       isSelected && !multiple && styles.optionSelected,
                     )}
                     role="option"
