@@ -1,48 +1,55 @@
 import { Tag, type Color } from '@/shared/ui/tag'
 import styles from './skill-exchange-info.module.css'
 
-export type SkillExchangeInfoProps = {
-  canTeach: string[]
-  wantsToLearn: string[]
+export type SkillTagData = {
+  title: string
+  color: Color
 }
 
-const tagColors: Color[] = [
-  'art',
-  'education',
-  'health',
-  'business',
-  'languages',
-  'home',
-]
+export type SkillExchangeInfoProps = {
+  canTeach: SkillTagData[]
+  wantsToLearn: SkillTagData[]
+}
 
-export function SkillExchangeInfo({ canTeach, wantsToLearn }: SkillExchangeInfoProps) {
-
+export function SkillExchangeInfo({
+  canTeach,
+  wantsToLearn,
+}: SkillExchangeInfoProps) {
   const skillCanTeach = canTeach[0]
   const skillsWantsToLearn = wantsToLearn.slice(0, 2)
-  const otherSkills = wantsToLearn.length - skillsWantsToLearn.length
+  const otherSkills =
+    wantsToLearn.length - skillsWantsToLearn.length
 
   return (
     <div className={styles.container}>
       <div className={styles.section}>
         <h4 className={styles.title}>Может научить:</h4>
-        {skillCanTeach && <Tag label={skillCanTeach} color={tagColors[0]} />}
+
+        {skillCanTeach && (
+          <Tag
+            label={skillCanTeach.title}
+            color={skillCanTeach.color}
+          />
+        )}
       </div>
 
       <div className={styles.section}>
         <h4 className={styles.title}>Хочет научиться:</h4>
 
         <div className={styles.tags}>
-        {skillsWantsToLearn.map((skill, index) => (
-          <Tag
-            key={`${skill}-${index}`}
-            label={skill}
-            color={tagColors[(index + 1) % tagColors.length]}
-          />
-        ))}
+          {skillsWantsToLearn.map((skill, index) => (
+            <Tag
+              key={`${skill.title}-${index}`}
+              label={skill.title}
+              color={skill.color}
+            />
+          ))}
 
-        {otherSkills > 0 && (<Tag label={`+${otherSkills}`} color='more' />)}
+          {otherSkills > 0 && (
+            <Tag label={`+${otherSkills}`} color="more" />
+          )}
+        </div>
       </div>
-    </div>
     </div>
   )
 }

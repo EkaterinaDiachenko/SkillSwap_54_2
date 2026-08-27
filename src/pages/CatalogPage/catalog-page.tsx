@@ -12,6 +12,7 @@ import { RecommendationSection } from '@/widgets/recommendation-section'
 import { SkillSection } from '@/widgets/skill-section'
 import type { CatalogCard } from '@/features/catalog-filters/model'
 import styles from './catalog-page.module.css'
+import type { RefObject } from 'react'
 
 export type CatalogPageProps = {
   isAuth: boolean
@@ -44,6 +45,9 @@ export type CatalogPageProps = {
 
   isLoading: boolean
   loadError?: string | null
+  isLoadingMore: boolean
+  hasMore: boolean
+  loadMoreRef: RefObject<HTMLDivElement>
 
   onShowPopular: () => void
   onShowNew: () => void
@@ -85,6 +89,9 @@ export function CatalogPageUI({
   onRegister,
   onProfileClick,
   onFavoritesClick,
+  isLoadingMore,
+  hasMore,
+  loadMoreRef,
 }: CatalogPageProps) {
   const isEmpty = !isLoading && !loadError && allCards.length === 0
   const shouldShowSections = !isLoading && !loadError && allCards.length > 0
@@ -157,7 +164,9 @@ export function CatalogPageUI({
 
               <RecommendationSection
                 skillCards={recommendationCards}
-                isLoading={isLoading}
+                isLoadingMore={isLoadingMore}
+                hasMore={hasMore}
+                loadMoreRef={loadMoreRef}
               />
             </>
           )}
