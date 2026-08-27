@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { lazy, Suspense, useEffect, useRef } from 'react'
-import { SKILL_CATEGORIES } from '@/entities/skill'
 import { ROUTES } from '@/shared/lib/constants'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { loadUsers, selectUsersLoading } from '@/entities/user/model'
@@ -53,22 +52,7 @@ export function AppRouter() {
           <Routes>
             <Route
               path={ROUTES.HOME}
-              element={
-                <CatalogPage
-                  isAuth={false}
-                  categories={SKILL_CATEGORIES}
-                  selectedFilters={{}}
-                  onFilterChange={() => undefined}
-                  onReset={() => undefined}
-                  cities={[]}
-                  recommendationCards={[]}
-                  popularCards={[]}
-                  newCards={[]}
-                  isLoading={false}
-                  onShowPopular={() => undefined}
-                  onShowNew={() => undefined}
-                />
-              }
+              element={<CatalogPage />}
             />
             <Route path={ROUTES.SKILL} element={<SkillPage />} />
             <Route path={ROUTES.FAVORITES} element={<FavoritesPage />} />

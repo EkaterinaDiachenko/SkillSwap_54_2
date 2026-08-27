@@ -9,6 +9,7 @@ import styles from './skill-card.module.css'
 
 export type SkillCardProps = UserSummaryProps &
   SkillExchangeInfoProps & {
+  skillId?: string
   likesCount: number
   onDetailsClick?: () => void
   className?: string

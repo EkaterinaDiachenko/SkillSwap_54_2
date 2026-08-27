@@ -1,5 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit'
-import type { Skill, User } from '@/shared/types'
+import type { City, Skill, User } from '@/shared/types'
+import type { SkillCardProps } from '@/widgets/skill-card'
 import { SKILL_CATEGORIES } from '@/entities/skill/model/skill-categories'
 import { selectSkills } from '@/entities/skill/model/skills-selectors'
 import { selectUsers } from '@/entities/user/model/users-selectors'
@@ -7,6 +8,11 @@ import type { SkillsRootState } from '@/entities/skill/model/skills-selectors'
 import type { UsersRootState } from '@/entities/user/model/users-selectors'
 import type { CatalogFilters } from './types'
 import type { FiltersState } from './filters-slice'
+
+export interface CatalogCard extends SkillCardProps {
+  skillId: string
+  createdAt: string
+}
 
 export type FiltersRootState = {
   filters: FiltersState
@@ -135,5 +141,58 @@ export const selectFilteredTeachSkills = createSelector(
     const userIdSet = new Set(userIds)
 
     return skills.filter((skill) => skill.type === 'teach' && userIdSet.has(skill.authorId))
+  },
+)
+
+export const selectActiveFiltersCount = createSelector(
+  [selectFilterMode, selectCategoryIds, selectSubcategoryIds, selectGender, selectCities],
+  (mode, categoryIds, subcategoryIds, gender, cities) =>
+    Number(mode !== 'all') +
+    Number(gender !== 'any') +
+    categoryIds.length +
+    subcategoryIds.length +
+    cities.length,
+)
+
+export const selectAvailableCities = createSelector(
+  [selectUsers],
+  (users): City[] => {
+    const seen = new Set<City>()
+    const result: City[] = []
+
+    for (const user of users) {
+      if (!seen.has(user.city)) {
+        seen.add(user.city)
+        result.push(user.city)
+      }
+    }
+
+    return result
+  },
+)
+
+export const selectAllCatalogCards = createSelector(
+  [selectFilteredTeachSkills, selectUsers, selectSkills],
+  (teachSkills, allUsers, allSkills): CatalogCard[] => {
+    const usersMap = new Map(allUsers.map((u) => [u.id, u]))
+
+    return teachSkills.map((skill) => {
+      const author = usersMap.get(skill.authorId)
+      const learnSkills = allSkills.filter(
+        (s) => s.authorId === skill.authorId && s.type === 'learn',
+      )
+
+      return {
+        skillId: skill.id,
+        createdAt: skill.createdAt,
+        name: author?.name ?? '',
+        city: author?.city ?? '',
+        age: author?.age ?? 0,
+        avatarUrl: author?.avatarUrl ?? null,
+        likesCount: author?.likesCount ?? 0,
+        canTeach: [skill.title],
+        wantsToLearn: learnSkills.map((s) => s.title),
+      }
+    })
   },
 )
