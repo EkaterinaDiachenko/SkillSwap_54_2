@@ -1,11 +1,11 @@
 import { Routes, Route, useLocation, type Location, useNavigate } from 'react-router-dom'
-import { lazy, Suspense, useEffect, useRef } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { SKILL_CATEGORIES } from '@/entities/skill'
 import { ROUTES } from '@/shared/lib/constants'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { loadUsers, selectUsersLoading } from '@/entities/user/model'
 import { loadSkills, selectSkillsLoading } from '@/entities/skill/model'
-import { checkUserAuth, selectCurrentUser, selectIsAuth } from '@/features/auth/model'
+import { checkUserAuth, selectCurrentUser, selectIsAuth, loginUser } from '@/features/auth/model'
 import { loadRegistrationDraft } from '@/features/registration/model'
 import { Spinner } from '@/shared/ui/spinner'
 import { PrivateRoute } from '@/features/auth/private-route'
@@ -34,6 +34,7 @@ const Error500Page = lazy(() =>
 type RouterLocationState = {
   backgroundLocation?: Location
   from?: Location
+  exchangeOffered?: boolean
 }
 
 export function AppRouter() {
@@ -52,6 +53,29 @@ export function AppRouter() {
   const backgroundLocation = state?.backgroundLocation
   const handleCloseModal = () => {
     navigate(-1)
+  }
+
+  const [loginEmail, setLoginEmail] = useState('')
+  const [loginPassword, setLoginPassword] = useState('')
+
+  const handleExchangeOfferDone = () => {
+    const background = state?.backgroundLocation
+
+    if (!background) {
+      navigate(ROUTES.HOME, { replace: true })
+      return
+    }
+
+    navigate(
+      `${background.pathname}${background.search}${background.hash}`,
+      {
+        replace: true,
+        state: {
+          ...(background.state ?? {}),
+          exchangeOffered: true,
+        },
+      },
+    )
   }
 
   useEffect(() => {
@@ -108,6 +132,28 @@ export function AppRouter() {
   }
 
   const handleCloseLogin = () => {
+    const from = state?.from
+
+    navigate(
+      from
+        ? `${from.pathname}${from.search}${from.hash}`
+        : ROUTES.HOME,
+      { replace: true },
+    )
+  }
+
+  const handleLoginSubmit = async () => {
+    const result = await dispatch(
+      loginUser({
+        email: loginEmail,
+        password: loginPassword,
+      }),
+    )
+
+    if (!loginUser.fulfilled.match(result)) {
+      return
+    }
+
     const from = state?.from
 
     navigate(
@@ -181,6 +227,7 @@ export function AppRouter() {
               onProfileClick={handleProfileClick}
               onFavoritesClick={handleFavoritesClick}
               onOfferClick={handleOfferClick}
+              isExchangeOffered={Boolean(state?.exchangeOffered)}
             />
           } />
           <Route path={ROUTES.FAVORITES} element={
@@ -197,7 +244,14 @@ export function AppRouter() {
           } />
           <Route path={ROUTES.LOGIN} element={
             <PrivateRoute onlyUnAuth>
-              <LoginPage onClose={handleCloseLogin} />
+              <LoginPage
+                email={loginEmail}
+                password={loginPassword}
+                onEmailChange={setLoginEmail}
+                onPasswordChange={setLoginPassword}
+                onLoginClick={handleLoginSubmit}
+                onClose={handleCloseLogin}
+              />
             </PrivateRoute>
           } />
           <Route path={ROUTES.REGISTER} element={<PrivateRoute onlyUnAuth><WelcomeRegisterPage /></PrivateRoute>} />
@@ -244,7 +298,7 @@ export function AppRouter() {
           <Route path={ROUTES.EXCHANGE_OFFER} element={
             <PrivateRoute>
               <Modal isOpen onClose={handleCloseModal}>
-                <ExchangeOfferContent onButtonClick={handleCloseModal} />
+                <ExchangeOfferContent onButtonClick={handleExchangeOfferDone} />
               </Modal>
             </PrivateRoute>
           } />
@@ -310,7 +364,7 @@ export function AppRouter() {
               <PrivateRoute>
                 <Modal isOpen onClose={handleCloseModal}>
                   <ExchangeOfferContent
-                    onButtonClick={handleCloseModal}
+                    onButtonClick={handleExchangeOfferDone}
                   />
                 </Modal>
               </PrivateRoute>

@@ -56,9 +56,7 @@ export default function WelcomeRegisterPage() {
   })
 
   const handleClose = () => {
-    const from = state?.from
-
-    navigate(from ? `${from.pathname}${from.search}${from.hash}` : ROUTES.HOME, { replace: true })
+    navigate(ROUTES.HOME, { replace: true })
   }
 
   return (

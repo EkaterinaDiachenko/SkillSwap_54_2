@@ -27,6 +27,7 @@ export type SkillPageProps = {
   onProfileClick?: () => void
   onFavoritesClick?: () => void
   onOfferClick?: () => void
+  isExchangeOffered?: boolean
 }
 
 const DEFAULT_OWNER: SkillOwnerCardProps = {
@@ -107,6 +108,7 @@ export default function SkillPage({
   onProfileClick,
   onFavoritesClick,
   onOfferClick,
+  isExchangeOffered = false,
 }: Partial<SkillPageProps> = {}) {
   return (
     <div className={styles.page}>
@@ -125,7 +127,21 @@ export default function SkillPage({
       <main className={styles.main}>
         <div className={styles.hero}>
           <SkillOwnerCard {...owner} className={styles.owner} />
-          <SkillOffer {...offer} className={styles.offer} onButtonClick={onOfferClick} />
+          <SkillOffer
+            {...offer}
+            variant={isExchangeOffered ? 'secondary' : offer.variant}
+            buttonText={
+              isExchangeOffered
+                ? 'Обмен предложен'
+                : offer.buttonText
+            }
+            className={styles.offer}
+            onButtonClick={
+              isExchangeOffered
+                ? undefined
+                : onOfferClick
+            }
+          />
         </div>
 
         <RelatedCards cards={relatedCards} />
