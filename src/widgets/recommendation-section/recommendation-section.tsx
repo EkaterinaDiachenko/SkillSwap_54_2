@@ -1,26 +1,32 @@
-import { SkillCard, type SkillCardProps } from "@/widgets/skill-card"
+import { Spinner } from '@/shared/ui/spinner'
+import { SkillCard, type SkillCardProps } from '@/widgets/skill-card'
 import styles from './recommendation-section.module.css'
-import { Spinner } from "@/shared/ui/spinner"
 
 export type RecommendationSectionProps = {
-skillCards: SkillCardProps[],
-isLoading: boolean
-className?: string
+  skillCards: Array<SkillCardProps & { skillId: string }>
+  isLoading: boolean
+  className?: string
 }
 
-export function RecommendationSection({skillCards, isLoading, className}: RecommendationSectionProps){
+export function RecommendationSection({
+  skillCards,
+  isLoading,
+  className,
+}: RecommendationSectionProps) {
   return (
     <section className={[styles.section, className].filter(Boolean).join(' ')}>
       <h2 className={styles.title}>Рекомендуем</h2>
       <div className={styles.container}>
-        {skillCards.map((card, index) => (
-          <SkillCard key={`${card.name}-${index}`}{...card} className={styles.skillCard}></SkillCard>
+        {skillCards.map((card) => (
+          <SkillCard
+            key={card.skillId}
+            {...card}
+            className={styles.skillCard}
+          />
         ))}
-
       </div>
-{isLoading && <Spinner/>}
 
+      {isLoading && <Spinner />}
     </section>
-
   )
 }

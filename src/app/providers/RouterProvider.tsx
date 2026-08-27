@@ -195,24 +195,13 @@ export function AppRouter() {
             path={ROUTES.HOME}
             element={
               <CatalogPage
-                isAuth={isAuth}
-                userName={currentUser?.name}
-                avatarSrc={currentUser?.avatarUrl ?? undefined}
-                onLogin={handleLoginClick}
-                onRegister={handleRegisterClick}
-                onProfileClick={handleProfileClick}
-                onFavoritesClick={handleFavoritesClick}
-                categories={SKILL_CATEGORIES}
-                selectedFilters={{}}
-                onFilterChange={() => undefined}
-                onReset={() => undefined}
-                cities={[]}
-                recommendationCards={[]}
-                popularCards={[]}
-                newCards={[]}
-                isLoading={false}
-                onShowPopular={() => undefined}
-                onShowNew={() => undefined}
+              isAuth={isAuth}
+              userName={currentUser?.name}
+              avatarSrc={currentUser?.avatarUrl ?? undefined}
+              onLogin={handleLoginClick}
+              onRegister={handleRegisterClick}
+              onProfileClick={handleProfileClick}
+              onFavoritesClick={handleFavoritesClick}
               />
             }
           />
