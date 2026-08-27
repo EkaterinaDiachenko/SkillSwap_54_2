@@ -35,9 +35,24 @@ const DEFAULT_OWNER: SkillOwnerCardProps = {
   name: 'Иван',
   city: 'Санкт-Петербург',
   age: 34,
-  about: 'Привет! Люблю ритм, кофе по утрам и людей, которые не боятся пробовать новое.',
-  canTeach: ['Английский язык'],
-  wantsToLearn: ['Тайм менеджмент', 'Медитация'],
+  about:
+    'Привет! Люблю ритм, кофе по утрам и людей, которые не боятся пробовать новое.',
+  canTeach: [
+    {
+      title: 'Английский язык',
+      color: 'languages',
+    },
+  ],
+  wantsToLearn: [
+    {
+      title: 'Тайм менеджмент',
+      color: 'business',
+    },
+    {
+      title: 'Медитация',
+      color: 'health',
+    },
+  ],
 }
 
 const DEFAULT_OFFER: Omit<SkillOfferProps, 'className'> = {
@@ -48,7 +63,15 @@ const DEFAULT_OFFER: Omit<SkillOfferProps, 'className'> = {
     'Привет! Меня зовут Иван, и я уже более 10 лет играю на барабанах — от репетиций в гараже до выступлений на сцене. Готов делиться опытом и помочь освоить инструмент с нуля или подтянуть навыки.',
   variant: 'primary',
   buttonText: 'Предложить обмен',
-  images: [gallery1, gallery2, gallery3, gallery4, gallery5, gallery6, gallery7],
+  images: [
+    gallery1,
+    gallery2,
+    gallery3,
+    gallery4,
+    gallery5,
+    gallery6,
+    gallery7,
+  ],
 }
 
 const DEFAULT_RELATED: SkillCardProps[] = [
@@ -57,40 +80,146 @@ const DEFAULT_RELATED: SkillCardProps[] = [
     city: 'Екатеринбург',
     age: 33,
     likesCount: 0,
-    canTeach: ['Английский язык'],
-    wantsToLearn: ['Тайм менеджмент', 'Медитация', 'Йога', 'Пилатес'],
+    canTeach: [
+      {
+        title: 'Английский язык',
+        color: 'languages',
+      },
+    ],
+    wantsToLearn: [
+      {
+        title: 'Тайм менеджмент',
+        color: 'business',
+      },
+      {
+        title: 'Медитация',
+        color: 'health',
+      },
+      {
+        title: 'Йога',
+        color: 'health',
+      },
+      {
+        title: 'Пилатес',
+        color: 'health',
+      },
+    ],
   },
   {
     name: 'Михаил',
     city: 'Екатеринбург',
     age: 33,
     likesCount: 0,
-    canTeach: ['Английский язык'],
-    wantsToLearn: ['Тайм менеджмент', 'Медитация', 'Йога', 'Пилатес'],
+    canTeach: [
+      {
+        title: 'Английский язык',
+        color: 'languages',
+      },
+    ],
+    wantsToLearn: [
+      {
+        title: 'Тайм менеджмент',
+        color: 'business',
+      },
+      {
+        title: 'Медитация',
+        color: 'health',
+      },
+      {
+        title: 'Йога',
+        color: 'health',
+      },
+      {
+        title: 'Пилатес',
+        color: 'health',
+      },
+    ],
   },
   {
     name: 'Анна',
     city: 'Екатеринбург',
     age: 33,
     likesCount: 0,
-    canTeach: ['Английский язык'],
-    wantsToLearn: ['Тайм менеджмент', 'Медитация', 'Йога', 'Пилатес'],
+    canTeach: [
+      {
+        title: 'Английский язык',
+        color: 'languages',
+      },
+    ],
+    wantsToLearn: [
+      {
+        title: 'Тайм менеджмент',
+        color: 'business',
+      },
+      {
+        title: 'Медитация',
+        color: 'health',
+      },
+      {
+        title: 'Йога',
+        color: 'health',
+      },
+      {
+        title: 'Пилатес',
+        color: 'health',
+      },
+    ],
   },
   {
     name: 'Олег',
     city: 'Екатеринбург',
     age: 33,
     likesCount: 0,
-    canTeach: ['Английский язык'],
-    wantsToLearn: ['Тайм менеджмент', 'Медитация', 'Йога', 'Пилатес'],
+    canTeach: [
+      {
+        title: 'Английский язык',
+        color: 'languages',
+      },
+    ],
+    wantsToLearn: [
+      {
+        title: 'Тайм менеджмент',
+        color: 'business',
+      },
+      {
+        title: 'Медитация',
+        color: 'health',
+      },
+      {
+        title: 'Йога',
+        color: 'health',
+      },
+      {
+        title: 'Пилатес',
+        color: 'health',
+      },
+    ],
   },
   {
     name: 'Мария',
     city: 'Москва',
     age: 28,
     likesCount: 2,
-    canTeach: ['Английский язык'],
-    wantsToLearn: ['Тайм менеджмент', 'Медитация', 'Йога'],
+    canTeach: [
+      {
+        title: 'Английский язык',
+        color: 'languages',
+      },
+    ],
+    wantsToLearn: [
+      {
+        title: 'Тайм менеджмент',
+        color: 'business',
+      },
+      {
+        title: 'Медитация',
+        color: 'health',
+      },
+      {
+        title: 'Йога',
+        color: 'health',
+      },
+    ],
   },
 ]
 

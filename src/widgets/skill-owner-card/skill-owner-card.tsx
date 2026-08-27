@@ -1,4 +1,4 @@
-import { SkillExchangeInfo } from "@/entities/user/ui/skill-exchange-info"
+import { SkillExchangeInfo, type SkillTagData } from "@/entities/user/ui/skill-exchange-info"
 import { UserSummary } from "@/entities/user/ui/user-summary"
 import styles from './skill-owner-card.module.css'
 
@@ -8,8 +8,8 @@ name: string,
 city: string,
 age: number,
 about: string,
-canTeach: string[],
-wantsToLearn: string[],
+canTeach: SkillTagData[]
+wantsToLearn: SkillTagData[]
 className?: string,
 }
 
