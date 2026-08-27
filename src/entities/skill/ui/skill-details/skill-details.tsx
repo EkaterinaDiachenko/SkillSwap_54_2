@@ -22,6 +22,7 @@ export type SkillDetailsProps = {
   /** Колбэк при клике на «Готово» (режим превью) */
   onDoneClick?: () => void
   className?: string
+  onButtonClick?: () => void
 }
 
 /** Сопоставление текста secondary-кнопки с иконкой из макета */
@@ -53,11 +54,10 @@ export function SkillDetails({
   onEditClick,
   onDoneClick,
   className,
+  onButtonClick,
 }: SkillDetailsProps) {
-  const iconName =
-    variant === 'secondary' ? getSecondaryIcon(buttonText) : null
-  const iconBeforeText =
-    iconName !== null && ICON_BEFORE_TEXT.includes(iconName)
+  const iconName = variant === 'secondary' ? getSecondaryIcon(buttonText) : null
+  const iconBeforeText = iconName !== null && ICON_BEFORE_TEXT.includes(iconName)
 
   return (
     <section className={[styles.container, className].filter(Boolean).join(' ')}>
@@ -75,34 +75,20 @@ export function SkillDetails({
       {showDualButtons ? (
         /* Модалка превью: белая «Редактировать» + зелёная «Готово» */
         <div className={styles.actions}>
-          <Button
-            type="button"
-            variant="secondary"
-            className={styles.button}
-            onClick={onEditClick}
-          >
+          <Button type="button" variant="secondary" className={styles.button} onClick={onEditClick}>
             <span>Редактировать</span>
             <Icon name="edit" size={24} aria-hidden="true" />
           </Button>
-          <Button
-            type="button"
-            variant="primary"
-            className={styles.button}
-            onClick={onDoneClick}
-          >
+          <Button type="button" variant="primary" className={styles.button} onClick={onDoneClick}>
             Готово
           </Button>
         </div>
       ) : (
         buttonText && (
-          <Button type="button" variant={variant} className={styles.button}>
-            {iconBeforeText && iconName && (
-              <Icon name={iconName} size={24} aria-hidden="true" />
-            )}
+          <Button type="button" variant={variant} className={styles.button} onClick={onButtonClick}>
+            {iconBeforeText && iconName && <Icon name={iconName} size={24} aria-hidden="true" />}
             <span>{buttonText}</span>
-            {!iconBeforeText && iconName && (
-              <Icon name={iconName} size={24} aria-hidden="true" />
-            )}
+            {!iconBeforeText && iconName && <Icon name={iconName} size={24} aria-hidden="true" />}
           </Button>
         )
       )}

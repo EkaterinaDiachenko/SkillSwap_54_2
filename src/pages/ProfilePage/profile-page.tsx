@@ -23,6 +23,8 @@ export type ProfilePageProps = {
   onSaveClick?: () => void
   onAvatarEdit?: () => void
   className?: string
+  onProfileClick?: () => void
+  onFavoritesClick?: () => void
 }
 
 export default function ProfilePage({
@@ -40,6 +42,8 @@ export default function ProfilePage({
   onSaveClick,
   onAvatarEdit,
   className,
+  onProfileClick,
+  onFavoritesClick,
 }: ProfilePageProps) {
   return (
     <div className={clsx(styles.page, className)}>
@@ -47,6 +51,8 @@ export default function ProfilePage({
         name={userName}
         avatarSrc={avatarSrc}
         categories={categories}
+        onProfileClick={onProfileClick}
+        onFavoritesClick={onFavoritesClick}
       />
 
       <main className={styles.main}>
