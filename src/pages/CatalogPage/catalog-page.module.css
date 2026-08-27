@@ -26,3 +26,11 @@
   max-width: 1020px;
   min-width: 0;
 }
+
+.message {
+  margin: var(--space-40) 0 0;
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  color: var(--color-text-secondary);
+}
