@@ -2,8 +2,9 @@
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  width: 556px;
-  height: 692px;
+  width: 100%;
+  min-height: 692px;
+  height: auto;
   padding: 49px var(--space-60) var(--space-40);
 }
 

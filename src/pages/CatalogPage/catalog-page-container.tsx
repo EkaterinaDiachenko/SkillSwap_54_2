@@ -15,6 +15,7 @@ import {
 } from '@/features/catalog/model'
 import { useAppSelector } from '@/store/hooks'
 import { CatalogPageUI, type CatalogPageProps } from './catalog-page'
+import { useRecommendationsPagination } from '@/features/catalog/model'
 
 type CatalogPageContainerProps = Pick<
   CatalogPageProps,
@@ -41,7 +42,8 @@ export default function CatalogPage({
   const allCards = useAppSelector(selectAllCatalogCards)
   const popularCards = useAppSelector(selectPopularCards)
   const newCards = useAppSelector(selectNewCards)
-  const recommendationCards = useAppSelector(selectRecommendedCards)
+  const recommendationCards = useAppSelector(selectRecommendedCards,)
+  const { visibleCards, isLoadingMore, hasMore, loadMoreRef } = useRecommendationsPagination(recommendationCards)
   const usersLoading = useAppSelector(selectUsersLoading)
   const skillsLoading = useAppSelector(selectSkillsLoading)
   const usersError = useAppSelector(selectUsersError)
@@ -63,7 +65,10 @@ export default function CatalogPage({
       onReset={() => undefined}
       cities={[]}
       allCards={allCards}
-      recommendationCards={recommendationCards}
+      recommendationCards={visibleCards}
+      isLoadingMore={isLoadingMore}
+      hasMore={hasMore}
+      loadMoreRef={loadMoreRef}
       popularCards={popularCards}
       newCards={newCards}
       isLoading={usersLoading || skillsLoading}

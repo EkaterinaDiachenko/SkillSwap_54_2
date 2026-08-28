@@ -8,6 +8,7 @@ import { RecommendationSection } from '@/widgets/recommendation-section'
 import { SkillSection } from '@/widgets/skill-section'
 import type { SkillCardProps } from '@/widgets/skill-card'
 import styles from './catalog-page.module.css'
+import type { RefObject } from 'react'
 
 export type CatalogSkillCardProps = SkillCardProps & {
   skillId: string
@@ -20,10 +21,6 @@ export type CatalogPageProps = {
   userName?: string
   avatarSrc?: string
   onLogout?: () => void
-  onLogin: () => void
-  onRegister: () => void
-  onProfileClick: () => void
-  onFavoritesClick: () => void
   selectedFilters: FiltersBarSelectedFilters
   onFilterChange: (next: FiltersBarSelectedFilters) => void
   onReset: () => void
@@ -34,8 +31,15 @@ export type CatalogPageProps = {
   newCards: CatalogSkillCardProps[]
   isLoading: boolean
   loadError?: string | null
+  isLoadingMore: boolean
+  hasMore: boolean
+  loadMoreRef: RefObject<HTMLDivElement>
   onShowPopular: () => void
   onShowNew: () => void
+  onLogin: () => void
+  onRegister: () => void
+  onProfileClick: () => void
+  onFavoritesClick: () => void
 }
 
 export function CatalogPageUI({
@@ -60,6 +64,9 @@ export function CatalogPageUI({
   loadError,
   onShowPopular,
   onShowNew,
+  isLoadingMore,
+  hasMore,
+  loadMoreRef,
 }: CatalogPageProps) {
   const isEmpty = !isLoading && !loadError && allCards.length === 0
   const shouldShowSections = !isLoading && !loadError && allCards.length > 0
@@ -109,7 +116,9 @@ export function CatalogPageUI({
 
               <RecommendationSection
                 skillCards={recommendationCards}
-                isLoading={isLoading}
+                isLoadingMore={isLoadingMore}
+                hasMore={hasMore}
+                loadMoreRef={loadMoreRef}
               />
             </>
           )}

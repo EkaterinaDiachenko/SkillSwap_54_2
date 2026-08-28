@@ -6,6 +6,7 @@ import { RegisterLayout } from '@/widgets/register-layout'
 import { SkillRegisterChildren } from '@/widgets/skill-register-children'
 import { getCategoryOptions, getSubcategoryOptions } from '@/entities/skill'
 import { ROUTES } from '@/shared/lib/constants'
+import { getLocationPath } from '@/shared/lib/helpers'
 import type { RegistrationDraft } from '@/features/registration/model'
 import {
   dataUrlsToImageFiles,
@@ -157,7 +158,7 @@ export default function SkillRegisterPage() {
   }
 
   const handleClose = () => {
-    navigate(ROUTES.HOME, { replace: true })
+    navigate(getLocationPath(state?.from), { replace: true })
   }
 
   return (

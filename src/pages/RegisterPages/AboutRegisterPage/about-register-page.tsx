@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useLocation, useNavigate, type Location } from 'react-router-dom'
@@ -7,6 +7,7 @@ import { AboutRegisterChildren } from '@/widgets/about-register-children'
 import type { SelectOption } from '@/shared/ui/select'
 import { getCategoryOptions, getSubcategoryOptions } from '@/entities/skill'
 import { ROUTES } from '@/shared/lib/constants'
+import { getLocationPath } from '@/shared/lib/helpers'
 import type { City, Gender } from '@/shared/types'
 import type { RegistrationDraft } from '@/features/registration/model'
 import {
@@ -67,6 +68,7 @@ export default function AboutRegisterPage() {
   const learningSkill = useAppSelector(selectLearningSkill)
   const draft = useAppSelector(selectRegistrationDraft)
   const state = location.state as LocationState | null
+  const [saveError, setSaveError] = useState<string | null>(null)
 
   const {
     watch,
@@ -125,6 +127,8 @@ export default function AboutRegisterPage() {
       return
     }
 
+    setSaveError(null)
+
     dispatch(
       updatePersonalData({
         name: values.name,
@@ -155,7 +159,13 @@ export default function AboutRegisterPage() {
       },
     }
 
-    saveRegistrationDraft(updatedDraft)
+    try {
+      saveRegistrationDraft(updatedDraft)
+    } catch {
+      setSaveError('Не удалось сохранить черновик регистрации')
+      return
+    }
+
     dispatch(setCurrentStep(3))
 
     navigate(ROUTES.REGISTER_STEP_3, {
@@ -186,7 +196,7 @@ export default function AboutRegisterPage() {
   }
 
   const handleClose = () => {
-    navigate(ROUTES.HOME, { replace: true })
+    navigate(getLocationPath(state?.from), { replace: true })
   }
 
   return (
@@ -214,7 +224,7 @@ export default function AboutRegisterPage() {
         genderError={errors.gender?.message}
         cityError={errors.city?.message}
         categoryError={errors.category?.message}
-        subcategoryError={errors.subcategory?.message}
+        subcategoryError={errors.subcategory?.message ?? saveError ?? undefined}
         onNameChange={(value) => setValue('name', value, shouldValidate)}
         onBirthDateChange={(date) => setValue('birthDate', date, shouldValidate)}
         onGenderChange={(value) => setValue('gender', value, shouldValidate)}

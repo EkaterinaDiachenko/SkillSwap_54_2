@@ -1,10 +1,11 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useLocation, useNavigate, type Location } from 'react-router-dom'
 import { RegisterLayout } from '@/widgets/register-layout'
 import { WelcomeRegisterChildren } from '@/widgets/welcome-register-children'
 import { ROUTES } from '@/shared/lib/constants'
+import { getLocationPath } from '@/shared/lib/helpers'
 import type { RegistrationDraft } from '@/features/registration/model'
 import {
   saveRegistrationDraft,
@@ -32,6 +33,7 @@ export default function WelcomeRegisterPage() {
   const credentials = useAppSelector(selectCredentials)
   const draft = useAppSelector(selectRegistrationDraft)
   const state = location.state as LocationState | null
+  const [saveError, setSaveError] = useState<string | null>(null)
 
   const {
     watch,
@@ -69,6 +71,7 @@ export default function WelcomeRegisterPage() {
   }
 
   const handleNext = handleSubmit((values) => {
+    setSaveError(null)
     dispatch(updateCredentials(values))
 
     const updatedDraft: RegistrationDraft = {
@@ -76,7 +79,13 @@ export default function WelcomeRegisterPage() {
       credentials: values,
     }
 
-    saveRegistrationDraft(updatedDraft)
+    try {
+      saveRegistrationDraft(updatedDraft)
+    } catch {
+      setSaveError('Не удалось сохранить черновик регистрации')
+      return
+    }
+
     dispatch(setCurrentStep(2))
 
     navigate(ROUTES.REGISTER_STEP_2, {
@@ -87,7 +96,7 @@ export default function WelcomeRegisterPage() {
   })
 
   const handleClose = () => {
-    navigate(ROUTES.HOME, { replace: true })
+    navigate(getLocationPath(state?.from), { replace: true })
   }
 
   return (
@@ -103,7 +112,7 @@ export default function WelcomeRegisterPage() {
         email={email}
         password={password}
         emailError={errors.email?.message}
-        passwordError={errors.password?.message}
+        passwordError={errors.password?.message ?? saveError ?? undefined}
         onEmailChange={handleEmailChange}
         onPasswordChange={handlePasswordChange}
         onNextClick={handleNext}

@@ -1,5 +1,5 @@
 import { getUsersApi } from '@/entities/user/api/users-api'
-import { saveAuthSession } from '@/features/auth/model/authUtils'
+import { clearAuthSession, saveAuthSession } from '@/features/auth/model/authUtils'
 import { LOCAL_STORAGE_KEYS } from '@/shared/lib/constants'
 import { generateId } from '@/shared/lib/helpers'
 import type { City, Gender, Skill, User } from '@/shared/types'
@@ -84,14 +84,7 @@ function readStoredList<T>(key: string): T[] {
   }
 }
 
-function appendStoredItem<T extends { id: string }>(key: string, item: T): void {
-  const list = readStoredList<T>(key)
-
-  if (list.some((existing) => existing.id === item.id)) {
-    return
-  }
-
-  list.push(item)
+function writeStoredList<T>(key: string, list: T[]): void {
   localStorage.setItem(key, JSON.stringify(list))
 }
 
@@ -203,13 +196,26 @@ export async function registerUserApi(draft: RegistrationDraft): Promise<Registe
     ]
   })
 
-  appendStoredItem(LOCAL_STORAGE_KEYS.REGISTERED_USERS, user)
-  appendStoredItem(LOCAL_STORAGE_KEYS.REGISTERED_SKILLS, teachSkill)
-  learnSkills.forEach((skill) => {
-    appendStoredItem(LOCAL_STORAGE_KEYS.REGISTERED_SKILLS, skill)
-  })
+  const nextUsers = [...readStoredList<User>(LOCAL_STORAGE_KEYS.REGISTERED_USERS), user]
+  const nextSkills = [
+    ...readStoredList<Skill>(LOCAL_STORAGE_KEYS.REGISTERED_SKILLS),
+    teachSkill,
+    ...learnSkills,
+  ]
 
-  const { accessToken } = saveAuthSession(userId)
+  let accessToken: string
+
+  try {
+    ;({ accessToken } = saveAuthSession(userId))
+    writeStoredList(LOCAL_STORAGE_KEYS.REGISTERED_USERS, nextUsers)
+    writeStoredList(LOCAL_STORAGE_KEYS.REGISTERED_SKILLS, nextSkills)
+    clearRegistrationDraft()
+  } catch (error) {
+    clearAuthSession()
+    throw error instanceof Error
+      ? error
+      : new Error('Не удалось завершить регистрацию')
+  }
 
   const authUser = {
     id: user.id,
@@ -218,8 +224,6 @@ export async function registerUserApi(draft: RegistrationDraft): Promise<Registe
     avatarUrl: user.avatarUrl,
     token: accessToken,
   }
-
-  clearRegistrationDraft()
 
   return {
     user,

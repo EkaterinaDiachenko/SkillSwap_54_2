@@ -1,17 +1,22 @@
 import { Spinner } from '@/shared/ui/spinner'
 import { SkillCard, type SkillCardProps } from '@/widgets/skill-card'
 import styles from './recommendation-section.module.css'
+import type { RefObject } from 'react'
 
 export type RecommendationSectionProps = {
   skillCards: Array<SkillCardProps & { skillId: string }>
-  isLoading: boolean
+  isLoadingMore: boolean
+  hasMore: boolean
+  loadMoreRef: RefObject<HTMLDivElement>
   className?: string
 }
 
 export function RecommendationSection({
   skillCards,
-  isLoading,
   className,
+  isLoadingMore,
+  hasMore,
+  loadMoreRef,
 }: RecommendationSectionProps) {
   return (
     <section className={[styles.section, className].filter(Boolean).join(' ')}>
@@ -26,7 +31,15 @@ export function RecommendationSection({
         ))}
       </div>
 
-      {isLoading && <Spinner />}
+      {hasMore && (
+        <div
+          ref={loadMoreRef}
+          className={styles.loadMoreTrigger}
+          aria-hidden="true"
+        />
+      )}
+
+      {isLoadingMore && <Spinner />}
     </section>
   )
 }

@@ -80,10 +80,11 @@ const authSlice = createSlice({
         state.currentUser = action.payload
         state.isInitialized = true
       })
-      .addCase(checkUserAuth.rejected, (state, action) => {
+      .addCase(checkUserAuth.rejected, (state) => {
         state.loading = false
         state.isInitialized = true
-        state.error = action.payload ?? action.error.message ?? 'Не удалось проверить авторизацию'
+        state.currentUser = null
+        state.error = null
       })
 
       .addCase(loginUser.pending, (state) => {

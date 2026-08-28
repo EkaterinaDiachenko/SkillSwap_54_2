@@ -1,10 +1,6 @@
 import { SKILL_CATEGORIES } from '@/entities/skill/model/skill-categories'
 import type { ImageFile } from '@/shared/ui/image-upload'
 
-export function getCategoryTitle(categoryId: string): string {
-  return SKILL_CATEGORIES.find((category) => category.id === categoryId)?.title ?? categoryId
-}
-
 export function getSubcategoryTitle(categoryId: string, subcategoryId: string): string {
   const category = SKILL_CATEGORIES.find((item) => item.id === categoryId)
   const subcategory = category?.subcategories.find((item) => item.id === subcategoryId)
