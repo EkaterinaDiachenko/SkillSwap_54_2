@@ -8,6 +8,7 @@ export type RecommendationSectionProps = {
   isLoadingMore: boolean
   hasMore: boolean
   loadMoreRef: RefObject<HTMLDivElement>
+  onCardDetailsClick: (skillId: string) => void
   className?: string
 }
 
@@ -17,6 +18,7 @@ export function RecommendationSection({
   isLoadingMore,
   hasMore,
   loadMoreRef,
+  onCardDetailsClick,
 }: RecommendationSectionProps) {
   return (
     <section className={[styles.section, className].filter(Boolean).join(' ')}>
@@ -27,6 +29,7 @@ export function RecommendationSection({
             key={card.skillId}
             {...card}
             className={styles.skillCard}
+            onDetailsClick={() => onCardDetailsClick(card.skillId)}
           />
         ))}
       </div>

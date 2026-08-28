@@ -10,6 +10,8 @@ export interface SkillSectionProps {
   skillCards: Array<SkillCardProps & { skillId: string }>
   /** Колбэк при клике на "Смотреть все" */
   onShowAll: () => void
+  /** Колбэк при клике на "Подробнее" */
+  onCardDetailsClick: (skillId: string) => void
   /** Дополнительный CSS-класс */
   className?: string
 }
@@ -18,6 +20,7 @@ export function SkillSection({
   title,
   skillCards,
   onShowAll,
+  onCardDetailsClick,
   className,
 }: SkillSectionProps) {
   return (
@@ -42,6 +45,7 @@ export function SkillSection({
             key={card.skillId}
             {...card}
             className={styles.skillCard}
+            onDetailsClick={() => onCardDetailsClick(card.skillId)}
           />
         ))}
       </div>
@@ -64,6 +68,7 @@ export function SkillSection({
             key={index}
             {...card}
             className={styles.skillCard}
+            onDetailsClick={() => onCardDetailsClick(card.skillId)}
           />
         ))}
       </div>

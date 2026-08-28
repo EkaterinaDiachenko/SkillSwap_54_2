@@ -263,10 +263,6 @@ export function AppRouter() {
             path={ROUTES.SKILL}
             element={
               <SkillPage
-                isAuth={isAuth}
-                categories={SKILL_CATEGORIES}
-                userName={authHeaderProps.userName}
-                avatarSrc={authHeaderProps.avatarSrc}
                 onLogout={authHeaderProps.onLogout}
                 onLogin={handleLoginClick}
                 onRegister={handleRegisterClick}

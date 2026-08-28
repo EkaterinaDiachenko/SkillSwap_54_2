@@ -2,18 +2,22 @@ import { Button } from '@/shared/ui/button'
 import { Icon } from '@/shared/ui/icon'
 import styles from './active-filters.module.css'
 
+export type ActiveFilter = {
+  id: string
+  label: string
+  onRemove: () => void
+}
+
 export type ActiveFiltersProps = {
-  selectedFilters: string[]
-  onRemoveFilter: (filter: string) => void
+  filters: ActiveFilter[]
   className?: string
 }
 
 export function ActiveFilters({
-  selectedFilters,
-  onRemoveFilter,
+  filters,
   className,
 }: ActiveFiltersProps) {
-  if (selectedFilters.length === 0) {
+  if (filters.length === 0) {
     return null
   }
 
@@ -25,15 +29,15 @@ export function ActiveFilters({
       aria-live="polite"
       aria-atomic="true"
     >
-      {selectedFilters.map((filter) => (
+      {filters.map((filter) => (
         <Button
-          key={filter}
+          key={filter.id}
           type="button"
           variant="tertiary"
-          aria-label={`Удалить фильтр ${filter}`}
-          onClick={() => onRemoveFilter(filter)}
+          aria-label={`Удалить фильтр ${filter.label}`}
+          onClick={filter.onRemove}
         >
-          <span>{filter}</span>
+          <span>{filter.label}</span>
           <Icon
             name="cross"
             size={16}
