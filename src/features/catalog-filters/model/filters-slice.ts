@@ -50,7 +50,8 @@ const filtersSlice = createSlice({
 
       if (categoryIndex !== -1) {
         state.categoryIds.splice(categoryIndex, 1)
-        state.subcategoryIds = allSubcategoryIds.filter((id) => id !== subcategoryId)
+        const subsToAdd = allSubcategoryIds.filter((id) => id !== subcategoryId)
+        state.subcategoryIds = [...state.subcategoryIds, ...subsToAdd]
         return
       }
 

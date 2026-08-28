@@ -23,7 +23,7 @@
   display: flex;
   flex: 1;
   justify-content: center;
-  align-items: flex-start;
+  align-items: stretch;
   gap: var(--space-24);
   width: 100%;
   min-height: 0;
@@ -36,7 +36,8 @@
   flex: 0 0 556px;
   flex-direction: column;
   width: 556px;
-  height: 692px;
+  min-height: 692px;
+  height: auto;
   background-color: var(--color-card);
   border-radius: var(--radius-12);
 }

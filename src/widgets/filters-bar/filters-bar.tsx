@@ -1,27 +1,14 @@
+import { useState, useCallback } from 'react'
 import type { SkillCategory } from '@/entities/skill'
+import type { CatalogFilters, FilterMode, GenderFilter } from '@/features/catalog-filters/model/types'
+import type { CategoryFilterState } from '@/features/catalog-filters/model'
+import type { City } from '@/shared/types'
 import { HeaderFiltersBar } from '@/shared/ui/header-filters-bar'
 import { RadioButtons } from '@/shared/ui/radio-buttons'
 import { Checkbox, CheckboxGroup } from '@/shared/ui/checkbox'
 import { Button } from '@/shared/ui/button'
 import { IconButton } from '@/shared/ui/icon-button'
 import styles from './filters-bar.module.css'
-
-/** Выбранные фильтры — структура уточнится при подключении данных */
-export type FiltersBarSelectedFilters = {
-  mode?: string
-  gender?: string
-  skillIds?: string[]
-  cityIds?: string[]
-}
-
-export type FiltersBarProps = {
-  selectedFilters: FiltersBarSelectedFilters
-  onFilterChange: (next: FiltersBarSelectedFilters) => void
-  onReset: () => void
-  skillsCategories: SkillCategory[]
-  cities: Array<string | { id: string; name: string }>
-  className?: string
-}
 
 const MODE_OPTIONS = [
   { value: 'all', label: 'Всё' },
@@ -35,69 +22,67 @@ const GENDER_OPTIONS = [
   { value: 'female', label: 'Женский' },
 ]
 
-/** Статичная разметка категорий (пока без данных из props) */
-const STATIC_SKILL_ROWS = [
-  { id: 'business', title: 'Бизнес и карьера', expandable: true, open: false },
-  {
-    id: 'art',
-    title: 'Творчество и искусство',
-    expandable: true,
-    open: true,
-    indeterminate: true,
-    children: [
-      'Рисование и иллюстрация',
-      'Фотография',
-      'Видеомонтаж',
-      'Музыка и звук',
-      'Актёрское мастерство',
-      'Креативное письмо',
-      'Арт-терапия',
-      'Декор и DIY',
-    ],
-    checkedChild: 'Музыка и звук',
-  },
-  { id: 'languages', title: 'Иностранные языки', expandable: true, open: false },
-  { id: 'education', title: 'Образование и развитие', expandable: true, open: false },
-  { id: 'health', title: 'Здоровье и лайфстайл', expandable: true, open: false },
-  { id: 'home', title: 'Дом и уют', expandable: true, open: false },
-] as const
+const VISIBLE_CITIES_COUNT = 5
 
-const STATIC_CITIES = [
-  'Москва',
-  'Санкт-Петербург',
-  'Новосибирск',
-  'Екатеринбург',
-  'Казань',
-]
-
-function countSelected(filters: FiltersBarSelectedFilters): number {
-  let count = 0
-  if (filters.mode && filters.mode !== 'all') count += 1
-  if (filters.gender && filters.gender !== 'any') count += 1
-  count += filters.skillIds?.length ?? 0
-  count += filters.cityIds?.length ?? 0
-  return count
+export type FiltersBarProps = {
+  filters: CatalogFilters
+  activeFiltersCount: number
+  categories: SkillCategory[]
+  categoryStates: Record<string, CategoryFilterState>
+  cities: City[]
+  onSetMode: (mode: FilterMode) => void
+  onToggleCategory: (categoryId: string, subcategoryIds: string[]) => void
+  onToggleSubcategory: (categoryId: string, subcategoryId: string, subcategoryIds: string[]) => void
+  onSetGender: (gender: GenderFilter) => void
+  onToggleCity: (city: City) => void
+  onReset: () => void
+  className?: string
 }
 
-const noopChange = () => {
-  /* клики без логики — состояние фильтров подключат позже */
-}
-
-/**
- * Панель фильтров каталога (статичная вёрстка).
- * Раскрытие категорий и реакция на «Все категории/города» — позже, с данными.
- */
 export function FiltersBar({
-  selectedFilters,
-  onFilterChange: _onFilterChange,
+  filters,
+  activeFiltersCount,
+  categories,
+  categoryStates,
+  cities,
+  onSetMode,
+  onToggleCategory,
+  onToggleSubcategory,
+  onSetGender,
+  onToggleCity,
   onReset,
-  skillsCategories: _skillsCategories,
-  cities: _cities,
   className,
 }: FiltersBarProps) {
-  const selectedCount = countSelected(selectedFilters)
-  const mode = selectedFilters.mode ?? 'learn'
-  const gender = selectedFilters.gender ?? 'any'
+  const [expandedCategoryIds, setExpandedCategoryIds] = useState<Set<string>>(new Set())
+  const [allCitiesExpanded, setAllCitiesExpanded] = useState(false)
+
+  const handleToggleCategoryExpand = useCallback((categoryId: string) => {
+    setExpandedCategoryIds((prev) => {
+      const next = new Set(prev)
+      if (next.has(categoryId)) {
+        next.delete(categoryId)
+      } else {
+        next.add(categoryId)
+      }
+      return next
+    })
+  }, [])
+
+  const allCategoriesExpanded = categories.every((c) => expandedCategoryIds.has(c.id))
+
+  const handleToggleAllCategories = useCallback(() => {
+    if (allCategoriesExpanded) {
+      setExpandedCategoryIds(new Set())
+    } else {
+      setExpandedCategoryIds(new Set(categories.map((c) => c.id)))
+    }
+  }, [allCategoriesExpanded, categories])
+
+  const handleToggleAllCities = useCallback(() => {
+    setAllCitiesExpanded((prev) => !prev)
+  }, [])
+
+  const visibleCities = allCitiesExpanded ? cities : cities.slice(0, VISIBLE_CITIES_COUNT)
 
   return (
     <aside
@@ -106,89 +91,82 @@ export function FiltersBar({
     >
       <HeaderFiltersBar
         className={styles.header}
-        selectedCount={selectedCount}
+        selectedCount={activeFiltersCount}
         onReset={onReset}
       />
 
-      {/* Список фильтров: от «Всё» до низа. Карточка тянется ниже по каталогу. */}
       <div className={styles.body}>
-        {/* Место под чипы активных фильтров (Tag) — появится позже */}
-        {/* <div className={styles.activeChips} /> */}
-
         <div className={styles.modeFilter}>
           <RadioButtons
             name="filterMode"
             options={MODE_OPTIONS}
-            value={mode}
-            onChange={noopChange}
+            value={filters.mode}
+            onChange={onSetMode as (value: string) => void}
           />
         </div>
 
         <CheckboxGroup title="Навыки">
-          {STATIC_SKILL_ROWS.map((row) => (
-            <div key={row.id} className={styles.skillBlock}>
-              <div className={styles.categoryRow}>
-                <div className={styles.categoryCheckbox}>
-                  <Checkbox
-                    checked={false}
-                    indeterminate={'indeterminate' in row && row.indeterminate}
-                    onChange={noopChange}
-                    label={row.title}
-                  />
-                </div>
-                {row.expandable && (
+          {categories.map((category) => {
+            const isExpanded = expandedCategoryIds.has(category.id)
+            const state = categoryStates[category.id] ?? { checked: false, indeterminate: false }
+
+            return (
+              <div key={category.id} className={styles.skillBlock}>
+                <div className={styles.categoryRow}>
+                  <div className={styles.categoryCheckbox}>
+                    <Checkbox
+                      checked={state.checked}
+                      indeterminate={state.indeterminate}
+                      onChange={() => onToggleCategory(category.id, category.subcategories.map((s) => s.id))}
+                      label={category.title}
+                    />
+                  </div>
                   <IconButton
                     iconName="chevron-down"
                     aria-label={
-                      row.open
-                        ? `Свернуть категорию ${row.title}`
-                        : `Раскрыть категорию ${row.title}`
+                      isExpanded
+                        ? `Свернуть категорию ${category.title}`
+                        : `Раскрыть категорию ${category.title}`
                     }
-                    className={[
-                      styles.chevronButton,
-                      row.open ? styles.chevronOpen : '',
-                    ]
+                    className={[styles.chevronButton, isExpanded ? styles.chevronOpen : '']
                       .filter(Boolean)
                       .join(' ')}
+                    onClick={() => handleToggleCategoryExpand(category.id)}
                   />
+                </div>
+
+                {isExpanded && (
+                  <div className={styles.subList}>
+                    {category.subcategories.map((sub) => (
+                      <Checkbox
+                        key={sub.id}
+                        checked={filters.subcategoryIds.includes(sub.id)}
+                        onChange={() => onToggleSubcategory(category.id, sub.id, category.subcategories.map((s) => s.id))}
+                        label={sub.title}
+                      />
+                    ))}
+                  </div>
                 )}
               </div>
-
-              {/* Статично открытая секция подкатегорий */}
-              {'open' in row && row.open && 'children' in row && row.children && (
-                <div className={styles.subList}>
-                  {row.children.map((sub) => (
-                    <Checkbox
-                      key={sub}
-                      checked={
-                        'checkedChild' in row && row.checkedChild === sub
-                      }
-                      onChange={noopChange}
-                      label={sub}
-                    />
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
-
-          {/* Место для дополнительных чекбоксов категорий (логика позже) */}
-          <div className={styles.extraSlot} aria-hidden>
-            {/* сюда добавятся остальные категории из skillsCategories */}
-          </div>
+            )
+          })}
 
           <div className={styles.moreRow}>
             <Button
               type="button"
               variant="quaternary"
               className={styles.moreButton}
+              onClick={handleToggleAllCategories}
             >
-              Все категории
+              {allCategoriesExpanded ? 'Свернуть все' : 'Все категории'}
             </Button>
             <IconButton
               iconName="chevron-down"
-              aria-label="Все категории"
-              className={styles.chevronButton}
+              aria-label={allCategoriesExpanded ? 'Свернуть все категории' : 'Все категории'}
+              className={[styles.chevronButton, allCategoriesExpanded ? styles.chevronOpen : '']
+                .filter(Boolean)
+                .join(' ')}
+              onClick={handleToggleAllCategories}
             />
           </div>
         </CheckboxGroup>
@@ -196,37 +174,36 @@ export function FiltersBar({
         <RadioButtons
           name="Пол автора"
           options={GENDER_OPTIONS}
-          value={gender}
-          onChange={noopChange}
+          value={filters.gender}
+          onChange={onSetGender as (value: string) => void}
         />
 
         <CheckboxGroup title="Город">
-          {STATIC_CITIES.map((city) => (
+          {visibleCities.map((city) => (
             <Checkbox
               key={city}
-              checked={false}
-              onChange={noopChange}
+              checked={filters.cities.includes(city)}
+              onChange={() => onToggleCity(city)}
               label={city}
             />
           ))}
-
-          {/* Место для дополнительных городов из props.cities */}
-          <div className={styles.extraSlot} aria-hidden>
-            {/* сюда добавятся города из props */}
-          </div>
 
           <div className={styles.moreRow}>
             <Button
               type="button"
               variant="quaternary"
               className={styles.moreButton}
+              onClick={handleToggleAllCities}
             >
-              Все города
+              {allCitiesExpanded ? 'Свернуть' : 'Все города'}
             </Button>
             <IconButton
               iconName="chevron-down"
-              aria-label="Все города"
-              className={styles.chevronButton}
+              aria-label={allCitiesExpanded ? 'Свернуть список городов' : 'Все города'}
+              className={[styles.chevronButton, allCitiesExpanded ? styles.chevronOpen : '']
+                .filter(Boolean)
+                .join(' ')}
+              onClick={handleToggleAllCities}
             />
           </div>
         </CheckboxGroup>
