@@ -20,6 +20,8 @@ export {
   selectCategoryState,
   selectFilteredUserIds,
   selectFilteredTeachSkills,
+  selectActiveFiltersCount,
+  selectAvailableCities,
 } from './filters-selectors'
 export type {
   FiltersRootState,

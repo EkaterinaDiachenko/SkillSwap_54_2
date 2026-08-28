@@ -3,9 +3,11 @@ import { Icon } from '@/shared/ui/icon'
 import { SkillCard, type SkillCardProps } from '@/widgets/skill-card'
 import styles from './filtered-cards-section.module.css'
 
+type CatalogCardWithId = SkillCardProps & { skillId: string }
+
 export type FilteredCardsSectionProps = {
   filteredCount: number
-  cards: SkillCardProps[]
+  cards: CatalogCardWithId[]
   onSortClick?: () => void
   className?: string
 }
@@ -44,9 +46,9 @@ export function FilteredCardsSection({
 
       {cards.length > 0 ? (
         <div className={styles.cards}>
-          {cards.map((card, index) => (
+          {cards.map((card) => (
             <SkillCard
-              key={`${card.name}-${index}`}
+              key={card.skillId}
               {...card}
               className={styles.card}
             />

@@ -1,5 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit'
-import type { Skill, User } from '@/shared/types'
+import type { City, Skill, User } from '@/shared/types'
 import { SKILL_CATEGORIES } from '@/entities/skill/model/skill-categories'
 import { selectSkills } from '@/entities/skill/model/skills-selectors'
 import { selectUsers } from '@/entities/user/model/users-selectors'
@@ -135,5 +135,32 @@ export const selectFilteredTeachSkills = createSelector(
     const userIdSet = new Set(userIds)
 
     return skills.filter((skill) => skill.type === 'teach' && userIdSet.has(skill.authorId))
+  },
+)
+
+export const selectActiveFiltersCount = createSelector(
+  [selectFilterMode, selectCategoryIds, selectSubcategoryIds, selectGender, selectCities],
+  (mode, categoryIds, subcategoryIds, gender, cities) =>
+    Number(mode !== 'all') +
+    Number(gender !== 'any') +
+    categoryIds.length +
+    subcategoryIds.length +
+    cities.length,
+)
+
+export const selectAvailableCities = createSelector(
+  [selectUsers],
+  (users): City[] => {
+    const seen = new Set<City>()
+    const result: City[] = []
+
+    for (const user of users) {
+      if (!seen.has(user.city)) {
+        seen.add(user.city)
+        result.push(user.city)
+      }
+    }
+
+    return result
   },
 )
