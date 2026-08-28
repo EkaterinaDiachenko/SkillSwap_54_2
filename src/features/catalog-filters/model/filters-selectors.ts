@@ -1,34 +1,12 @@
 import { createSelector } from '@reduxjs/toolkit'
 import type { City, Skill, User } from '@/shared/types'
-import type { SkillCardProps } from '@/widgets/skill-card'
 import { SKILL_CATEGORIES } from '@/entities/skill/model/skill-categories'
 import { selectSkills } from '@/entities/skill/model/skills-selectors'
 import { selectUsers } from '@/entities/user/model/users-selectors'
 import type { SkillsRootState } from '@/entities/skill/model/skills-selectors'
 import type { UsersRootState } from '@/entities/user/model/users-selectors'
-import type { SkillTagData } from '@/entities/user/ui/skill-exchange-info'
 import type { CatalogFilters } from './types'
 import type { FiltersState } from './filters-slice'
-
-export interface CatalogCard extends SkillCardProps {
-  skillId: string
-  createdAt: string
-  canTeach: SkillTagData[]
-  wantsToLearn: SkillTagData[]
-}
-
-function createSkillTag(skill: Skill): SkillTagData | null {
-  const category = SKILL_CATEGORIES.find((item) => item.id === skill.categoryId)
-
-  if (!category) {
-    return null
-  }
-
-  return {
-    title: skill.title,
-    color: category.color,
-  }
-}
 
 export type FiltersRootState = {
   filters: FiltersState
@@ -184,49 +162,5 @@ export const selectAvailableCities = createSelector(
     }
 
     return result
-  },
-)
-
-export const selectAllCatalogCards = createSelector(
-  [selectFilteredTeachSkills, selectUsers, selectSkills],
-  (teachSkills, allUsers, allSkills): CatalogCard[] => {
-    const usersMap = new Map(allUsers.map((u) => [u.id, u]))
-
-    return teachSkills.flatMap((skill) => {
-      const author = usersMap.get(skill.authorId)
-
-      if (!author) {
-        return []
-      }
-
-      const teachTag = createSkillTag(skill)
-
-      if (!teachTag) {
-        return []
-      }
-
-      const learnSkills = allSkills.filter(
-        (s) => s.authorId === skill.authorId && s.type === 'learn',
-      )
-
-      const learnTags = learnSkills.flatMap((s) => {
-        const tag = createSkillTag(s)
-        return tag ? [tag] : []
-      })
-
-      return [
-        {
-          skillId: skill.id,
-          createdAt: skill.createdAt,
-          name: author.name,
-          city: author.city,
-          age: author.age,
-          avatarUrl: author.avatarUrl,
-          likesCount: author.likesCount,
-          canTeach: [teachTag],
-          wantsToLearn: learnTags,
-        },
-      ]
-    })
   },
 )

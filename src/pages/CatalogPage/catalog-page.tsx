@@ -10,7 +10,7 @@ import { Footer } from '@/widgets/footer'
 import { AuthHeader, Header } from '@/widgets/header'
 import { RecommendationSection } from '@/widgets/recommendation-section'
 import { SkillSection } from '@/widgets/skill-section'
-import type { CatalogCard } from '@/features/catalog-filters/model'
+import type { CatalogCard } from '@/features/catalog/model'
 import styles from './catalog-page.module.css'
 import type { RefObject } from 'react'
 
