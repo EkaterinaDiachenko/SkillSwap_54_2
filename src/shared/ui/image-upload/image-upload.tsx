@@ -35,8 +35,13 @@ export function ImageUpload({
   const [images, setImages] = useState<ImageFile[]>(initialImages);
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const imagesRef = useRef<ImageFile[]>(images);
 
   const inputId = useId();
+
+  useEffect(() => {
+    imagesRef.current = images
+  }, [images])
 
   useEffect(() => {
     if (initialImages.length > 0) {
@@ -56,7 +61,7 @@ export function ImageUpload({
 
   useEffect(() => {
     return () => {
-      images.forEach((file) => {
+      imagesRef.current.forEach((file) => {
         if (file.preview) {
           URL.revokeObjectURL(file.preview);
         }
