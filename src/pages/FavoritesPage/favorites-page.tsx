@@ -13,6 +13,7 @@ export type FavoritesPageProps = {
   userName?: string
   avatarSrc?: string
   categories?: SkillCategory[]
+  onLogout?: () => void
   onBackClick?: () => void
   className?: string
   onProfileClick?: () => void
@@ -24,6 +25,7 @@ export default function FavoritesPage({
   userName = '',
   avatarSrc,
   categories = [],
+  onLogout,
   onBackClick,
   className,
   onProfileClick,
@@ -35,6 +37,7 @@ export default function FavoritesPage({
         name={userName}
         avatarSrc={avatarSrc}
         categories={categories}
+        onLogout={onLogout}
         onProfileClick={onProfileClick}
         onFavoritesClick={onFavoritesClick}
       />

@@ -7,10 +7,11 @@ import styles from './error-500.module.css'
 
 export type Error500Props = {
   /** true — AuthHeader (авторизован), false — Header (гость) */
-  isAuth: boolean,
+  isAuth: boolean
   categories?: SkillCategory[]
   userName?: string
   avatarSrc?: string
+  onLogout?: () => void
   onLogin?: () => void
   onRegister?: () => void
   onProfileClick?: () => void
@@ -27,29 +28,26 @@ export function Error500({
   categories = [],
   userName = '',
   avatarSrc,
+  onLogout,
   onLogin,
   onRegister,
   onProfileClick,
   onFavoritesClick,
   onHomeClick,
- }: Error500Props) {
-
+}: Error500Props) {
   return (
     <div className={styles.page}>
       {isAuth ? (
-         <AuthHeader
-         name={userName}
-         avatarSrc={avatarSrc}
-         categories={categories}
-         onProfileClick={onProfileClick}
-         onFavoritesClick={onFavoritesClick}
-       />
-     ) : (
-       <Header
-         categories={categories}
-         onLogin={onLogin}
-         onRegister={onRegister}
-       />
+        <AuthHeader
+          name={userName}
+          avatarSrc={avatarSrc}
+          categories={categories}
+          onLogout={onLogout}
+          onProfileClick={onProfileClick}
+          onFavoritesClick={onFavoritesClick}
+        />
+      ) : (
+        <Header categories={categories} onLogin={onLogin} onRegister={onRegister} />
       )}
 
       <main className={styles.content}>

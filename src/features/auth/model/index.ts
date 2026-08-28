@@ -18,3 +18,7 @@ export {
   selectFullCurrentUser,
 } from './auth-selectors'
 export type { TLoginData } from '../api/auth-api'
+export {
+  loginSchema,
+  type LoginFormValues,
+} from './login-schema'

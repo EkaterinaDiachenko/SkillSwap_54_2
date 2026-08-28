@@ -40,8 +40,8 @@ const initialState: RegistrationState = {
     avatarUrl: null,
   },
   learningSkill: {
-    category: '',
-    subcategory: '',
+    categoryIds: [],
+    subcategoryIds: [],
   },
   offer: {
     title: '',

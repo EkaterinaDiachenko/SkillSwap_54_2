@@ -16,8 +16,8 @@ export type RegistrationPersonalData = {
 }
 
 export type RegistrationLearningSkill = {
-  category: string
-  subcategory: string
+  categoryIds: string[]
+  subcategoryIds: string[]
 }
 
 export type RegistrationOffer = {

@@ -15,6 +15,7 @@ export type SkillPageProps = {
   offer: Omit<SkillOfferProps, 'className'>
   relatedCards: RelatedCard[]
   onLogin?: () => void
+  onLogout?: () => void
   onRegister?: () => void
   onProfileClick?: () => void
   onFavoritesClick?: () => void
@@ -33,6 +34,7 @@ export default function SkillPage({
   offer,
   relatedCards,
   onLogin,
+  onLogout,
   onRegister,
   onProfileClick,
   onFavoritesClick,
@@ -47,6 +49,7 @@ export default function SkillPage({
           name={userName ?? ''}
           avatarSrc={avatarSrc}
           categories={categories}
+          onLogout={onLogout}
           onProfileClick={onProfileClick}
           onFavoritesClick={onFavoritesClick}
         />

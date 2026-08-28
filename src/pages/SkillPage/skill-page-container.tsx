@@ -22,6 +22,7 @@ import SkillPage, { type SkillPageProps } from './skill-page'
 type SkillPageContainerProps = Pick<
   SkillPageProps,
   | 'onLogin'
+  | 'onLogout'
   | 'onRegister'
   | 'onProfileClick'
   | 'onFavoritesClick'
@@ -89,6 +90,7 @@ function createCardData(
 
 export default function SkillPageContainer({
   onLogin,
+  onLogout,
   onRegister,
   onProfileClick,
   onFavoritesClick,
@@ -190,6 +192,7 @@ export default function SkillPageContainer({
       offer={offer}
       relatedCards={relatedCards}
       onLogin={onLogin}
+      onLogout={onLogout}
       onRegister={onRegister}
       onProfileClick={onProfileClick}
       onFavoritesClick={onFavoritesClick}

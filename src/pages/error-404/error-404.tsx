@@ -11,6 +11,7 @@ export type Error404Props = {
   categories?: SkillCategory[]
   userName?: string
   avatarSrc?: string
+  onLogout?: () => void
   onLogin?: () => void
   onRegister?: () => void
   onProfileClick?: () => void
@@ -27,29 +28,26 @@ export function Error404({
   categories = [],
   userName = '',
   avatarSrc,
+  onLogout,
   onLogin,
   onRegister,
   onProfileClick,
   onFavoritesClick,
   onHomeClick,
 }: Error404Props) {
-
   return (
     <div className={styles.page}>
       {isAuth ? (
-         <AuthHeader
-         name={userName}
-         avatarSrc={avatarSrc}
-         categories={categories}
-         onProfileClick={onProfileClick}
-         onFavoritesClick={onFavoritesClick}
-       />
+        <AuthHeader
+          name={userName}
+          avatarSrc={avatarSrc}
+          categories={categories}
+          onLogout={onLogout}
+          onProfileClick={onProfileClick}
+          onFavoritesClick={onFavoritesClick}
+        />
       ) : (
-        <Header
-    categories={categories}
-    onLogin={onLogin}
-    onRegister={onRegister}
-  />
+        <Header categories={categories} onLogin={onLogin} onRegister={onRegister} />
       )}
 
       <main className={styles.content}>

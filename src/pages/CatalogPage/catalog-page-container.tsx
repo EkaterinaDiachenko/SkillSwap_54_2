@@ -51,6 +51,7 @@ type CatalogPageContainerProps = Pick<
   | 'isAuth'
   | 'userName'
   | 'avatarSrc'
+  | 'onLogout'
   | 'onLogin'
   | 'onRegister'
   | 'onProfileClick'
@@ -61,6 +62,7 @@ export default function CatalogPage({
   isAuth,
   userName,
   avatarSrc,
+  onLogout,
   onLogin,
   onRegister,
   onProfileClick,
@@ -200,6 +202,7 @@ export default function CatalogPage({
       isAuth={isAuth}
       userName={userName}
       avatarSrc={avatarSrc}
+      onLogout={onLogout}
       onLogin={onLogin}
       onRegister={onRegister}
       onProfileClick={onProfileClick}

@@ -54,6 +54,7 @@ export type CatalogPageProps = {
   onCardDetailsClick: (skillId: string) => void
 
   onLogin: () => void
+  onLogout?: () => void
   onRegister: () => void
   onProfileClick: () => void
   onFavoritesClick: () => void
@@ -88,6 +89,7 @@ export function CatalogPageUI({
   onShowNew,
   onCardDetailsClick,
   onLogin,
+  onLogout,
   onRegister,
   onProfileClick,
   onFavoritesClick,
@@ -105,6 +107,7 @@ export function CatalogPageUI({
           name={userName ?? ''}
           avatarSrc={avatarSrc}
           categories={categories}
+          onLogout={onLogout}
           onProfileClick={onProfileClick}
           onFavoritesClick={onFavoritesClick}
         />

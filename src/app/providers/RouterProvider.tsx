@@ -1,21 +1,31 @@
 import { Routes, Route, useLocation, type Location, useNavigate } from 'react-router-dom'
-import { lazy, Suspense, useEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useCallback, useEffect, useRef } from 'react'
 import { SKILL_CATEGORIES } from '@/entities/skill'
 import { ROUTES } from '@/shared/lib/constants'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { loadUsers, selectUsersLoading } from '@/entities/user/model'
 import { loadSkills, selectSkillsLoading } from '@/entities/skill/model'
-import { checkUserAuth, selectCurrentUser, selectIsAuth, loginUser } from '@/features/auth/model'
-import { loadRegistrationDraft } from '@/features/registration/model'
+import {
+  checkUserAuth,
+  logoutUser,
+  selectCurrentUser,
+  selectIsAuth,
+} from '@/features/auth/model'
+import {
+  loadRegistrationDraft,
+  registerUser,
+  selectOffer,
+  selectRegistrationDraft,
+  selectRegistrationError,
+  selectRegistrationLoading,
+} from '@/features/registration/model'
 import { Spinner } from '@/shared/ui/spinner'
 import { PrivateRoute } from '@/features/auth/private-route'
 import { Modal } from '@/shared/ui/modal'
 import { OfferConfirmContent } from '@/widgets/offer-confirm-content'
 import { ExchangeOfferContent } from '@/widgets/exchange-offer-content'
 import { RegisterPreviewContent } from '@/widgets/register-preview-content'
-import { selectOffer } from '@/features/registration/model'
 
-// Lazy-загрузка страниц — каждая страница грузится только при переходе на неё
 const CatalogPage = lazy(() => import('@/pages/CatalogPage'))
 const SkillPage = lazy(() => import('@/pages/SkillPage'))
 const ProfilePage = lazy(() => import('@/pages/ProfilePage'))
@@ -31,10 +41,79 @@ const Error404Page = lazy(() =>
 const Error500Page = lazy(() =>
   import('@/pages/error-500').then(({ Error500 }) => ({ default: Error500 })),
 )
+
 type RouterLocationState = {
   backgroundLocation?: Location
   from?: Location
   exchangeOffered?: boolean
+}
+
+function getLocationPath(locationValue: Location | undefined): string {
+  if (!locationValue) {
+    return ROUTES.HOME
+  }
+
+  return `${locationValue.pathname}${locationValue.search}${locationValue.hash}`
+}
+
+type RegisterPreviewModalProps = {
+  onClose: () => void
+  onEdit: () => void
+}
+
+function RegisterPreviewModal({ onClose, onEdit }: RegisterPreviewModalProps) {
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
+  const location = useLocation()
+  const offer = useAppSelector(selectOffer)
+  const draft = useAppSelector(selectRegistrationDraft)
+  const loading = useAppSelector(selectRegistrationLoading)
+  const error = useAppSelector(selectRegistrationError)
+  const state = location.state as RouterLocationState | null
+
+  const selectedCategory = SKILL_CATEGORIES.find((category) => category.id === offer.category)
+  const selectedSubcategory = selectedCategory?.subcategories.find(
+    (subcategory) => subcategory.id === offer.subcategory,
+  )
+
+  const handleDone = async () => {
+    try {
+      await dispatch(registerUser(draft)).unwrap()
+
+      navigate(ROUTES.OFFER_CONFIRM, {
+        replace: true,
+        state: {
+          from: state?.from,
+        },
+      })
+    } catch {
+      // Ошибка отображается через selector
+    }
+  }
+
+  return (
+    <Modal isOpen onClose={onClose}>
+      <RegisterPreviewContent
+        title="Ваше предложение"
+        subtitle="Проверьте данные перед завершением регистрации"
+        skillTitle={offer.title}
+        category={selectedCategory?.title ?? ''}
+        subcategory={selectedSubcategory?.title ?? ''}
+        description={offer.description}
+        images={offer.imageUrls}
+        onEditClick={onEdit}
+        onDoneClick={loading ? undefined : handleDone}
+      />
+      {error ? (
+        <p role="alert" style={{ marginTop: '16px', textAlign: 'center', color: 'var(--color-error)' }}>
+          {error}
+        </p>
+      ) : null}
+      {loading ? (
+        <p style={{ marginTop: '8px', textAlign: 'center' }}>Завершение регистрации...</p>
+      ) : null}
+    </Modal>
+  )
 }
 
 export function AppRouter() {
@@ -51,12 +130,20 @@ export function AppRouter() {
 
   const state = location.state as RouterLocationState | null
   const backgroundLocation = state?.backgroundLocation
+
   const handleCloseModal = () => {
     navigate(-1)
   }
 
-  const [loginEmail, setLoginEmail] = useState('')
-  const [loginPassword, setLoginPassword] = useState('')
+  const handleLogout = useCallback(async () => {
+    try {
+      await dispatch(logoutUser()).unwrap()
+    } catch {
+      // ignore
+    }
+
+    navigate(ROUTES.HOME, { replace: true })
+  }, [dispatch, navigate])
 
   const handleExchangeOfferDone = () => {
     const background = state?.backgroundLocation
@@ -66,16 +153,13 @@ export function AppRouter() {
       return
     }
 
-    navigate(
-      `${background.pathname}${background.search}${background.hash}`,
-      {
-        replace: true,
-        state: {
-          ...(background.state ?? {}),
-          exchangeOffered: true,
-        },
+    navigate(`${background.pathname}${background.search}${background.hash}`, {
+      replace: true,
+      state: {
+        ...(background.state ?? {}),
+        exchangeOffered: true,
       },
-    )
+    })
   }
 
   useEffect(() => {
@@ -87,16 +171,6 @@ export function AppRouter() {
     dispatch(checkUserAuth())
     dispatch(loadRegistrationDraft())
   }, [dispatch])
-
-  const offer = useAppSelector(selectOffer)
-
-  const selectedCategory = SKILL_CATEGORIES.find(
-    (category) => category.id === offer.category,
-  )
-
-  const selectedSubcategory = selectedCategory?.subcategories.find(
-    (subcategory) => subcategory.id === offer.subcategory,
-  )
 
   const handlePreviewEdit = () => {
     navigate(ROUTES.REGISTER_STEP_3, {
@@ -131,37 +205,8 @@ export function AppRouter() {
     navigate(ROUTES.FAVORITES)
   }
 
-  const handleCloseLogin = () => {
-    const from = state?.from
-
-    navigate(
-      from
-        ? `${from.pathname}${from.search}${from.hash}`
-        : ROUTES.HOME,
-      { replace: true },
-    )
-  }
-
-  const handleLoginSubmit = async () => {
-    const result = await dispatch(
-      loginUser({
-        email: loginEmail,
-        password: loginPassword,
-      }),
-    )
-
-    if (!loginUser.fulfilled.match(result)) {
-      return
-    }
-
-    const from = state?.from
-
-    navigate(
-      from
-        ? `${from.pathname}${from.search}${from.hash}`
-        : ROUTES.HOME,
-      { replace: true },
-    )
+  const handleOfferConfirmClose = () => {
+    navigate(getLocationPath(state?.from), { replace: true })
   }
 
   const handleHomeClick = () => {
@@ -185,6 +230,14 @@ export function AppRouter() {
     })
   }
 
+  const authHeaderProps = {
+    userName: currentUser?.name,
+    avatarSrc: currentUser?.avatarUrl ?? undefined,
+    onLogout: handleLogout,
+    onProfileClick: handleProfileClick,
+    onFavoritesClick: handleFavoritesClick,
+  }
+
   return (
     <Suspense fallback={<Spinner />}>
       {isInitialLoading ? (
@@ -195,135 +248,180 @@ export function AppRouter() {
             path={ROUTES.HOME}
             element={
               <CatalogPage
-              isAuth={isAuth}
-              userName={currentUser?.name}
-              avatarSrc={currentUser?.avatarUrl ?? undefined}
-              onLogin={handleLoginClick}
-              onRegister={handleRegisterClick}
-              onProfileClick={handleProfileClick}
-              onFavoritesClick={handleFavoritesClick}
+                isAuth={isAuth}
+                userName={authHeaderProps.userName}
+                avatarSrc={authHeaderProps.avatarSrc}
+                onLogout={authHeaderProps.onLogout}
+                onLogin={handleLoginClick}
+                onRegister={handleRegisterClick}
+                onProfileClick={handleProfileClick}
+                onFavoritesClick={handleFavoritesClick}
               />
             }
           />
-          <Route path={ROUTES.SKILL} element={
-            <SkillPage
-              onLogin={handleLoginClick}
-              onRegister={handleRegisterClick}
-              onProfileClick={handleProfileClick}
-              onFavoritesClick={handleFavoritesClick}
-              onOfferClick={handleOfferClick}
-              isExchangeOffered={Boolean(state?.exchangeOffered)}
-            />
-          } />
-          <Route path={ROUTES.FAVORITES} element={
-            <PrivateRoute>
-              <FavoritesPage
-                userName={currentUser?.name}
-                avatarSrc={currentUser?.avatarUrl ?? undefined}
-                categories={SKILL_CATEGORIES}
+          <Route
+            path={ROUTES.SKILL}
+            element={
+              <SkillPage
+                onLogout={authHeaderProps.onLogout}
+                onLogin={handleLoginClick}
+                onRegister={handleRegisterClick}
                 onProfileClick={handleProfileClick}
                 onFavoritesClick={handleFavoritesClick}
-                onBackClick={handleHomeClick}
+                onOfferClick={handleOfferClick}
+                isExchangeOffered={Boolean(state?.exchangeOffered)}
               />
-            </PrivateRoute>
-          } />
-          <Route path={ROUTES.LOGIN} element={
-            <PrivateRoute onlyUnAuth>
-              <LoginPage
-                email={loginEmail}
-                password={loginPassword}
-                onEmailChange={setLoginEmail}
-                onPasswordChange={setLoginPassword}
-                onLoginClick={handleLoginSubmit}
-                onClose={handleCloseLogin}
-              />
-            </PrivateRoute>
-          } />
-          <Route path={ROUTES.REGISTER} element={<PrivateRoute onlyUnAuth><WelcomeRegisterPage /></PrivateRoute>} />
-          <Route path={ROUTES.REGISTER_STEP_2} element={<PrivateRoute onlyUnAuth><AboutRegisterPage /></PrivateRoute>} />
-          <Route path={ROUTES.REGISTER_STEP_3} element={<PrivateRoute onlyUnAuth><SkillRegisterPage /></PrivateRoute>} />
-          <Route path={ROUTES.REGISTER_PREVIEW} element={
-            <PrivateRoute onlyUnAuth>
-              <Modal isOpen onClose={handleCloseModal}>
-                <RegisterPreviewContent
-                  title="Ваше предложение"
-                  subtitle="Проверьте, всё ли верно"
-                  skillTitle={offer.title}
-                  category={selectedCategory?.title ?? ''}
-                  subcategory={selectedSubcategory?.title ?? ''}
-                  description={offer.description}
-                  images={offer.imageUrls}
-                  onEditClick={handlePreviewEdit}
+            }
+          />
+          <Route
+            path={ROUTES.FAVORITES}
+            element={
+              <PrivateRoute>
+                <FavoritesPage
+                  userName={authHeaderProps.userName}
+                  avatarSrc={authHeaderProps.avatarSrc}
+                  categories={SKILL_CATEGORIES}
+                  onLogout={authHeaderProps.onLogout}
+                  onProfileClick={handleProfileClick}
+                  onFavoritesClick={handleFavoritesClick}
+                  onBackClick={handleHomeClick}
                 />
-              </Modal>
-            </PrivateRoute>
-          }
+              </PrivateRoute>
+            }
           />
-
-          {/* Защищённые маршруты — добавь PrivateRoute обёртку */}
-          <Route path={ROUTES.PROFILE} element={
-            <PrivateRoute>
-              <ProfilePage
-                userName={currentUser?.name}
-                avatarSrc={currentUser?.avatarUrl ?? undefined}
+          <Route
+            path={ROUTES.LOGIN}
+            element={
+              <PrivateRoute onlyUnAuth>
+                <LoginPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={ROUTES.REGISTER}
+            element={
+              <PrivateRoute onlyUnAuth>
+                <WelcomeRegisterPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={ROUTES.REGISTER_STEP_2}
+            element={
+              <PrivateRoute onlyUnAuth>
+                <AboutRegisterPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={ROUTES.REGISTER_STEP_3}
+            element={
+              <PrivateRoute onlyUnAuth>
+                <SkillRegisterPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={ROUTES.REGISTER_PREVIEW}
+            element={
+              <PrivateRoute onlyUnAuth>
+                <RegisterPreviewModal onClose={handleCloseModal} onEdit={handlePreviewEdit} />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={ROUTES.PROFILE}
+            element={
+              <PrivateRoute>
+                <ProfilePage
+                  userName={authHeaderProps.userName}
+                  avatarSrc={authHeaderProps.avatarSrc}
+                  categories={SKILL_CATEGORIES}
+                  onLogout={authHeaderProps.onLogout}
+                  onProfileClick={handleProfileClick}
+                  onFavoritesClick={handleFavoritesClick}
+                />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={ROUTES.CREATE}
+            element={
+              <PrivateRoute>
+                <CreateSkillPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={ROUTES.OFFER_CONFIRM}
+            element={
+              <PrivateRoute>
+                <Modal isOpen onClose={handleOfferConfirmClose}>
+                  <OfferConfirmContent onButtonClick={handleOfferConfirmClose} />
+                </Modal>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={ROUTES.EXCHANGE_OFFER}
+            element={
+              <PrivateRoute>
+                <Modal isOpen onClose={handleCloseModal}>
+                  <ExchangeOfferContent onButtonClick={handleExchangeOfferDone} />
+                </Modal>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={ROUTES.ERROR_404}
+            element={
+              <Error404Page
+                isAuth={isAuth}
                 categories={SKILL_CATEGORIES}
+                userName={authHeaderProps.userName}
+                avatarSrc={authHeaderProps.avatarSrc}
+                onLogout={authHeaderProps.onLogout}
+                onLogin={handleLoginClick}
+                onRegister={handleRegisterClick}
                 onProfileClick={handleProfileClick}
                 onFavoritesClick={handleFavoritesClick}
+                onHomeClick={handleHomeClick}
               />
-            </PrivateRoute>
-          } />
-          <Route path={ROUTES.CREATE} element={<PrivateRoute><CreateSkillPage /></PrivateRoute>} />
-          <Route path={ROUTES.OFFER_CONFIRM} element={
-            <PrivateRoute>
-              <Modal isOpen onClose={handleCloseModal}>
-                <OfferConfirmContent onButtonClick={handleCloseModal} />
-              </Modal>
-            </PrivateRoute>
-          } />
-          <Route path={ROUTES.EXCHANGE_OFFER} element={
-            <PrivateRoute>
-              <Modal isOpen onClose={handleCloseModal}>
-                <ExchangeOfferContent onButtonClick={handleExchangeOfferDone} />
-              </Modal>
-            </PrivateRoute>
-          } />
-          <Route path={ROUTES.ERROR_404} element={
-            <Error404Page isAuth={isAuth}
-              categories={SKILL_CATEGORIES}
-              userName={currentUser?.name}
-              avatarSrc={currentUser?.avatarUrl ?? undefined}
-              onLogin={handleLoginClick}
-              onRegister={handleRegisterClick}
-              onProfileClick={handleProfileClick}
-              onFavoritesClick={handleFavoritesClick}
-              onHomeClick={handleHomeClick}
-            />
-          }
+            }
           />
-          <Route path={ROUTES.ERROR_500} element={
-            <Error500Page isAuth={isAuth}
-              categories={SKILL_CATEGORIES}
-              userName={currentUser?.name}
-              avatarSrc={currentUser?.avatarUrl ?? undefined}
-              onLogin={handleLoginClick}
-              onRegister={handleRegisterClick}
-              onProfileClick={handleProfileClick}
-              onFavoritesClick={handleFavoritesClick}
-              onHomeClick={handleHomeClick}
-            />
-          }
+          <Route
+            path={ROUTES.ERROR_500}
+            element={
+              <Error500Page
+                isAuth={isAuth}
+                categories={SKILL_CATEGORIES}
+                userName={authHeaderProps.userName}
+                avatarSrc={authHeaderProps.avatarSrc}
+                onLogout={authHeaderProps.onLogout}
+                onLogin={handleLoginClick}
+                onRegister={handleRegisterClick}
+                onProfileClick={handleProfileClick}
+                onFavoritesClick={handleFavoritesClick}
+                onHomeClick={handleHomeClick}
+              />
+            }
           />
-          <Route path="*" element={<Error404Page isAuth={isAuth}
-            categories={SKILL_CATEGORIES}
-            userName={currentUser?.name}
-            avatarSrc={currentUser?.avatarUrl ?? undefined}
-            onLogin={handleLoginClick}
-            onRegister={handleRegisterClick}
-            onProfileClick={handleProfileClick}
-            onFavoritesClick={handleFavoritesClick}
-            onHomeClick={handleHomeClick}
-          />
-          }
+          <Route
+            path="*"
+            element={
+              <Error404Page
+                isAuth={isAuth}
+                categories={SKILL_CATEGORIES}
+                userName={authHeaderProps.userName}
+                avatarSrc={authHeaderProps.avatarSrc}
+                onLogout={authHeaderProps.onLogout}
+                onLogin={handleLoginClick}
+                onRegister={handleRegisterClick}
+                onProfileClick={handleProfileClick}
+                onFavoritesClick={handleFavoritesClick}
+                onHomeClick={handleHomeClick}
+              />
+            }
           />
         </Routes>
       )}
@@ -334,50 +432,32 @@ export function AppRouter() {
             path={ROUTES.OFFER_CONFIRM}
             element={
               <PrivateRoute>
-                <Modal isOpen onClose={handleCloseModal}>
-                  <OfferConfirmContent
-                    onButtonClick={handleCloseModal}
-                  />
+                <Modal isOpen onClose={handleOfferConfirmClose}>
+                  <OfferConfirmContent onButtonClick={handleOfferConfirmClose} />
                 </Modal>
               </PrivateRoute>
             }
           />
-
           <Route
             path={ROUTES.EXCHANGE_OFFER}
             element={
               <PrivateRoute>
                 <Modal isOpen onClose={handleCloseModal}>
-                  <ExchangeOfferContent
-                    onButtonClick={handleExchangeOfferDone}
-                  />
+                  <ExchangeOfferContent onButtonClick={handleExchangeOfferDone} />
                 </Modal>
               </PrivateRoute>
             }
           />
-
           <Route
             path={ROUTES.REGISTER_PREVIEW}
             element={
               <PrivateRoute onlyUnAuth>
-                <Modal isOpen onClose={handleCloseModal}>
-                  <RegisterPreviewContent
-                    title="Ваше предложение"
-                    subtitle="Проверьте, всё ли верно"
-                    skillTitle={offer.title}
-                    category={selectedCategory?.title ?? ''}
-                    subcategory={selectedSubcategory?.title ?? ''}
-                    description={offer.description}
-                    images={offer.imageUrls}
-                    onEditClick={handlePreviewEdit}
-                  />
-                </Modal>
+                <RegisterPreviewModal onClose={handleCloseModal} onEdit={handlePreviewEdit} />
               </PrivateRoute>
             }
           />
         </Routes>
       )}
-
     </Suspense>
   )
 }

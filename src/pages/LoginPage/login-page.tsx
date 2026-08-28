@@ -10,22 +10,26 @@ export type LoginPageProps = {
   password?: string
   emailError?: string
   passwordError?: string
+  submitError?: string
+  isLoading?: boolean
   onEmailChange?: (value: string) => void
   onPasswordChange?: (value: string) => void
   onClose?: () => void
-  onLoginClick?: () => void
+  onSubmit?: () => void
   className?: string
 }
 
-export function LoginPage({
+export function LoginPageUI({
   email,
   password,
   emailError,
   passwordError,
+  submitError,
+  isLoading = false,
   onEmailChange,
   onPasswordChange,
   onClose,
-  onLoginClick,
+  onSubmit,
   className,
 }: LoginPageProps) {
   return (
@@ -37,7 +41,10 @@ export function LoginPage({
           <div className={styles.leftColumn}>
             <form
               className={styles.form}
-              onSubmit={(e) => e.preventDefault()}
+              onSubmit={(event) => {
+                event.preventDefault()
+                onSubmit?.()
+              }}
               aria-label="Вход в аккаунт"
             >
               <Input
@@ -46,7 +53,7 @@ export function LoginPage({
                 placeholder="Введите email"
                 value={email}
                 error={emailError}
-                onChange={(e) => onEmailChange?.(e.target.value)}
+                onChange={(event) => onEmailChange?.(event.target.value)}
               />
               <Input
                 label="Пароль"
@@ -54,15 +61,20 @@ export function LoginPage({
                 placeholder="Введите пароль"
                 value={password}
                 error={passwordError}
-                onChange={(e) => onPasswordChange?.(e.target.value)}
+                onChange={(event) => onPasswordChange?.(event.target.value)}
               />
+              {submitError ? (
+                <p className={styles.submitError} role="alert">
+                  {submitError}
+                </p>
+              ) : null}
               <Button
                 variant="primary"
-                type="button"
+                type="submit"
                 className={styles.submitButton}
-                onClick={onLoginClick}
+                disabled={isLoading}
               >
-                Войти
+                {isLoading ? 'Вход...' : 'Войти'}
               </Button>
             </form>
           </div>
