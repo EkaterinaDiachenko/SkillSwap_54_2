@@ -51,6 +51,7 @@ export type CatalogPageProps = {
 
   onShowPopular: () => void
   onShowNew: () => void
+  onCardDetailsClick: (skillId: string) => void
 
   onLogin: () => void
   onRegister: () => void
@@ -85,6 +86,7 @@ export function CatalogPageUI({
   loadError,
   onShowPopular,
   onShowNew,
+  onCardDetailsClick,
   onLogin,
   onRegister,
   onProfileClick,
@@ -144,6 +146,7 @@ export function CatalogPageUI({
               <FilteredCardsSection
                 filteredCount={filteredCount}
                 cards={filteredCards}
+                onCardDetailsClick={onCardDetailsClick}
               />
             </>
           )}
@@ -154,12 +157,14 @@ export function CatalogPageUI({
                 title="Популярное"
                 skillCards={popularCards}
                 onShowAll={onShowPopular}
+                onCardDetailsClick={onCardDetailsClick}
               />
 
               <SkillSection
                 title="Новое"
                 skillCards={newCards}
                 onShowAll={onShowNew}
+                onCardDetailsClick={onCardDetailsClick}
               />
 
               <RecommendationSection
@@ -167,6 +172,7 @@ export function CatalogPageUI({
                 isLoadingMore={isLoadingMore}
                 hasMore={hasMore}
                 loadMoreRef={loadMoreRef}
+                onCardDetailsClick={onCardDetailsClick}
               />
             </>
           )}

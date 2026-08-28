@@ -8,6 +8,7 @@ type CatalogCardWithId = SkillCardProps & { skillId: string }
 export type FilteredCardsSectionProps = {
   filteredCount: number
   cards: CatalogCardWithId[]
+  onCardDetailsClick: (skillId: string) => void
   onSortClick?: () => void
   className?: string
 }
@@ -15,6 +16,7 @@ export type FilteredCardsSectionProps = {
 export function FilteredCardsSection({
   filteredCount,
   cards,
+  onCardDetailsClick,
   onSortClick,
   className,
 }: FilteredCardsSectionProps) {
@@ -51,6 +53,7 @@ export function FilteredCardsSection({
               key={card.skillId}
               {...card}
               className={styles.card}
+              onDetailsClick={() => onCardDetailsClick(card.skillId)}
             />
           ))}
         </div>

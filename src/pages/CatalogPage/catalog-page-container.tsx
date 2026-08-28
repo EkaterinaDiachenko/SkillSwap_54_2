@@ -1,13 +1,8 @@
+import { generatePath, useNavigate } from 'react-router-dom'
 import { useMemo } from 'react'
 import { SKILL_CATEGORIES } from '@/entities/skill'
-import {
-  selectSkillsError,
-  selectSkillsLoading,
-} from '@/entities/skill/model'
-import {
-  selectUsersError,
-  selectUsersLoading,
-} from '@/entities/user/model'
+import { selectSkillsLoading, selectSkillsError } from '@/entities/skill/model'
+import { selectUsersError, selectUsersLoading } from '@/entities/user/model'
 import {
   selectAllCatalogCards,
   selectNewCards,
@@ -15,6 +10,7 @@ import {
   selectRecommendedCards,
   useRecommendationsPagination,
 } from '@/features/catalog/model'
+import { ROUTES } from '@/shared/lib/constants'
 import {
   selectFilters,
   selectHasActiveFilters,
@@ -70,6 +66,7 @@ export default function CatalogPage({
   onProfileClick,
   onFavoritesClick,
 }: CatalogPageContainerProps) {
+  const navigate = useNavigate()
   const dispatch = useAppDispatch()
 
   const filters = useAppSelector(selectFilters)
@@ -84,12 +81,15 @@ export default function CatalogPage({
   const filteredTeachSkills = useAppSelector(selectFilteredTeachSkills)
   const { visibleCards, isLoadingMore, hasMore, loadMoreRef } =
     useRecommendationsPagination(recommendationCards)
-
   const usersLoading = useAppSelector(selectUsersLoading)
   const skillsLoading = useAppSelector(selectSkillsLoading)
   const usersError = useAppSelector(selectUsersError)
   const skillsError = useAppSelector(selectSkillsError)
 
+  const handleReset = () => dispatch(resetFilters())
+  const handleCardDetailsClick = (skillId: string) => {
+    navigate(generatePath(ROUTES.SKILL, { id: skillId }))
+  }
   const categoryStates = useMemo(() => {
     const states: Record<string, { checked: boolean; indeterminate: boolean }> = {}
     const subcategoryIdsSet = new Set(filters.subcategoryIds)
@@ -194,7 +194,6 @@ export default function CatalogPage({
   ) => dispatch(toggleSubcategory({ categoryId, subcategoryId, subcategoryIds }))
   const handleSetGender = (gender: string) => dispatch(setGender(gender as GenderFilter))
   const handleToggleCity = (city: City) => dispatch(toggleCity(city))
-  const handleReset = () => dispatch(resetFilters())
 
   return (
     <CatalogPageUI
@@ -231,6 +230,7 @@ export default function CatalogPage({
       loadError={usersError ?? skillsError}
       onShowPopular={() => undefined}
       onShowNew={() => undefined}
+      onCardDetailsClick={handleCardDetailsClick}
     />
   )
 }
