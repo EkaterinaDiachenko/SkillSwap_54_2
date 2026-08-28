@@ -32,9 +32,9 @@ export function RelatedCards({
 
       <div className={styles.row}>
         <div className={styles.track}>
-          {cards.map((card, index) => (
+          {cards.map((card) => (
             <SkillCard
-              key={`${card.name}-${index}`}
+              key={card.skillId}
               className={styles.card}
               {...card}
               onDetailsClick={() => onCardDetailsClick(card.skillId)}
