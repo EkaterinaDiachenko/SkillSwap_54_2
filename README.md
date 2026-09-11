@@ -36,7 +36,6 @@ SkillSwap_54_2/
 </details>
 
 ## Технологический стек:
-
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 ![Redux Toolkit](https://img.shields.io/badge/Redux_Toolkit-764ABC?style=for-the-badge&logo=redux&logoColor=white)
@@ -46,8 +45,7 @@ SkillSwap_54_2/
 ![React Hook Form](https://img.shields.io/badge/React_Hook_Form-EC5990?style=for-the-badge&logo=reacthookform&logoColor=white)
 ![Yup](https://img.shields.io/badge/Yup-4B5563?style=for-the-badge)
 
-### Инструменты разработки
-
+### Инструменты разработки:
 ![Vitest](https://img.shields.io/badge/Vitest-6E9F18?style=for-the-badge&logo=vitest&logoColor=white)
 ![Testing Library](https://img.shields.io/badge/Testing_Library-E33332?style=for-the-badge&logo=testinglibrary&logoColor=white)
 ![ESLint](https://img.shields.io/badge/ESLint-4B32C3?style=for-the-badge&logo=eslint&logoColor=white)
@@ -56,7 +54,7 @@ SkillSwap_54_2/
 
 ESLint и Stylelint проверяют код и стили, Prettier отвечает за форматирование. Для тестирования настроены Vitest и Testing Library; тестовые сценарии пока не добавлены.
 
-## Основной функционал
+## Основной функционал:
 - Каталог: карточки пользователей с навыками «Могу научить» и «Хочу научиться».
 - Фильтры: выбор категорий, подкатегорий, города, пола и направления обмена.
 - Подборки: популярные и новые предложения, рекомендации с постепенным показом карточек.
@@ -73,8 +71,7 @@ ESLint и Stylelint проверяют код и стили, Prettier отвеч
 - Страницы загружаются через `React.lazy`, доступ к приватным маршрутам контролирует `PrivateRoute`.
 - Исходные данные загружаются из JSON-файлов в `public/db`. Новые пользователи, навыки и черновик регистрации сохраняются в `localStorage`.
 
-## Текущий статус
-
+## Текущий статус:
 - Приложение работает с демонстрационными данными без отдельного backend-сервера. Авторизация имитируется на стороне браузера.
 - Интерфейсы профиля и избранного подготовлены, но сохранение изменений профиля и подключение избранных карточек к странице пока не завершены.
 - Предложение обмена реализовано как интерфейсный сценарий без отправки заявки другому пользователю. Отдельная страница создания навыка находится в разработке.
